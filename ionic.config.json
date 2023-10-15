@@ -1,0 +1,7 @@
+{
+  "name": "LightMoney",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
