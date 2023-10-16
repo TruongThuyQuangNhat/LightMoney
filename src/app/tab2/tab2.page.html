@@ -1,17 +1,52 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
+  <ion-title>{{viewTitle}}</ion-title>
+  <ion-buttons>
+    <ion-button ion-button [disabled]="isToday" (click)="today()">Today</ion-button>
+    <ion-button ion-button (click)="changeMode('month')">M</ion-button>
+    <ion-button ion-button (click)="changeMode('week')">W</ion-button>
+    <ion-button ion-button (click)="changeMode('day')">D</ion-button>
+    <ion-button ion-button (click)="loadEvents()">Load Events</ion-button>
+  </ion-buttons>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <calendar
+    [eventSource]="eventSource"
+    [calendarMode]="calendar.mode"
+    [currentDate]="calendar.currentDate"
+    [monthviewEventDetailTemplate]="monthview"
+    [monthviewDisplayEventTemplate]="monthviewDisplayEventTemplate"
+    (onCurrentDateChanged)="onCurrentDateChanged($event)"
+    (onEventSelected)="onEventSelected($event)"
+    (onTitleChanged)="onViewTitleChanged($event)"
+    (onTimeSelected)="onTimeSelected($event)"
+  >
+  </calendar>
 </ion-content>
+
+<ng-template #monthview 
+  let-showEventDetail="showEventDetail" 
+  let-selectedDate="selectedDate" 
+  let-noEventsLabel="noEventsLabel"
+>
+  <ng-container>
+    <ng-container *ngFor="let item of selectedDate.events">
+      <ion-item>
+        <ion-label>
+          <p>{{item.title}}</p>
+          <p>{{item.expenditure}}</p>
+          <p>{{item.revenue}}</p>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #monthviewDisplayEventTemplate 
+  let-view="view" 
+  let-row="row" 
+  let-col="col"
+>
+  {{view.dates[row*7+col].label}} - {{convertExpenditure(view, row*7+col)}}
+  - {{convertRevenue(view, row*7+col)}}
+</ng-template>
