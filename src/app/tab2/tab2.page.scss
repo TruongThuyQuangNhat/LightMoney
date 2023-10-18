@@ -1,0 +1,43 @@
+:host ::ng-deep {
+    .table > tbody > tr > td {
+      padding: 0px !important;
+      height: 40px;
+      width: 100%;
+      background-color: unset !important;
+    }
+}
+.month-square {
+    height: 40px;
+    width: 100%;
+}
+
+.date {
+    display: block;
+    font-size: 12px;
+    position: relative;
+    right: 15px;
+    width: 100%;
+    color: black;
+}
+
+.expenditure {
+    display: block;
+    font-size: 10px;
+    direction: rtl;
+    position: relative;
+    bottom: 9px;
+    text-align: right;
+    width: 100%;
+    color: blue;
+}
+
+.revenue {
+    display: block;
+    font-size: 10px;
+    direction: rtl;
+    position: relative;
+    top: -16px;
+    text-align: right;
+    width: 100%;
+    color: red;
+}

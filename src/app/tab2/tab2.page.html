@@ -1,5 +1,10 @@
-<ion-header [translucent]="true">
-  <ion-title>{{viewTitle}}</ion-title>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{viewTitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
   <ion-buttons>
     <ion-button ion-button [disabled]="isToday" (click)="today()">Today</ion-button>
     <ion-button ion-button (click)="changeMode('month')">M</ion-button>
@@ -7,9 +12,6 @@
     <ion-button ion-button (click)="changeMode('day')">D</ion-button>
     <ion-button ion-button (click)="loadEvents()">Load Events</ion-button>
   </ion-buttons>
-</ion-header>
-
-<ion-content [fullscreen]="true">
   <calendar
     [eventSource]="eventSource"
     [calendarMode]="calendar.mode"
@@ -47,6 +49,11 @@
   let-row="row" 
   let-col="col"
 >
-  {{view.dates[row*7+col].label}} - {{convertExpenditure(view, row*7+col)}}
-  - {{convertRevenue(view, row*7+col)}}
+  <ng-container>
+    <div class="month-square">
+      <span class="date">{{view.dates[row*7+col].label}}</span>
+      <span class="expenditure">{{convertExpenditure(view, row*7+col)}}</span>
+      <span class="revenue">{{convertRevenue(view, row*7+col)}}</span>
+    </div>
+  </ng-container>
 </ng-template>

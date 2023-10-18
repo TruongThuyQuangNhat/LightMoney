@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { CalendarMode } from 'ionic2-calendar';
 import { IView } from 'ionic2-calendar/calendar.interface';
@@ -11,14 +11,17 @@ import { IView } from 'ionic2-calendar/calendar.interface';
 export class Tab2Page {
   eventSource: any[] = [];
   viewTitle: string = '';
-
+  localID: string = 'vi-VN';
   isToday: boolean = true;
   calendar = {
     mode: 'month' as CalendarMode,
     currentDate: new Date(),
   };
 
-  constructor(private navController: NavController) {}
+  constructor(
+    private navController: NavController,
+    private detec: ChangeDetectorRef
+  ) {}
 
   loadEvents() {
     this.eventSource = this.createRandomEvents();
@@ -45,6 +48,7 @@ export class Tab2Page {
 
   today() {
     this.calendar.currentDate = new Date();
+    this.detec.detectChanges();
   }
 
   onTimeSelected(ev: any) {
@@ -143,15 +147,19 @@ export class Tab2Page {
   };
 
   convertExpenditure(view: any, index: number){
-    return view?.dates[index]?.events?.reduce((acc: number, curr: any) => {
+    const result = view?.dates[index]?.events?.reduce((acc: number, curr: any) => {
       return acc + curr.expenditure;
     }, 0);
+    if(result === 0) return "";
+    return result.toLocaleString(this.localID);
 
   }
 
   convertRevenue(view: any, index: number){
-    return view?.dates[index]?.events?.reduce((acc: number, curr: any) => {
+    const result = view?.dates[index]?.events?.reduce((acc: number, curr: any) => {
       return acc + curr.revenue;
     }, 0);
+    if(result === 0) return "";
+    return result.toLocaleString(this.localID);
   }
 }
