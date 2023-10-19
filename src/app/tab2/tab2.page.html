@@ -52,8 +52,12 @@
   <ng-container>
     <div class="month-square">
       <span class="date">{{view.dates[row*7+col].label}}</span>
-      <span class="expenditure">{{convertExpenditure(view, row*7+col)}}</span>
-      <span class="revenue">{{convertRevenue(view, row*7+col)}}</span>
+      <span class="expenditure">
+        {{convertExpenditure(view, row*7+col)}}
+      </span>
+      <span class="revenue">
+        {{convertRevenue(view, row*7+col)}}
+      </span>
     </div>
   </ng-container>
 </ng-template>
