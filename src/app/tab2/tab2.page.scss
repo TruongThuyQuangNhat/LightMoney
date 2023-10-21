@@ -15,7 +15,7 @@
     display: block;
     font-size: 12px;
     position: relative;
-    left: 18px;
+    right: 16px;
     width: 100%;
     color: black;
 }
@@ -31,6 +31,8 @@
     overflow: hidden;
     width: 55px;
     text-overflow: ellipsis;
+    padding-right: 2px;
+    padding-left: 2px;
 }
 
 .revenue {
@@ -44,4 +46,6 @@
     overflow: hidden;
     width: 55px;
     text-overflow: ellipsis;
+    padding-right: 2px;
+    padding-left: 2px;
 }
