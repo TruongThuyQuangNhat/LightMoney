@@ -3,8 +3,35 @@
       padding: 0px !important;
       height: 40px;
       width: 100%;
-      background-color: unset !important;
     }
+
+    .monthview-primary-with-event {
+        background-color: rgb(222, 240, 255) !important;
+    }
+
+    .monthview-secondary-with-event {
+        background-color: rgb(247, 247, 247) !important;
+    }
+
+    .monthview-current {
+        background-color: rgb(252, 255, 222) !important;
+        .date {
+            font-weight: bold;
+        }
+    }
+
+    .monthview-selected {
+        background-color: rgb(232, 255, 214) !important;
+        .date {
+            font-weight: bold;
+        }
+    }
+    //////////////////
+    
+    calendar > .monthview-container > monthview > div > ion-list {
+        display: none !important;
+    }
+    
 }
 .month-square {
     height: 40px;

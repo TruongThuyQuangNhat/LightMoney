@@ -1,15 +1,17 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { CalendarMode } from 'ionic2-calendar';
 import { IView } from 'ionic2-calendar/calendar.interface';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
   eventSource: any[] = [];
+  eventOfDate: any[] = [];
   viewTitle: string = '';
   localID: string = 'vi-VN';
   isToday: boolean = true;
@@ -22,6 +24,10 @@ export class Tab2Page {
     private navController: NavController,
     private detec: ChangeDetectorRef
   ) {}
+
+  ngOnInit(): void {
+    this.loadEvents();
+  }
 
   loadEvents() {
     this.eventSource = this.createRandomEvents();
@@ -52,14 +58,12 @@ export class Tab2Page {
   }
 
   onTimeSelected(ev: any) {
-    console.log(
-      'Selected time: ' +
-        ev.selectedTime +
-        ', hasEvents: ' +
-        (ev.events !== undefined && ev.events.length !== 0) +
-        ', disabled: ' +
-        ev.disabled
-    );
+    this.eventOfDate = this.eventSource.filter((event) => {
+      return (
+        moment(event.startTime).format('YYYY-MM-DD') ===
+        moment(ev.selectedTime).format('YYYY-MM-DD')
+      );
+    });
   }
 
   onCurrentDateChanged(event: Date) {
@@ -73,63 +77,35 @@ export class Tab2Page {
     var events = [];
     for (var i = 0; i < 50; i += 1) {
       var date = new Date();
-      var eventType = Math.floor(Math.random() * 2);
       var startDay = Math.floor(Math.random() * 90) - 45;
       var endDay = Math.floor(Math.random() * 2) + startDay;
       var startTime;
       var endTime;
-      if (eventType === 0) {
-        startTime = new Date(
-          Date.UTC(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate() + startDay
-          )
-        );
-        if (endDay === startDay) {
-          endDay += 1;
-        }
-        endTime = new Date(
-          Date.UTC(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate() + endDay
-          )
-        );
-        events.push({
-          title: 'All Day - ' + i,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: true,
-          expenditure: 500,
-          revenue: 3000
-        });
-      } else {
-        var startMinute = Math.floor(Math.random() * 24 * 60);
-        var endMinute = Math.floor(Math.random() * 180) + startMinute;
-        startTime = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate() + startDay,
-          0,
-          date.getMinutes() + startMinute
-        );
-        endTime = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate() + endDay,
-          0,
-          date.getMinutes() + endMinute
-        );
-        events.push({
-          title: 'Event - ' + i,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: false,
-          expenditure: 400,
-          revenue: 7000
-        });
+      startTime = new Date(
+        Date.UTC(
+          date.getUTCFullYear(),
+          date.getUTCMonth(),
+          date.getUTCDate() + startDay
+        )
+      );
+      if (endDay === startDay) {
+        endDay += 1;
       }
+      endTime = new Date(
+        Date.UTC(
+          date.getUTCFullYear(),
+          date.getUTCMonth(),
+          date.getUTCDate() + endDay
+        )
+      );
+      events.push({
+        title: 'All Day - ' + i,
+        startTime: startTime,
+        endTime: endTime,
+        allDay: true,
+        expenditure: Math.floor(Math.random() * 10000),
+        revenue: Math.floor(Math.random() * 10000)
+      });
     }
     return events;
   }
