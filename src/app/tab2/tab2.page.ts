@@ -26,9 +26,9 @@ export class Tab2Page implements OnInit, OnDestroy {
     private service: CalendarService,
   ) {
     this.service.eventSource$.pipe(takeUntil(this.destroy$))
-    .subscribe((events) => {
-      if(events.length === 0) return;
-      this.eventSource = this.eventSource.concat(events);
+    .subscribe((event) => {
+      if(!event) return;
+      this.eventSource = [...this.eventSource, event];
       this.detec.detectChanges();
     });
   }

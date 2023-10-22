@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
-  eventSource$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  private eventSource: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public eventSource$ = this.eventSource.asObservable();
 
   constructor() { }
 
   addEvent(event: any) {
-    const events = this.eventSource$.getValue();
-    events.push(event);
-    this.eventSource$.next(events);
+    this.eventSource.next(event);
+  }
+
+  getEvents() {
+    return this.eventSource.getValue();
   }
 
 }
