@@ -1,15 +1,15 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CalendarMode } from 'ionic2-calendar';
-import { IView } from 'ionic2-calendar/calendar.interface';
 import * as moment from 'moment';
+import { CalendarService } from '../service/calendar.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit {
+export class Tab2Page implements OnInit, OnDestroy {
   eventSource: any[] = [];
   eventOfDate: any[] = [];
   viewTitle: string = '';
@@ -19,11 +19,24 @@ export class Tab2Page implements OnInit {
     mode: 'month' as CalendarMode,
     currentDate: new Date(),
   };
+  destroy$: Subject<void> = new Subject<void>();
 
   constructor(
-    private navController: NavController,
-    private detec: ChangeDetectorRef
-  ) {}
+    private detec: ChangeDetectorRef,
+    private service: CalendarService,
+  ) {
+    this.service.eventSource$.pipe(takeUntil(this.destroy$))
+    .subscribe((events) => {
+      if(events.length === 0) return;
+      this.eventSource = this.eventSource.concat(events);
+      this.detec.detectChanges();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
     this.loadEvents();
