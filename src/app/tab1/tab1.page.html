@@ -1,8 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+    <ion-segment [value]="type" (ionChange)="changeSegment($event)">
+      <ion-segment-button value="revenue">
+        <ion-label>Tiền Thu</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="expenditure">
+        <ion-label>Tiền Chi</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
@@ -11,10 +16,10 @@
     <ion-item>
       <ion-input label="Tiêu đề" [(ngModel)]="title"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="type == 'revenue'">
       <ion-input label="Doanh thu" [(ngModel)]="revenue" type="number"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="type == 'expenditure'">
       <ion-input label="Chi tiêu" [(ngModel)]="expenditure" type="number"></ion-input>
     </ion-item>
     <ion-item>
@@ -30,6 +35,27 @@
         </ng-template>
       </ion-modal>
     </ion-item>
+    <div class="div-category">
+      <ng-container *ngFor="let item of listCategory">
+        <div class="parent-cate">
+          <ion-card [ngClass]="{'clicked': category.name == item.name}" class="card-category" (click)="chooseCate(item)">
+            <ion-card-header>
+              <ion-icon [src]="item.icon" 
+                aria-hidden="true" [style]="
+                  'color: '+ item.color +';'+
+                  'font-size: 30px;'+
+                  'margin: auto;'
+                "
+              ></ion-icon>
+            </ion-card-header>
+          
+            <ion-card-content>
+              {{item.name}}
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ng-container>
+    </div>
     <ion-button (click)="action()">Thêm</ion-button>
   </ion-list>
 </ion-content>

@@ -1,0 +1,17 @@
+.div-category {
+    width: 100%;
+    .parent-cate {
+        width: 33.33%;
+        display: inline-block;
+        padding: 10px 10px 0px 10px;
+        
+    }
+}
+
+ion-card.card-category {
+    margin: 0px;
+    
+    &.clicked {
+        --background: #E7E7E7;
+    }
+}
