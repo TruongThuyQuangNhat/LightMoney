@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { CalendarMode } from 'ionic2-calendar';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { CalendarComponent, CalendarMode } from 'ionic2-calendar';
 import * as moment from 'moment';
 import { CalendarService } from '../service/calendar.service';
 import { Subject, takeUntil } from 'rxjs';
@@ -10,10 +10,12 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit, OnDestroy {
+  @ViewChild(CalendarComponent) cal: CalendarComponent | undefined;
   eventSource: any[] = [];
   eventOfDate: any[] = [];
   viewTitle: string = '';
   localID: string = 'vi-VN';
+  currency: string = 'VND';
   isToday: boolean = true;
   calendar = {
     mode: 'month' as CalendarMode,
@@ -28,8 +30,8 @@ export class Tab2Page implements OnInit, OnDestroy {
     this.service.eventSource$.pipe(takeUntil(this.destroy$))
     .subscribe((event) => {
       if(!event) return;
-      this.eventSource = [...this.eventSource, event];
-      this.detec.detectChanges();
+      this.eventSource.push(event);
+      this.cal?.loadEvents();
     });
   }
 
@@ -111,13 +113,34 @@ export class Tab2Page implements OnInit, OnDestroy {
           date.getUTCDate() + endDay
         )
       );
+      
       events.push({
         title: 'All Day - ' + i,
         startTime: startTime,
         endTime: endTime,
         allDay: true,
         expenditure: Math.floor(Math.random() * 10000),
-        revenue: Math.floor(Math.random() * 10000)
+        revenue: 0,
+        type: 'expenditure',
+        category: {
+          icon: "assets/icon-category/add.svg",
+          name: "add",
+          color: "#F44336",
+        }
+      });
+      events.push({
+        title: 'All Day - ' + i,
+        startTime: startTime,
+        endTime: endTime,
+        allDay: true,
+        revenue: Math.floor(Math.random() * 10000),
+        expenditure: 0,
+        type: 'revenue',
+        category: {
+          icon: "assets/icon-category/add.svg",
+          name: "add",
+          color: "#F44336",
+        }
       });
     }
     return events;

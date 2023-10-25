@@ -13,16 +13,11 @@
 
 <ion-content>
   <ion-list>
+    <ion-list-header>
+      <ion-label>Thêm mới {{type}}</ion-label>
+    </ion-list-header>
     <ion-item>
-      <ion-input label="Tiêu đề" [(ngModel)]="title"></ion-input>
-    </ion-item>
-    <ion-item *ngIf="type == 'revenue'">
-      <ion-input label="Doanh thu" [(ngModel)]="revenue" type="number"></ion-input>
-    </ion-item>
-    <ion-item *ngIf="type == 'expenditure'">
-      <ion-input label="Chi tiêu" [(ngModel)]="expenditure" type="number"></ion-input>
-    </ion-item>
-    <ion-item>
+      <ion-label>Ngày</ion-label>
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
@@ -35,26 +30,40 @@
         </ng-template>
       </ion-modal>
     </ion-item>
+    <ion-item *ngIf="type == 'revenue'">
+      <ion-input label="Doanh thu" [(ngModel)]="revenue" type="number"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="type == 'expenditure'">
+      <ion-input label="Chi tiêu" [(ngModel)]="expenditure" type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Tiêu đề" [(ngModel)]="title"></ion-input>
+    </ion-item>
     <div class="div-category">
-      <ng-container *ngFor="let item of listCategory">
-        <div class="parent-cate">
-          <ion-card [ngClass]="{'clicked': category.name == item.name}" class="card-category" (click)="chooseCate(item)">
-            <ion-card-header>
-              <ion-icon [src]="item.icon" 
-                aria-hidden="true" [style]="
-                  'color: '+ item.color +';'+
-                  'font-size: 30px;'+
-                  'margin: auto;'
-                "
-              ></ion-icon>
-            </ion-card-header>
-          
-            <ion-card-content>
-              {{item.name}}
-            </ion-card-content>
-          </ion-card>
-        </div>
-      </ng-container>
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Chọn danh mục</ion-label>
+        </ion-list-header>
+        <ng-container *ngFor="let item of listCategory">
+          <div class="parent-cate">
+            <ion-card [ngClass]="{'clicked': category.name == item.name}" class="card-category" (click)="chooseCate(item)">
+              <ion-card-header>
+                <ion-icon [src]="item.icon" 
+                  aria-hidden="true" [style]="
+                    'color: '+ item.color +';'+
+                    'font-size: 30px;'+
+                    'margin: auto;'
+                  "
+                ></ion-icon>
+              </ion-card-header>
+            
+              <ion-card-content>
+                {{item.name}}
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ng-container>
+      </ion-list>
     </div>
     <ion-button (click)="action()">Thêm</ion-button>
   </ion-list>

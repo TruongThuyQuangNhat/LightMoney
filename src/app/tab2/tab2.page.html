@@ -19,15 +19,27 @@
 </ion-header>
 
 <ion-content>
+  <div style="height: 20px;"></div>
   <ion-list>
     <ng-container *ngFor="let item of eventOfDate">
       <ion-item-sliding>
         <ion-item>
+          <ion-avatar slot="start">
+            <ion-icon
+              [src]="item?.category?.icon"
+              [style]="'color: ' + item?.category?.color + ';'"
+            ></ion-icon>
+          </ion-avatar>
           <ion-label>
+            <h3>{{item.category?.name}}</h3>
             <p>{{item.title}}</p>
-            <p>{{item.expenditure}}</p>
-            <p>{{item.revenue}}</p>
           </ion-label>
+          <ion-note class="cur-revenue" slot="end" *ngIf="item.type == 'revenue'">
+            {{item.revenue | currency:currency}}
+          </ion-note>
+          <ion-note class="cur-expenditure" slot="end" *ngIf="item.type == 'expenditure'">
+            {{item.expenditure | currency:currency}}
+          </ion-note>
         </ion-item>
     
         <ion-item-options>

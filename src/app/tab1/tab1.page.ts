@@ -51,11 +51,7 @@ export class Tab1Page {
       expenditure: this.expenditure,
       revenue: this.revenue,
       type: this.type,
-      category: {
-        icon: "",
-        name: "",
-        color: "",
-      },
+      category: this.category,
     }
     this.service.addEvent(data);
     this.reset();
