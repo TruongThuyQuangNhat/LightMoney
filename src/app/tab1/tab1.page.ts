@@ -9,6 +9,7 @@ import { Category, listCategory } from '../model/category';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  titlePage: string = "Thêm giao dịch";
   date: string = new Date().toISOString();
   localID: string = 'vi-VN';
   title: string = "";

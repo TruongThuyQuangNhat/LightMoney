@@ -17,9 +17,22 @@
   >
   </calendar>
 </ion-header>
+<div style="height: 30px; display: flex; justify-content: space-around; margin-top: 15px;">
+  <span class="cur-revenue">
+    Thu: {{totalRevenue | currency:currency}} 
+  </span>
+  <span class="cur-expenditure">
+    Chi: {{totalExpenditure | currency:currency}} 
+  </span>
+  <span
+    class="{{totalRevenue - totalExpenditure >= 0 ? 'cur-revenue' : 'cur-expenditure'}}"
+  >
+    Còn lại: {{totalRevenue - totalExpenditure | currency:currency}}
+  </span>
+</div>
 
 <ion-content>
-  <div style="height: 20px;"></div>
+  
   <ion-list>
     <ng-container *ngFor="let item of eventOfDate">
       <ion-item-sliding>

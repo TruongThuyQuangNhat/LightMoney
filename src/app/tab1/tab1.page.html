@@ -14,7 +14,7 @@
 <ion-content>
   <ion-list>
     <ion-list-header>
-      <ion-label>Thêm mới {{type}}</ion-label>
+      <ion-label>{{titlePage}}</ion-label>
     </ion-list-header>
     <ion-item>
       <ion-label>Ngày</ion-label>
@@ -65,6 +65,10 @@
         </ng-container>
       </ion-list>
     </div>
-    <ion-button (click)="action()">Thêm</ion-button>
   </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="action()">Thêm</ion-button>
+  </ion-toolbar>
+</ion-footer>

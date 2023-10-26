@@ -21,6 +21,8 @@ export class Tab2Page implements OnInit, OnDestroy {
     mode: 'month' as CalendarMode,
     currentDate: new Date(),
   };
+  totalExpenditure: number = 0;
+  totalRevenue: number = 0;
   destroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -79,6 +81,12 @@ export class Tab2Page implements OnInit, OnDestroy {
         moment(ev.selectedTime).format('YYYY-MM-DD')
       );
     });
+    this.totalExpenditure = this.eventOfDate.reduce((acc: number, curr: any) => {
+      return acc + curr.expenditure;
+    }, 0);
+    this.totalRevenue = this.eventOfDate.reduce((acc: number, curr: any) => {
+      return acc + curr.revenue;
+    }, 0);
   }
 
   onCurrentDateChanged(event: Date) {
