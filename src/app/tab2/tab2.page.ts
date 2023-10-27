@@ -3,6 +3,7 @@ import { CalendarComponent, CalendarMode } from 'ionic2-calendar';
 import * as moment from 'moment';
 import { CalendarService } from '../service/calendar.service';
 import { Subject, takeUntil } from 'rxjs';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'app-tab2',
@@ -123,6 +124,7 @@ export class Tab2Page implements OnInit, OnDestroy {
       );
       
       events.push({
+        id: uuid.v4(),
         title: 'All Day - ' + i,
         startTime: startTime,
         endTime: endTime,
@@ -137,6 +139,7 @@ export class Tab2Page implements OnInit, OnDestroy {
         }
       });
       events.push({
+        id: uuid.v4(),
         title: 'All Day - ' + i,
         startTime: startTime,
         endTime: endTime,

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CalendarService } from '../service/calendar.service';
 import { Event } from '../model/event';
 import { Category, listCategory } from '../model/category';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'app-tab1',
@@ -45,6 +46,7 @@ export class Tab1Page {
       )
     );
     const data: Event = {
+      id: uuid.v4(),
       title: this.title,
       startTime,
       endTime,
