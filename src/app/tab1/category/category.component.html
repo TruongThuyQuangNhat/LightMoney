@@ -1,0 +1,38 @@
+<ion-header mode="ios">
+  <ion-toolbar mode="ios">
+    <ion-buttons (click)="back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-segment [value]="type" (ionChange)="changeSegment($event)">
+      <ion-segment-button value="revenue">
+        <ion-label>Tiền Thu</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="expenditure">
+        <ion-label>Tiền Chi</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar animated="true" placeholder="search"></ion-searchbar>
+  <ion-list>
+    <ng-container *ngFor="let item of listCategory">
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-icon [src]="item.icon" 
+          [style]="'color: ' + item.color + '; font-size: 36px; margin: auto;'" 
+          aria-hidden="true"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h3>{{item.name}}</h3>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="addCate()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

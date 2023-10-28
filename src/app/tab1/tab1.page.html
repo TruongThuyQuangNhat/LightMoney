@@ -1,6 +1,6 @@
-<ion-header>
+<ion-header mode="ios">
   <ion-toolbar>
-    <ion-segment [value]="type" (ionChange)="changeSegment($event)">
+    <ion-segment mode="ios" [value]="type" (ionChange)="changeSegment($event)">
       <ion-segment-button value="revenue">
         <ion-label>Tiền Thu</ion-label>
       </ion-segment-button>
@@ -11,8 +11,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
+<ion-content mode="ios">
+  <ion-list mode="ios">
     <ion-list-header>
       <ion-label>{{titlePage}}</ion-label>
     </ion-list-header>
@@ -42,7 +42,10 @@
     <div class="div-category">
       <ion-list>
         <ion-list-header>
-          <ion-label>Chọn danh mục</ion-label>
+            <ion-label>Chọn danh mục</ion-label>
+            <ion-button (click)="editCate()">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
         </ion-list-header>
         <ng-container *ngFor="let item of listCategory">
           <div class="parent-cate">
@@ -67,8 +70,8 @@
     </div>
   </ion-list>
 </ion-content>
-<ion-footer>
-  <ion-toolbar>
+<ion-footer mode="ios">
+  <ion-toolbar mode="ios">
     <ion-button expand="block" (click)="action()">Thêm</ion-button>
   </ion-toolbar>
 </ion-footer>

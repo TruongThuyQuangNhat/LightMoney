@@ -12,6 +12,17 @@ ion-card.card-category {
     margin: 0px;
     
     &.clicked {
-        --background: #E7E7E7;
+        --background: #ECEFF8;
     }
+}
+
+ion-card-content {
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

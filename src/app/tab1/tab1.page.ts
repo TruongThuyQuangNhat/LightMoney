@@ -3,6 +3,8 @@ import { CalendarService } from '../service/calendar.service';
 import { Event } from '../model/event';
 import { Category, listCategory } from '../model/category';
 import * as uuid from 'uuid';
+import { ModalController } from '@ionic/angular';
+import { CategoryComponent } from './category/category.component';
 
 @Component({
   selector: 'app-tab1',
@@ -17,15 +19,17 @@ export class Tab1Page {
   revenue: number = 0;
   expenditure: number = 0;
   type: "revenue" | "expenditure" = "revenue";
-  listCategory: Category[] = listCategory;
+  listCategory: Category[] = listCategory.filter((item) => item.type === this.type);
   category: Category = this.listCategory[0];
   constructor(
     private service: CalendarService,
+    private modalCtrl: ModalController
   ) {}
 
   changeSegment(data: any) {
     if(data?.detail?.value){
       this.type = data.detail.value;
+      this.listCategory = listCategory.filter((item) => item.type === this.type);
     }
   }
 
@@ -70,5 +74,17 @@ export class Tab1Page {
     this.revenue = 0;
     this.expenditure = 0;
 
+  }
+
+  async editCate(){
+    const modal = await this.modalCtrl.create({
+      component: CategoryComponent,
+      componentProps: {
+        type: this.type
+      }
+    });
+
+    modal.onDidDismiss().then((data) => {});
+    await modal.present();
   }
 }
