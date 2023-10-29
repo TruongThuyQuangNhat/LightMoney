@@ -6,7 +6,48 @@
       <ion-title>Thêm mới danh mục</ion-title>
     </ion-toolbar>
 </ion-header>
-<ion-content mode="ios"></ion-content>
+<ion-content mode="ios">
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Tên danh mục</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-input [(ngModel)]="name"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Chọn icon</ion-label>
+      <ion-button (click)="filterCate('outline')">Outline</ion-button>
+      <ion-button (click)="filterCate()">Filled</ion-button>
+      <ion-button (click)="filterCate('sharp')">Sharp</ion-button>
+    </ion-list-header>
+    <div style="height: 250px; overflow: scroll;">
+      <ng-container *ngFor="let item of categoryName">
+        <ion-icon 
+          [src]="'assets/icon-category/'+item" 
+          [style]="'font-size: 50px; margin: 12px 6px 0px 6px;'" 
+          aria-hidden="true"
+        ></ion-icon>
+      </ng-container>
+    </div>
+  </ion-list>
+  
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Chọn màu</ion-label>
+    </ion-list-header>
+    <div style="height: 250px; overflow: scroll;">
+      <ng-container *ngFor="let item of colorArray">
+        <div
+          [style]="'background-color: '+item+'; height: 50px; width: 50px; display: inline-block; margin: 12px 6px 0px 6px; border-radius: 50%; border: 1px solid #000;'"
+        ></div>
+      </ng-container>
+    </div>
+  </ion-list>
+  
+</ion-content>
 <ion-footer mode="ios">
   <ion-toolbar>
     <ion-button class="footer">Hủy</ion-button>
