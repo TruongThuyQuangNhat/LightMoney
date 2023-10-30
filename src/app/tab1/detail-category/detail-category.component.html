@@ -24,10 +24,10 @@
       <ion-button (click)="filterCate('sharp')">Sharp</ion-button>
     </ion-list-header>
     <div style="height: 250px; overflow: scroll;">
-      <ng-container *ngFor="let item of categoryName">
+      <ng-container *ngFor="let item of categoryName; index as i">
         <ng-container *ngIf="icon === item">
           <ion-icon 
-            (click)="chooseIcon(item)"
+            (click)="chooseIcon(item, i)"
             [name]="item" 
             [style]="'font-size: 50px; margin: 12px 6px 0px 6px;'" 
             aria-hidden="true"
@@ -37,7 +37,7 @@
 
         <ng-container *ngIf="icon !== item">
           <ion-icon 
-            (click)="chooseIcon(item)"
+            (click)="chooseIcon(item, i)"
             [name]="item" 
             [style]="'font-size: 50px; margin: 12px 6px 0px 6px;'" 
             aria-hidden="true"
@@ -52,10 +52,10 @@
       <ion-label>Chọn màu</ion-label>
     </ion-list-header>
     <div style="height: 250px; overflow: scroll;">
-      <ng-container *ngFor="let item of colorArray">
+      <ng-container *ngFor="let item of colorArray; index as i">
         <div 
           *ngIf="color === item"
-          (click)="chooseColor(item)"
+          (click)="chooseColor(item, i)"
           [style]="
             'background-color: '+item+'; '+
             'height: 50px; '+
@@ -63,12 +63,13 @@
             'display: inline-block; '+
             'margin: 12px 6px 0px 6px; '+
             'border-radius: 50%; '+
-            'border: 3px solid #3880FF;'
+            'border: 5px solid #b3b3b3;'+
+            'border-style: outset;'
           ">
         </div>
         <div 
           *ngIf="color !== item"
-          (click)="chooseColor(item)"
+          (click)="chooseColor(item, i)"
           [style]="
             'background-color: '+item+'; '+
             'height: 50px; '+

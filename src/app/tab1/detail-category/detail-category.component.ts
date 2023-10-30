@@ -11,6 +11,8 @@ export class DetailCategoryComponent  implements OnInit {
   categoryName: string[] = [];
   colorArray: string[] = colorArray;
   name: string = '';
+  indexIcon: number = 0;
+  indexColor: number = 0;
   color: string = colorArray[0];
   icon: string = '';
   constructor(
@@ -19,7 +21,7 @@ export class DetailCategoryComponent  implements OnInit {
 
   ngOnInit() {
     this.categoryName = categoryName.filter((item) => item.includes('outline'));
-    this.icon = this.categoryName[0];
+    this.icon = this.categoryName[this.indexIcon];
   }
 
   filterCate(data?: string){
@@ -28,20 +30,22 @@ export class DetailCategoryComponent  implements OnInit {
     }else{
       this.categoryName = categoryName.filter((item) => !(item.includes('outline') || item.includes('sharp')));
     }
-    this.icon = this.categoryName[0];
+    this.icon = this.categoryName[this.indexIcon];
   }
 
   back(){
     this.modalCtrl.dismiss();
   }
 
-  chooseIcon(icon: string){
+  chooseIcon(icon: string, index: number){
+    this.indexIcon = index;
     this.icon = icon;
     const data = this.categoryName.find((item) => item === icon);
     console.log(data);
   }
 
-  chooseColor(color: string){
+  chooseColor(color: string, index: number){
+    this.indexColor = index;
     this.color = color;
     console.log(color);
   }
