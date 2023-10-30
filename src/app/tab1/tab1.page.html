@@ -51,7 +51,7 @@
           <div class="parent-cate">
             <ion-card [ngClass]="{'clicked': category.name == item.name}" class="card-category" (click)="chooseCate(item)">
               <ion-card-header>
-                <ion-icon [src]="item.icon" 
+                <ion-icon [name]="item.icon" 
                   aria-hidden="true" [style]="
                     'color: '+ item.color +';'+
                     'font-size: 30px;'+

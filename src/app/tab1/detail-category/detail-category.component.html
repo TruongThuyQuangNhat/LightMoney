@@ -25,11 +25,24 @@
     </ion-list-header>
     <div style="height: 250px; overflow: scroll;">
       <ng-container *ngFor="let item of categoryName">
-        <ion-icon 
-          [src]="'assets/icon-category/'+item" 
-          [style]="'font-size: 50px; margin: 12px 6px 0px 6px;'" 
-          aria-hidden="true"
-        ></ion-icon>
+        <ng-container *ngIf="icon === item">
+          <ion-icon 
+            (click)="chooseIcon(item)"
+            [name]="item" 
+            [style]="'font-size: 50px; margin: 12px 6px 0px 6px;'" 
+            aria-hidden="true"
+            [ngStyle]="{'color': color,}"
+          ></ion-icon>
+        </ng-container>
+
+        <ng-container *ngIf="icon !== item">
+          <ion-icon 
+            (click)="chooseIcon(item)"
+            [name]="item" 
+            [style]="'font-size: 50px; margin: 12px 6px 0px 6px;'" 
+            aria-hidden="true"
+          ></ion-icon>
+        </ng-container>
       </ng-container>
     </div>
   </ion-list>
@@ -40,9 +53,32 @@
     </ion-list-header>
     <div style="height: 250px; overflow: scroll;">
       <ng-container *ngFor="let item of colorArray">
-        <div
-          [style]="'background-color: '+item+'; height: 50px; width: 50px; display: inline-block; margin: 12px 6px 0px 6px; border-radius: 50%; border: 1px solid #000;'"
-        ></div>
+        <div 
+          *ngIf="color === item"
+          (click)="chooseColor(item)"
+          [style]="
+            'background-color: '+item+'; '+
+            'height: 50px; '+
+            'width: 50px; '+
+            'display: inline-block; '+
+            'margin: 12px 6px 0px 6px; '+
+            'border-radius: 50%; '+
+            'border: 3px solid #3880FF;'
+          ">
+        </div>
+        <div 
+          *ngIf="color !== item"
+          (click)="chooseColor(item)"
+          [style]="
+            'background-color: '+item+'; '+
+            'height: 50px; '+
+            'width: 50px; '+
+            'display: inline-block; '+
+            'margin: 12px 6px 0px 6px; '+
+            'border-radius: 50%; '+
+            'border: 1px solid #000;'
+          ">
+        </div>
       </ng-container>
     </div>
   </ion-list>
