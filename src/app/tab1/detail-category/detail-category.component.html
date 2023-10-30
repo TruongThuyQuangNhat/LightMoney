@@ -23,7 +23,7 @@
       <ion-button (click)="filterCate()">Filled</ion-button>
       <ion-button (click)="filterCate('sharp')">Sharp</ion-button>
     </ion-list-header>
-    <div style="height: 250px; overflow: scroll;">
+    <div #scrollIcon (scroll)="onScroll($event)" style="height: 250px; overflow: scroll;">
       <ng-container *ngFor="let item of categoryName; index as i">
         <ng-container *ngIf="icon === item">
           <ion-icon 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { categoryName, colorArray } from 'src/app/model/category';
 
@@ -7,7 +7,7 @@ import { categoryName, colorArray } from 'src/app/model/category';
   templateUrl: './detail-category.component.html',
   styleUrls: ['./detail-category.component.scss'],
 })
-export class DetailCategoryComponent  implements OnInit {
+export class DetailCategoryComponent  implements OnInit, AfterViewInit {
   categoryName: string[] = [];
   colorArray: string[] = colorArray;
   name: string = '';
@@ -15,9 +15,29 @@ export class DetailCategoryComponent  implements OnInit {
   indexColor: number = 0;
   color: string = colorArray[0];
   icon: string = '';
+
+  @ViewChild('scrollIcon') scrollIcon!: ElementRef;
+  private savedScrollPosition: { top: number, left: number, behavior: string };
+
   constructor(
     private modalCtrl: ModalController,
-  ) { }
+  ) { 
+    this.savedScrollPosition = { top: 0, left: 0, behavior: 'smooth' };
+  }
+
+  ngAfterViewInit(): void {
+    this.scrollIcon.nativeElement.scrollTo(this.savedScrollPosition);
+  }
+
+
+
+  @HostListener('scroll', ['$event']) 
+  onScroll(event: any) {
+    const tartget = event.target as HTMLElement;
+    if(tartget.scrollTop !== 0){
+      this.savedScrollPosition  = { top: tartget.scrollTop, left: tartget.scrollLeft, behavior: 'smooth' };
+    }
+  }
 
   ngOnInit() {
     this.categoryName = categoryName.filter((item) => item.includes('outline'));
@@ -30,7 +50,10 @@ export class DetailCategoryComponent  implements OnInit {
     }else{
       this.categoryName = categoryName.filter((item) => !(item.includes('outline') || item.includes('sharp')));
     }
-    this.icon = this.categoryName[this.indexIcon];
+    setTimeout(() => {
+      this.icon = this.categoryName[this.indexIcon];
+      this.scrollIcon.nativeElement.scrollTo(this.savedScrollPosition);
+    }, 100);
   }
 
   back(){
