@@ -8,52 +8,199 @@ export interface Category {
 
 export const listCategory: Category[] = [
     {
-        icon: "add",
-        name: "Xăng xe",
-        color: "#F44336",
-        type: "expenditure",
-        isDefault: true
-    },
-    {
-        icon: "albums",
-        name: "Cơm",
-        color: "#E91E63",
-        type: "expenditure",
-        isDefault: true
-    },
-    {
-        icon: "apps",
-        name: "quang nhat",
-        color: "#9C27B0",
+        icon: "cash-outline",
+        name: "Lương",
+        color: "#CC0000",
         type: "revenue",
         isDefault: true
     },
     {
-        icon: "archive",
-        name: "archive Trương THiyuj",
+        icon: "cafe-outline",
+        name: "Cà phê",
+        color: "#550000",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "fast-food-outline",
+        name: "Ăn vặt",
+        color: "#FF6666",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "wallet-outline",
+        name: "Thu nhập khác",
+        color: "#33FF99",
+        type: "revenue",
+        isDefault: true
+    },
+    {
+        icon: "flame-outline",
+        name: "Nhiên liệu",
+        color: "#339999",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "cart-outline",
+        name: "Siêu thị",
+        color: "#CC3300",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "gift-outline",
+        name: "Tiền thưởng",
+        color: "#33CCFF",
+        type: "revenue",
+        isDefault: true
+    },
+    {
+        icon: "extension-puzzle-outline",
+        name: "Tiền phụ cấp",
+        color: "#66CC66",
+        type: "revenue",
+        isDefault: true
+    },
+    {
+        icon: "trending-up-outline",
+        name: "Đầu tư",
+        color: "#3399FF",
+        type: "revenue",
+        isDefault: true
+    },
+    {
+        icon: "people-outline",
+        name: "Đám cưới, sinh nhật",
+        color: "#CC0066",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "medkit-outline",
+        name: "Y tế",
+        color: "#CC0000",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "paw-outline",
+        name: "Thú cưng",
+        color: "#CC99FF",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "phone-portrait-outline",
+        name: "Điện thoại",
+        color: "#000077",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "bus-outline",
+        name: "Phương tiện di chuyển",
         color: "#673AB7",
-        type: "revenue",
-        isDefault: true
-    },
-    {
-        icon: "at",
-        name: "at",
-        color: "#3F51B5",
-        type: "revenue",
-        isDefault: true
-    },
-    {
-        icon: "ban",
-        name: "ban",
-        color: "#2196F3",
         type: "expenditure",
         isDefault: true
     },
     {
-        icon: "barcode",
-        name: "barcode",
-        color: "#03A9F4",
-        type: "revenue",
+        icon: "construct-outline",
+        name: "Thiết bị, dụng cụ",
+        color: "#FF6600",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "restaurant-outline",
+        name: "Ăn uống",
+        color: "#00BB00",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "shapes-outline",
+        name: "Đồ linh tinh",
+        color: "#330099",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "water-outline",
+        name: "Tiền nước",
+        color: "#0000EE",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "wifi-outline",
+        name: "Tiền internet",
+        color: "#00CC33",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "flash-outline",
+        name: "Tiền điện",
+        color: "#FFFF66",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "shirt-outline",
+        name: "Quần áo, giày dép",
+        color: "#999999",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "home-outline",
+        name: "Tiền nhà",
+        color: "#777777",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "barbell-outline",
+        name: "Thể thao",
+        color: "#DD0000",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "car-outline",
+        name: "Tiền xe",
+        color: "#666666",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "school-outline",
+        name: "Học phí",
+        color: "#6633CC",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "trash-outline",
+        name: "Tiền rác",
+        color: "#000099",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "beer-outline",
+        name: "Tiệc tùng, nhậu nhẹt",
+        color: "#FFCC00",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "color-wand-outline",
+        name: "Mỹ phẩm, làm đẹp",
+        color: "#CC99FF",
+        type: "expenditure",
         isDefault: true
     },
 ]
@@ -1311,7 +1458,7 @@ export const categoryName: string[] = [
 
 export const colorArray = [
     "#000000", "#800000", "#FF0000", "#FFFF00", "#008000", "#000080", "#800080", "#FF00FF", "#808080", "#C0C0C0",
-    "#FFA500", "#008080", "#00FFFF", "#0000FF", "#FF69B4", "#FF1493", "#FFC0CB", "#FFB6C1", "#FFA07A", "#FF7F50",
+    "#FFA500", "#008080", "#00a3a3", "#0000FF", "#FF69B4", "#FF1493", "#FFC0CB", "#FFB6C1", "#FFA07A", "#FF7F50",
     "#FF6347", "#DC143C", "#FF4500", "#FF8C00", "#CD5C5C", "#F08080", "#FA8072", "#E9967A", "#FFD700", "#FFFFE0",
     "#FFFACD", "#FAFAD2", "#FFEFD5", "#FFE4B5", "#FFDAB9", "#EEE8AA", "#F0E68C", "#BDB76B", "#ADFF2F", "#7FFF00",
     "#7CFC00", "#32CD32", "#98FB98", "#90EE90", "#00FA9A", "#00FF7F", "#3CB371", "#2E8B57", "#808000", "#556B2F",
