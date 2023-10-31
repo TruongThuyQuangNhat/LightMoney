@@ -3,6 +3,7 @@ export interface Category {
     name: string;
     color: string;
     type: "expenditure" | "revenue";
+    isDefault: boolean;
 }
 
 export const listCategory: Category[] = [
@@ -10,43 +11,50 @@ export const listCategory: Category[] = [
         icon: "add",
         name: "Xăng xe",
         color: "#F44336",
-        type: "expenditure"
+        type: "expenditure",
+        isDefault: true
     },
     {
         icon: "albums",
         name: "Cơm",
         color: "#E91E63",
-        type: "expenditure"
+        type: "expenditure",
+        isDefault: true
     },
     {
         icon: "apps",
         name: "quang nhat",
         color: "#9C27B0",
-        type: "revenue"
+        type: "revenue",
+        isDefault: true
     },
     {
         icon: "archive",
         name: "archive Trương THiyuj",
         color: "#673AB7",
-        type: "revenue"
+        type: "revenue",
+        isDefault: true
     },
     {
         icon: "at",
         name: "at",
         color: "#3F51B5",
-        type: "revenue"
+        type: "revenue",
+        isDefault: true
     },
     {
         icon: "ban",
         name: "ban",
         color: "#2196F3",
-        type: "expenditure"
+        type: "expenditure",
+        isDefault: true
     },
     {
         icon: "barcode",
         name: "barcode",
         color: "#03A9F4",
-        type: "revenue"
+        type: "revenue",
+        isDefault: true
     },
 ]
 
@@ -774,96 +782,6 @@ export const categoryName: string[] = [
     'log-out-outline',
     'log-out-sharp',
     'log-out',
-    'logo-alipay',
-    'logo-amazon',
-    'logo-amplify',
-    'logo-android',
-    'logo-angular',
-    'logo-apple-appstore',
-    'logo-apple-ar',
-    'logo-apple',
-    'logo-behance',
-    'logo-bitbucket',
-    'logo-bitcoin',
-    'logo-buffer',
-    'logo-capacitor',
-    'logo-chrome',
-    'logo-closed-captioning',
-    'logo-codepen',
-    'logo-css3',
-    'logo-designernews',
-    'logo-deviantart',
-    'logo-discord',
-    'logo-docker',
-    'logo-dribbble',
-    'logo-dropbox',
-    'logo-edge',
-    'logo-electron',
-    'logo-euro',
-    'logo-facebook',
-    'logo-figma',
-    'logo-firebase',
-    'logo-firefox',
-    'logo-flickr',
-    'logo-foursquare',
-    'logo-github',
-    'logo-gitlab',
-    'logo-google-playstore',
-    'logo-google',
-    'logo-hackernews',
-    'logo-html5',
-    'logo-instagram',
-    'logo-ionic',
-    'logo-ionitron',
-    'logo-javascript',
-    'logo-laravel',
-    'logo-linkedin',
-    'logo-markdown',
-    'logo-mastodon',
-    'logo-medium',
-    'logo-microsoft',
-    'logo-no-smoking',
-    'logo-nodejs',
-    'logo-npm',
-    'logo-octocat',
-    'logo-paypal',
-    'logo-pinterest',
-    'logo-playstation',
-    'logo-pwa',
-    'logo-python',
-    'logo-react',
-    'logo-reddit',
-    'logo-rss',
-    'logo-sass',
-    'logo-skype',
-    'logo-slack',
-    'logo-snapchat',
-    'logo-soundcloud',
-    'logo-stackoverflow',
-    'logo-steam',
-    'logo-stencil',
-    'logo-tableau',
-    'logo-tiktok',
-    'logo-tumblr',
-    'logo-tux',
-    'logo-twitch',
-    'logo-twitter',
-    'logo-usd',
-    'logo-venmo',
-    'logo-vercel',
-    'logo-vimeo',
-    'logo-vk',
-    'logo-vue',
-    'logo-web-component',
-    'logo-wechat',
-    'logo-whatsapp',
-    'logo-windows',
-    'logo-wordpress',
-    'logo-xbox',
-    'logo-xing',
-    'logo-yahoo',
-    'logo-yen',
-    'logo-youtube',
     'magnet-outline',
     'magnet-sharp',
     'magnet',

@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { categoryName, colorArray } from 'src/app/model/category';
+import { Category, categoryName, colorArray } from 'src/app/model/category';
+import { CategoryService } from 'src/app/service/category.service';
 
 @Component({
   selector: 'app-detail-category',
@@ -8,6 +9,7 @@ import { categoryName, colorArray } from 'src/app/model/category';
   styleUrls: ['./detail-category.component.scss'],
 })
 export class DetailCategoryComponent  implements OnInit, AfterViewInit {
+  @Input() type: "revenue" | "expenditure" = "revenue";
   categoryName: string[] = [];
   colorArray: string[] = colorArray;
   name: string = '';
@@ -15,27 +17,42 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
   indexColor: number = 0;
   color: string = colorArray[0];
   icon: string = '';
+  topIconScroll: number = 0;
+  topIconColor: number = 0;
 
   @ViewChild('scrollIcon') scrollIcon!: ElementRef;
-  private savedScrollPosition: { top: number, left: number, behavior: string };
+  @ViewChild('scrollColor') scrollColor!: ElementRef;
+  private savedScrollIcon: { top: number, left: number, behavior: string };
+  private savedScrollColor: { top: number, left: number, behavior: string };
 
   constructor(
     private modalCtrl: ModalController,
+    private service: CategoryService
   ) { 
-    this.savedScrollPosition = { top: 0, left: 0, behavior: 'smooth' };
+    this.savedScrollIcon = { top: 0, left: 0, behavior: 'smooth' };
+    this.savedScrollColor = { top: 0, left: 0, behavior: 'smooth' };
   }
 
   ngAfterViewInit(): void {
-    this.scrollIcon.nativeElement.scrollTo(this.savedScrollPosition);
+    this.scrollIcon.nativeElement.scrollTo(this.savedScrollIcon);
+    this.scrollColor.nativeElement.scrollTo(this.savedScrollColor);
   }
 
 
 
   @HostListener('scroll', ['$event']) 
-  onScroll(event: any) {
+  onScrollIcon(event: any) {
     const tartget = event.target as HTMLElement;
     if(tartget.scrollTop !== 0){
-      this.savedScrollPosition  = { top: tartget.scrollTop, left: tartget.scrollLeft, behavior: 'smooth' };
+      this.savedScrollIcon  = { top: tartget.scrollTop, left: tartget.scrollLeft, behavior: 'smooth' };
+    }
+  }
+
+  @HostListener('scroll', ['$event']) 
+  onScrollColor(event: any) {
+    const tartget = event.target as HTMLElement;
+    if(tartget.scrollTop !== 0){
+      this.savedScrollColor  = { top: tartget.scrollTop, left: tartget.scrollLeft, behavior: 'smooth' };
     }
   }
 
@@ -52,7 +69,7 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
     }
     setTimeout(() => {
       this.icon = this.categoryName[this.indexIcon];
-      this.scrollIcon.nativeElement.scrollTo(this.savedScrollPosition);
+      this.scrollIcon.nativeElement.scrollTo(this.savedScrollIcon);
     }, 100);
   }
 
@@ -61,15 +78,26 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
   }
 
   chooseIcon(icon: string, index: number){
+    this.topIconScroll = this.savedScrollIcon.top;
     this.indexIcon = index;
     this.icon = icon;
-    const data = this.categoryName.find((item) => item === icon);
-    console.log(data);
   }
 
   chooseColor(color: string, index: number){
+    this.topIconColor = this.savedScrollColor.top;
     this.indexColor = index;
     this.color = color;
-    console.log(color);
+  }
+
+  save(){
+    const data: Category = {
+      name: this.name,
+      icon: this.icon,
+      color: this.color,
+      type: this.type,
+      isDefault: false
+    };
+    this.service.addCategory(data);
+    this.modalCtrl.dismiss();
   }
 }
