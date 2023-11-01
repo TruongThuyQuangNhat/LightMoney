@@ -24,14 +24,14 @@ export const listCategory: Category[] = [
     {
         icon: "fast-food-outline",
         name: "Ăn vặt",
-        color: "#FF6666",
+        color: "#f96161",
         type: "expenditure",
         isDefault: true
     },
     {
         icon: "wallet-outline",
         name: "Thu nhập khác",
-        color: "#33FF99",
+        color: "#5085a5",
         type: "revenue",
         isDefault: true
     },
@@ -87,7 +87,7 @@ export const listCategory: Category[] = [
     {
         icon: "paw-outline",
         name: "Thú cưng",
-        color: "#CC99FF",
+        color: "#6fcb9f",
         type: "expenditure",
         isDefault: true
     },
@@ -143,21 +143,28 @@ export const listCategory: Category[] = [
     {
         icon: "flash-outline",
         name: "Tiền điện",
-        color: "#FFFF66",
+        color: "#f68c06",
         type: "expenditure",
         isDefault: true
     },
     {
         icon: "shirt-outline",
-        name: "Quần áo, giày dép",
-        color: "#999999",
+        name: "Quần áo",
+        color: "#325da7",
+        type: "expenditure",
+        isDefault: true
+    },
+    {
+        icon: "footsteps-outline",
+        name: "Giày dép",
+        color: "#444444",
         type: "expenditure",
         isDefault: true
     },
     {
         icon: "home-outline",
         name: "Tiền nhà",
-        color: "#777777",
+        color: "#5085a5",
         type: "expenditure",
         isDefault: true
     },
