@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Category, categoryName, colorArray } from 'src/app/model/category';
 import { CategoryService } from 'src/app/service/category.service';
@@ -8,8 +8,9 @@ import { CategoryService } from 'src/app/service/category.service';
   templateUrl: './detail-category.component.html',
   styleUrls: ['./detail-category.component.scss'],
 })
-export class DetailCategoryComponent  implements OnInit, AfterViewInit {
+export class DetailCategoryComponent  implements OnInit, OnChanges {
   @Input() type: "revenue" | "expenditure" = "revenue";
+  @Input() data: Category | undefined;
   categoryName: string[] = [];
   colorArray: string[] = colorArray;
   name: string = '';
@@ -33,12 +34,17 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
     this.savedScrollColor = { top: 0, left: 0, behavior: 'smooth' };
   }
 
-  ngAfterViewInit(): void {
-    this.scrollIcon.nativeElement.scrollTo(this.savedScrollIcon);
-    this.scrollColor.nativeElement.scrollTo(this.savedScrollColor);
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.data){
+      this.name = this.data.name;
+      this.icon = this.data.icon;
+      this.color = this.data.color;
+      this.indexIcon = this.categoryName.findIndex((item) => item === this.icon);
+      this.indexColor = this.colorArray.findIndex((item) => item === this.color);
+      this.savedScrollIcon.top = this.data.topIcon || 0;
+      this.scrollIcon.nativeElement.scrollTo(this.savedScrollIcon);
+    }
   }
-
-
 
   @HostListener('scroll', ['$event']) 
   onScrollIcon(event: any) {
@@ -57,8 +63,22 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.categoryName = categoryName.filter((item) => item.includes('outline'));
-    this.icon = this.categoryName[this.indexIcon];
+    if(this.data){
+      this.name = this.data.name;
+      this.icon = this.data.icon;
+      this.color = this.data.color;
+      this.categoryName = categoryName.filter((item) => item.includes(this.data?.typeIcon || 'outline'));
+      this.indexIcon = this.categoryName.findIndex((item) => item === this.icon);
+      this.indexColor = this.colorArray.findIndex((item) => item === this.color);
+      this.savedScrollIcon.top = this.data.topIcon || 0;
+
+      setTimeout(() => {
+        this.scrollIcon.nativeElement.scrollTo(this.savedScrollIcon);
+      }, 100);
+    } else {
+      this.categoryName = categoryName.filter((item) => item.includes('outline'));
+      this.icon = this.categoryName[this.indexIcon];
+    }
   }
 
   filterCate(data?: string){

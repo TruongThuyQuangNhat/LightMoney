@@ -19,7 +19,7 @@
   <ion-list>
     <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
       <ng-container *ngFor="let item of listCategory">
-        <ion-item>
+        <ion-item (click)="openDetail(item)">
           <ion-avatar slot="start">
             <ion-icon [name]="item.icon" 
             [style]="'color: ' + item.color + '; font-size: 36px; margin: auto;'" 

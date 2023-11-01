@@ -64,4 +64,16 @@ export class CategoryComponent  implements OnInit, OnDestroy {
     // by the reorder group
     ev.detail.complete();
   }
+
+  async openDetail(data: Category){
+    const modal = await this.modalCtrl.create({
+      component: DetailCategoryComponent,
+      componentProps: {
+        type: this.type,
+        data
+      }
+    });
+    modal.onDidDismiss().then((data) => {});
+    await modal.present();
+  }
 }

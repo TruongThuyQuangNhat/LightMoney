@@ -7,6 +7,7 @@ export interface Category {
     topIcon?: number;
     topColor?: number;
     index?: number;
+    typeIcon?: string;
 }
 
 export const listCategory: Category[] = [
@@ -16,22 +17,29 @@ export const listCategory: Category[] = [
         color: "#009900",
         type: "revenue",
         isDefault: true,
-        topIcon: 883,
-        index: 0
+        topIcon: 835,
+        index: 0,
+        typeIcon: "outline",
     },
     {
         icon: "cafe-outline",
         name: "Cà phê",
         color: "#996600",
         type: "expenditure",
-        isDefault: true
+        topIcon: 632,
+        isDefault: true,
+        index: 0,
+        typeIcon: "outline",
     },
     {
         icon: "fast-food-outline",
         name: "Ăn vặt",
         color: "#ff3300",
         type: "expenditure",
-        isDefault: true
+        topIcon: 1693,
+        isDefault: true,
+        index: 1,
+        typeIcon: "outline",
     },
     {
         icon: "wallet-outline",
@@ -40,6 +48,7 @@ export const listCategory: Category[] = [
         type: "revenue",
         isDefault: true,
         topIcon: 4370,
+        typeIcon: "outline",
         index: 1
     },
     {
@@ -47,14 +56,20 @@ export const listCategory: Category[] = [
         name: "Nhiên liệu",
         color: "#9966ff",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 2,
+        typeIcon: "outline",
+        topIcon: 1823
     },
     {
         icon: "cart-outline",
         name: "Siêu thị",
         color: "#ff6600",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 3,
+        typeIcon: "outline",
+        topIcon: 841,
     },
     {
         icon: "gift-outline",
@@ -63,6 +78,7 @@ export const listCategory: Category[] = [
         type: "revenue",
         isDefault: true,
         topIcon: 1955,
+        typeIcon: "outline",
         index: 2,
     },
     {
@@ -72,6 +88,7 @@ export const listCategory: Category[] = [
         type: "revenue",
         isDefault: true,
         topIcon: 1629,
+        typeIcon: "outline",
         index: 3
     },
     {
@@ -81,6 +98,7 @@ export const listCategory: Category[] = [
         type: "revenue",
         isDefault: true,
         topIcon: 4207,
+        typeIcon: "outline",
         index: 4
     },
     {
@@ -88,140 +106,200 @@ export const listCategory: Category[] = [
         name: "Đám cưới, sinh nhật",
         color: "#ff66cc",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 4,
+        typeIcon: "outline",
+        topIcon: 2947,
     },
     {
         icon: "medkit-outline",
         name: "Y tế",
         color: "#ff0000",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 5,
+        typeIcon: "outline",
+        topIcon: 180,
     },
     {
         icon: "paw-outline",
         name: "Thú cưng",
         color: "#999966",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 6,
+        typeIcon: "outline",
+        topIcon: 2948,
     },
     {
         icon: "phone-portrait-outline",
         name: "Điện thoại",
         color: "#666699",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 7,
+        typeIcon: "outline",
+        topIcon: 3010,
     },
     {
         icon: "bus-outline",
         name: "Phương tiện di chuyển",
         color: "#0066cc",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 8,
+        typeIcon: "outline",
+        topIcon: 576,
     },
     {
         icon: "construct-outline",
         name: "Dụng cụ",
         color: "#666633",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 9,
+        typeIcon: "outline",
+        topIcon: 1297,
     },
     {
         icon: "restaurant-outline",
         name: "Ăn uống",
         color: "#cc3399",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 10,
+        typeIcon: "outline",
+        topIcon: 3482,
     },
     {
         icon: "shapes-outline",
         name: "Đồ linh tinh",
         color: "#336699",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 11,
+        typeIcon: "outline",
+        topIcon: 3746,
     },
     {
         icon: "water-outline",
         name: "Tiền nước",
         color: "#0099ff",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 12,
+        typeIcon: "outline",
+        topIcon: 4369,
     },
     {
         icon: "wifi-outline",
         name: "Tiền internet",
         color: "#00ff00",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 13,
+        typeIcon: "outline",
+        topIcon: 4369,
     },
     {
         icon: "flash-outline",
         name: "Tiền điện",
         color: "#ffcc00",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 14,
+        typeIcon: "outline",
+        topIcon: 1823,
     },
     {
         icon: "shirt-outline",
         name: "Quần áo",
         color: "#006666",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 15,
+        typeIcon: "outline",
+        topIcon: 3808,
     },
     {
         icon: "footsteps-outline",
         name: "Giày dép",
         color: "#003300",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 16,
+        typeIcon: "outline",
+        topIcon: 1958,
     },
     {
         icon: "home-outline",
         name: "Tiền nhà",
         color: "#cc3300",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 17,
+        typeIcon: "outline",
+        topIcon: 2222,
     },
     {
         icon: "barbell-outline",
         name: "Thể thao",
         color: "#cc6600",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 18,
+        topIcon: 303,
+        typeIcon: "outline",
     },
     {
         icon: "car-outline",
         name: "Tiền xe",
         color: "#cc0099",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 19,
+        topIcon: 703,
+        typeIcon: "outline",
     },
     {
         icon: "school-outline",
         name: "Học phí",
         color: "#0099cc",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 20,
+        topIcon: 3670,
+        typeIcon: "outline",
     },
     {
         icon: "trash-outline",
         name: "Tiền rác",
         color: "#cc6699",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 21,
+        topIcon: 4202,
+        typeIcon: "outline",
     },
     {
         icon: "beer-outline",
         name: "Tiệc tùng",
         color: "#ff9966",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 22,
+        topIcon: 441,
+        typeIcon: "outline",
     },
     {
         icon: "color-wand-outline",
         name: "Mỹ phẩm",
         color: "#cc66ff",
         type: "expenditure",
-        isDefault: true
+        isDefault: true,
+        index: 23,
+        topIcon: 1297,
+        typeIcon: "outline",
     },
 ]
 
