@@ -79,6 +79,7 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
 
   chooseIcon(icon: string, index: number){
     this.topIconScroll = this.savedScrollIcon.top;
+    console.log(this.topIconScroll);
     this.indexIcon = index;
     this.icon = icon;
   }

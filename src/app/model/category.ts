@@ -4,6 +4,8 @@ export interface Category {
     color: string;
     type: "expenditure" | "revenue";
     isDefault: boolean;
+    top?: number;
+    index?: number;
 }
 
 export const listCategory: Category[] = [
@@ -12,7 +14,9 @@ export const listCategory: Category[] = [
         name: "Lương",
         color: "#CC0000",
         type: "revenue",
-        isDefault: true
+        isDefault: true,
+        top: 883,
+        index: 0
     },
     {
         icon: "cafe-outline",
@@ -33,7 +37,9 @@ export const listCategory: Category[] = [
         name: "Thu nhập khác",
         color: "#5085a5",
         type: "revenue",
-        isDefault: true
+        isDefault: true,
+        top: 4370,
+        index: 1
     },
     {
         icon: "flame-outline",
@@ -54,21 +60,27 @@ export const listCategory: Category[] = [
         name: "Tiền thưởng",
         color: "#33CCFF",
         type: "revenue",
-        isDefault: true
+        isDefault: true,
+        top: 1955,
+        index: 2,
     },
     {
         icon: "extension-puzzle-outline",
         name: "Tiền phụ cấp",
         color: "#66CC66",
         type: "revenue",
-        isDefault: true
+        isDefault: true,
+        top: 1629,
+        index: 3
     },
     {
         icon: "trending-up-outline",
         name: "Đầu tư",
         color: "#3399FF",
         type: "revenue",
-        isDefault: true
+        isDefault: true,
+        top: 4207,
+        index: 4
     },
     {
         icon: "people-outline",
@@ -1464,13 +1476,10 @@ export const categoryName: string[] = [
 ];
 
 export const colorArray = [
-    "#000000", "#800000", "#FF0000", "#FFFF00", "#008000", "#000080", "#800080", "#FF00FF", "#808080", "#C0C0C0",
-    "#FFA500", "#008080", "#00a3a3", "#0000FF", "#FF69B4", "#FF1493", "#FFC0CB", "#FFB6C1", "#FFA07A", "#FF7F50",
-    "#FF6347", "#DC143C", "#FF4500", "#FF8C00", "#CD5C5C", "#F08080", "#FA8072", "#E9967A", "#FFD700", "#FFFFE0",
-    "#FFFACD", "#FAFAD2", "#FFEFD5", "#FFE4B5", "#FFDAB9", "#EEE8AA", "#F0E68C", "#BDB76B", "#ADFF2F", "#7FFF00",
-    "#7CFC00", "#32CD32", "#98FB98", "#90EE90", "#00FA9A", "#00FF7F", "#3CB371", "#2E8B57", "#808000", "#556B2F",
-    "#6B8E23", "#9ACD32", "#8FBC8F", "#20B2AA", "#008B8B", "#00FFFF", "#E0FFFF", "#AFEEEE", "#7FFFD4", "#40E0D0",
-    "#48D1CC", "#00CED1", "#5F9EA0", "#4682B4", "#B0C4DE", "#ADD8E6", "#B0E0E6", "#87CEEB", "#87CEFA", "#00BFFF",
-    "#1E90FF", "#6495ED", "#7B68EE", "#4169E1", "#0000CD", "#00008B", "#8A2BE2", "#A020F0", "#9370DB", "#9932CC",
-    "#8B008B", "#800080", "#4B0082", "#6A5ACD", "#483D8B"
+    "#ad0303", "#ad1703", "#ad2203", "#ad3303", "#ad4403", "#ad5503", "#ad6103", "#ad6f03", "#ad7d03", "#ad9403",
+    "#ad9f03", "#adad03", "#96ad03", "#85ad03", "#71ad03", "#5bad03", "#47ad03", "#36ad03", "#1fad03", "#03ad06", 
+    "#03ad1f", "#03ad30", "#03ad4a", "#03ad5e", "#03ad71", "#03ad80", "#03ad8e", "#03ad9c", "#03adad", "#039fad",
+    "#0388ad", "#0374ad", "#0366ad", "#0355ad", "#0347ad", "#0339ad", "#032ead", "#031fad", "#0303ad", "#1a03ad",
+    "#2b03ad", "#3c03ad", "#4d03ad", "#5e03ad", "#7203ad", "#8503ad", "#9103ad", "#a203ad", "#ad0399", "#ad037a",
+    "#ad0363", "#ad0344", "#ad0325", "#ad0317"
 ];
