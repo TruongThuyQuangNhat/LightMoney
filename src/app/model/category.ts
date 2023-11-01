@@ -107,7 +107,7 @@ export const listCategory: Category[] = [
     },
     {
         icon: "construct-outline",
-        name: "Thiết bị, dụng cụ",
+        name: "Dụng cụ",
         color: "#FF6600",
         type: "expenditure",
         isDefault: true
@@ -198,15 +198,15 @@ export const listCategory: Category[] = [
     },
     {
         icon: "beer-outline",
-        name: "Tiệc tùng, nhậu nhẹt",
+        name: "Tiệc tùng",
         color: "#FFCC00",
         type: "expenditure",
         isDefault: true
     },
     {
         icon: "color-wand-outline",
-        name: "Mỹ phẩm, làm đẹp",
-        color: "#CC99FF",
+        name: "Mỹ phẩm",
+        color: "#c825ed",
         type: "expenditure",
         isDefault: true
     },
