@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Category, categoryName, colorArray } from 'src/app/model/category';
 import { CategoryService } from 'src/app/service/category.service';
@@ -8,7 +8,7 @@ import { CategoryService } from 'src/app/service/category.service';
   templateUrl: './detail-category.component.html',
   styleUrls: ['./detail-category.component.scss'],
 })
-export class DetailCategoryComponent  implements OnInit, OnChanges {
+export class DetailCategoryComponent  implements OnInit, AfterViewInit {
   @Input() type: "revenue" | "expenditure" = "revenue";
   @Input() data: Category | undefined;
   categoryName: string[] = [];
@@ -18,48 +18,28 @@ export class DetailCategoryComponent  implements OnInit, OnChanges {
   indexColor: number = 0;
   color: string = colorArray[0];
   icon: string = '';
-  topIconScroll: number = 0;
-  topIconColor: number = 0;
-
-  @ViewChild('scrollIcon') scrollIcon!: ElementRef;
-  @ViewChild('scrollColor') scrollColor!: ElementRef;
-  private savedScrollIcon: { top: number, left: number, behavior: string };
-  private savedScrollColor: { top: number, left: number, behavior: string };
 
   constructor(
     private modalCtrl: ModalController,
     private service: CategoryService
-  ) { 
-    this.savedScrollIcon = { top: 0, left: 0, behavior: 'smooth' };
-    this.savedScrollColor = { top: 0, left: 0, behavior: 'smooth' };
-  }
+  ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(this.data){
-      this.name = this.data.name;
-      this.icon = this.data.icon;
-      this.color = this.data.color;
-      this.indexIcon = this.categoryName.findIndex((item) => item === this.icon);
-      this.indexColor = this.colorArray.findIndex((item) => item === this.color);
-      this.savedScrollIcon.top = this.data.topIcon || 0;
-      this.scrollIcon.nativeElement.scrollTo(this.savedScrollIcon);
-    }
-  }
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      document.getElementById(this.icon)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest"
+      });
+    }, 100);
 
-  @HostListener('scroll', ['$event']) 
-  onScrollIcon(event: any) {
-    const tartget = event.target as HTMLElement;
-    if(tartget.scrollTop !== 0){
-      this.savedScrollIcon  = { top: tartget.scrollTop, left: tartget.scrollLeft, behavior: 'smooth' };
-    }
-  }
-
-  @HostListener('scroll', ['$event']) 
-  onScrollColor(event: any) {
-    const tartget = event.target as HTMLElement;
-    if(tartget.scrollTop !== 0){
-      this.savedScrollColor  = { top: tartget.scrollTop, left: tartget.scrollLeft, behavior: 'smooth' };
-    }
+    setTimeout(() => {
+      document.getElementById(this.color)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest"
+      });
+    }, 1000);
   }
 
   ngOnInit() {
@@ -70,11 +50,6 @@ export class DetailCategoryComponent  implements OnInit, OnChanges {
       this.categoryName = categoryName.filter((item) => item.includes(this.data?.typeIcon || 'outline'));
       this.indexIcon = this.categoryName.findIndex((item) => item === this.icon);
       this.indexColor = this.colorArray.findIndex((item) => item === this.color);
-      this.savedScrollIcon.top = this.data.topIcon || 0;
-
-      setTimeout(() => {
-        this.scrollIcon.nativeElement.scrollTo(this.savedScrollIcon);
-      }, 100);
     } else {
       this.categoryName = categoryName.filter((item) => item.includes('outline'));
       this.icon = this.categoryName[this.indexIcon];
@@ -87,10 +62,6 @@ export class DetailCategoryComponent  implements OnInit, OnChanges {
     }else{
       this.categoryName = categoryName.filter((item) => !(item.includes('outline') || item.includes('sharp')));
     }
-    setTimeout(() => {
-      this.icon = this.categoryName[this.indexIcon];
-      this.scrollIcon.nativeElement.scrollTo(this.savedScrollIcon);
-    }, 100);
   }
 
   back(){
@@ -98,14 +69,11 @@ export class DetailCategoryComponent  implements OnInit, OnChanges {
   }
 
   chooseIcon(icon: string, index: number){
-    this.topIconScroll = this.savedScrollIcon.top;
-    console.log(this.topIconScroll);
     this.indexIcon = index;
     this.icon = icon;
   }
 
   chooseColor(color: string, index: number){
-    this.topIconColor = this.savedScrollColor.top;
     this.indexColor = index;
     this.color = color;
   }

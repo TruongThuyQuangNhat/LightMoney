@@ -23,12 +23,13 @@
       <ion-button (click)="filterCate()">Filled</ion-button>
       <ion-button (click)="filterCate('sharp')">Sharp</ion-button>
     </ion-list-header>
-    <div #scrollIcon (scroll)="onScrollIcon($event)" style="height: 250px; overflow: scroll;">
+    <div style="height: 250px; overflow: scroll;">
       <ng-container *ngFor="let item of categoryName; index as i">
         <ng-container *ngIf="icon === item">
           <ion-icon 
             (click)="chooseIcon(item, i)"
             [name]="item" 
+            id="{{item}}"
             [style]="'font-size: 50px; margin: 12px 6px 0px 6px;'" 
             aria-hidden="true"
             [ngStyle]="{'color': color,}"
@@ -39,6 +40,7 @@
           <ion-icon 
             (click)="chooseIcon(item, i)"
             [name]="item" 
+            id="{{item}}"
             [style]="'font-size: 50px; margin: 12px 6px 0px 6px;'" 
             aria-hidden="true"
           ></ion-icon>
@@ -51,38 +53,39 @@
     <ion-list-header>
       <ion-label>Chọn màu</ion-label>
     </ion-list-header>
-    <div #scrollColor (scroll)="onScrollColor($event)"  style="height: 250px; overflow: scroll;">
+    <div style="height: 250px; overflow: scroll;">
       <ng-container *ngFor="let item of colorArray; index as i">
         <div 
           *ngIf="color === item"
           (click)="chooseColor(item, i)"
+          id="{{item}}"
           [style]="
             'background-color: '+item+'; '+
             'height: 50px; '+
-            'width: 50px; '+
+            'width: 18.8%; '+
             'display: inline-block; '+
-            'margin: 12px 6px 0px 6px; '+
-            'border-radius: 50%; '+
-            'border: 1px solid #000;'
+            'border: 1px solid #000;'+
+            'margin: 0px 2px 0px 2px;'
           ">
           <ion-icon 
             style="
               font-size: 49px;
               color: white;
+              margin-left: 20%;
             " 
             name="checkmark-outline"></ion-icon>
         </div>
         <div 
           *ngIf="color !== item"
           (click)="chooseColor(item, i)"
+          id="{{item}}"
           [style]="
             'background-color: '+item+'; '+
             'height: 50px; '+
-            'width: 50px; '+
+            'width: 18.8%; '+
             'display: inline-block; '+
-            'margin: 12px 6px 0px 6px; '+
-            'border-radius: 50%; '+
-            'border: 1px solid #000;'
+            'border: 1px solid #000;'+
+            'margin: 0px 2px 0px 2px;'
           ">
         </div>
       </ng-container>

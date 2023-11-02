@@ -4,8 +4,6 @@ export interface Category {
     color: string;
     type: "expenditure" | "revenue";
     isDefault: boolean;
-    topIcon?: number;
-    topColor?: number;
     index?: number;
     typeIcon?: string;
 }
@@ -17,7 +15,6 @@ export const listCategory: Category[] = [
         color: "#009900",
         type: "revenue",
         isDefault: true,
-        topIcon: 835,
         index: 0,
         typeIcon: "outline",
     },
@@ -26,7 +23,6 @@ export const listCategory: Category[] = [
         name: "Cà phê",
         color: "#996600",
         type: "expenditure",
-        topIcon: 632,
         isDefault: true,
         index: 0,
         typeIcon: "outline",
@@ -36,7 +32,6 @@ export const listCategory: Category[] = [
         name: "Ăn vặt",
         color: "#ff3300",
         type: "expenditure",
-        topIcon: 1693,
         isDefault: true,
         index: 1,
         typeIcon: "outline",
@@ -47,7 +42,6 @@ export const listCategory: Category[] = [
         color: "#00cc99",
         type: "revenue",
         isDefault: true,
-        topIcon: 4370,
         typeIcon: "outline",
         index: 1
     },
@@ -59,7 +53,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 2,
         typeIcon: "outline",
-        topIcon: 1823
     },
     {
         icon: "cart-outline",
@@ -69,7 +62,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 3,
         typeIcon: "outline",
-        topIcon: 841,
     },
     {
         icon: "gift-outline",
@@ -77,7 +69,6 @@ export const listCategory: Category[] = [
         color: "#cc33ff",
         type: "revenue",
         isDefault: true,
-        topIcon: 1955,
         typeIcon: "outline",
         index: 2,
     },
@@ -87,7 +78,6 @@ export const listCategory: Category[] = [
         color: "#6666ff",
         type: "revenue",
         isDefault: true,
-        topIcon: 1629,
         typeIcon: "outline",
         index: 3
     },
@@ -97,7 +87,6 @@ export const listCategory: Category[] = [
         color: "#33cc33",
         type: "revenue",
         isDefault: true,
-        topIcon: 4207,
         typeIcon: "outline",
         index: 4
     },
@@ -109,7 +98,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 4,
         typeIcon: "outline",
-        topIcon: 2947,
     },
     {
         icon: "medkit-outline",
@@ -119,7 +107,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 5,
         typeIcon: "outline",
-        topIcon: 180,
     },
     {
         icon: "paw-outline",
@@ -129,7 +116,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 6,
         typeIcon: "outline",
-        topIcon: 2948,
     },
     {
         icon: "phone-portrait-outline",
@@ -139,7 +125,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 7,
         typeIcon: "outline",
-        topIcon: 3010,
     },
     {
         icon: "bus-outline",
@@ -149,7 +134,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 8,
         typeIcon: "outline",
-        topIcon: 576,
     },
     {
         icon: "construct-outline",
@@ -159,7 +143,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 9,
         typeIcon: "outline",
-        topIcon: 1297,
     },
     {
         icon: "restaurant-outline",
@@ -169,7 +152,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 10,
         typeIcon: "outline",
-        topIcon: 3482,
     },
     {
         icon: "shapes-outline",
@@ -179,7 +161,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 11,
         typeIcon: "outline",
-        topIcon: 3746,
     },
     {
         icon: "water-outline",
@@ -189,7 +170,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 12,
         typeIcon: "outline",
-        topIcon: 4369,
     },
     {
         icon: "wifi-outline",
@@ -199,7 +179,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 13,
         typeIcon: "outline",
-        topIcon: 4369,
     },
     {
         icon: "flash-outline",
@@ -209,7 +188,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 14,
         typeIcon: "outline",
-        topIcon: 1823,
     },
     {
         icon: "shirt-outline",
@@ -219,7 +197,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 15,
         typeIcon: "outline",
-        topIcon: 3808,
     },
     {
         icon: "footsteps-outline",
@@ -229,7 +206,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 16,
         typeIcon: "outline",
-        topIcon: 1958,
     },
     {
         icon: "home-outline",
@@ -239,7 +215,6 @@ export const listCategory: Category[] = [
         isDefault: true,
         index: 17,
         typeIcon: "outline",
-        topIcon: 2222,
     },
     {
         icon: "barbell-outline",
@@ -248,7 +223,6 @@ export const listCategory: Category[] = [
         type: "expenditure",
         isDefault: true,
         index: 18,
-        topIcon: 303,
         typeIcon: "outline",
     },
     {
@@ -258,7 +232,6 @@ export const listCategory: Category[] = [
         type: "expenditure",
         isDefault: true,
         index: 19,
-        topIcon: 703,
         typeIcon: "outline",
     },
     {
@@ -268,7 +241,6 @@ export const listCategory: Category[] = [
         type: "expenditure",
         isDefault: true,
         index: 20,
-        topIcon: 3670,
         typeIcon: "outline",
     },
     {
@@ -278,7 +250,6 @@ export const listCategory: Category[] = [
         type: "expenditure",
         isDefault: true,
         index: 21,
-        topIcon: 4202,
         typeIcon: "outline",
     },
     {
@@ -288,7 +259,6 @@ export const listCategory: Category[] = [
         type: "expenditure",
         isDefault: true,
         index: 22,
-        topIcon: 441,
         typeIcon: "outline",
     },
     {
@@ -298,7 +268,6 @@ export const listCategory: Category[] = [
         type: "expenditure",
         isDefault: true,
         index: 23,
-        topIcon: 1297,
         typeIcon: "outline",
     },
 ]
