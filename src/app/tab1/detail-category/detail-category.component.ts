@@ -18,6 +18,7 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
   indexColor: number = 0;
   color: string = colorArray[0];
   icon: string = '';
+  typeIcon: string = 'outline';
 
   constructor(
     private modalCtrl: ModalController,
@@ -25,21 +26,8 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      document.getElementById(this.icon)?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-        inline: "nearest"
-      });
-    }, 100);
-
-    setTimeout(() => {
-      document.getElementById(this.color)?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-        inline: "nearest"
-      });
-    }, 1000);
+    this.scrollIcon();
+    this.scrollColor();
   }
 
   ngOnInit() {
@@ -58,10 +46,51 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
 
   filterCate(data?: string){
     if(data){
-      this.categoryName = categoryName.filter((item) => item.includes(data));
+      if(data !== this.typeIcon){
+        this.typeIcon = data;
+        this.categoryName = categoryName.filter((item) => item.includes(data));
+        if(this.icon.includes('outline')){
+          this.icon = this.icon.replace('outline', data);
+        } else if(this.icon.includes('sharp')){
+          this.icon = this.icon.replace('sharp', data);
+        } else {
+          this.icon = this.icon + '-' + data;
+        }
+        this.scrollIcon();
+      }
     }else{
-      this.categoryName = categoryName.filter((item) => !(item.includes('outline') || item.includes('sharp')));
+      if(data !== this.typeIcon){
+        this.typeIcon = '';
+        if(this.icon.includes('outline')){
+          this.icon = this.icon.replace('outline', '');
+        } else {
+          this.icon = this.icon.replace('sharp', '');
+        }
+        this.icon = this.icon.slice(0, this.icon.length - 1);
+        this.categoryName = categoryName.filter((item) => !(item.includes('outline') || item.includes('sharp')));
+        this.scrollIcon();
+      }
     }
+  }
+
+  scrollIcon(){
+    setTimeout(() => {
+      document.getElementById(this.icon)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest"
+      });
+    }, 100);
+  }
+
+  scrollColor(){
+    setTimeout(() => {
+      document.getElementById(this.color)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest"
+      });
+    }, 1000);
   }
 
   back(){
