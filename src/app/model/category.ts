@@ -1,4 +1,5 @@
 export interface Category {
+    id: string;
     icon: string;
     name: string;
     color: string;
@@ -10,6 +11,7 @@ export interface Category {
 
 export const listCategory: Category[] = [
     {
+        id: "cda1a23b-c42d-4b8b-a3b9-6f5281f8b767",
         icon: "cash-outline",
         name: "Lương",
         color: "#009900",
@@ -19,6 +21,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "192cd8bd-7968-42c5-b9b7-e584becf0768",
         icon: "cafe-outline",
         name: "Cà phê",
         color: "#996600",
@@ -28,6 +31,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "4f66d0f1-18a8-42f1-86cb-9abb69a26435",
         icon: "fast-food-outline",
         name: "Ăn vặt",
         color: "#ff3300",
@@ -37,6 +41,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "25156491-3f5d-4e9a-903f-a4c65f0e8176",
         icon: "wallet-outline",
         name: "Thu nhập khác",
         color: "#00cc99",
@@ -46,6 +51,7 @@ export const listCategory: Category[] = [
         index: 1
     },
     {
+        id: "37074433-b658-4456-9734-82a866e8ea40",
         icon: "flame-outline",
         name: "Nhiên liệu",
         color: "#9966ff",
@@ -55,6 +61,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "4501bcaf-d5ce-45e5-8941-95f26eac5fe3",
         icon: "cart-outline",
         name: "Siêu thị",
         color: "#ff6600",
@@ -64,6 +71,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "be35345b-cf48-4bb0-9b9c-47ff4cd75f41",
         icon: "gift-outline",
         name: "Tiền thưởng",
         color: "#cc33ff",
@@ -73,6 +81,7 @@ export const listCategory: Category[] = [
         index: 2,
     },
     {
+        id: "91c6cd39-3887-4314-bc48-d92512064354",
         icon: "extension-puzzle-outline",
         name: "Tiền phụ cấp",
         color: "#6666ff",
@@ -82,6 +91,7 @@ export const listCategory: Category[] = [
         index: 3
     },
     {
+        id: "277c5491-2aec-4236-9b7d-fd456a99b266",
         icon: "trending-up-outline",
         name: "Đầu tư",
         color: "#33cc33",
@@ -91,6 +101,7 @@ export const listCategory: Category[] = [
         index: 4
     },
     {
+        id: "0b009d37-4a19-4018-bea4-767f05c024f1",
         icon: "people-outline",
         name: "Đám cưới, sinh nhật",
         color: "#ff66cc",
@@ -100,6 +111,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "46295b8e-9231-4edf-a18e-e16f423d2357",
         icon: "medkit-outline",
         name: "Y tế",
         color: "#ff0000",
@@ -109,6 +121,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "abd6fb7b-4124-4f5f-84f3-d6b21bbb2669",
         icon: "paw-outline",
         name: "Thú cưng",
         color: "#999966",
@@ -118,6 +131,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "43194f93-4abb-4f81-91f2-4c84cbbee8f1",
         icon: "phone-portrait-outline",
         name: "Điện thoại",
         color: "#666699",
@@ -127,6 +141,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "5f68ad93-581a-45cb-81e8-30b50418f7ea",
         icon: "bus-outline",
         name: "Phương tiện di chuyển",
         color: "#0066cc",
@@ -136,6 +151,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "73817de0-b51e-43ea-895c-da3562163bad",
         icon: "construct-outline",
         name: "Dụng cụ",
         color: "#666633",
@@ -145,6 +161,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "a11f2ea5-d49e-4f06-882e-bf39efc97eb0",
         icon: "restaurant-outline",
         name: "Ăn uống",
         color: "#cc3399",
@@ -154,6 +171,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "6188bdc6-d6cb-4417-b41d-966b92dc9a5d",
         icon: "shapes-outline",
         name: "Đồ linh tinh",
         color: "#336699",
@@ -163,6 +181,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "bb937d72-f79e-4ee4-be12-3777656b779d",
         icon: "water-outline",
         name: "Tiền nước",
         color: "#0099ff",
@@ -172,6 +191,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "c86baf1c-eb7d-41d7-8d70-9daf1b24bfbf",
         icon: "wifi-outline",
         name: "Tiền internet",
         color: "#00ff00",
@@ -181,6 +201,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "716cdc5c-0dc9-4af6-88ca-0e532838dca8",
         icon: "flash-outline",
         name: "Tiền điện",
         color: "#ffcc00",
@@ -190,6 +211,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "94694841-599b-40a2-8b1b-d6ed2ac91816",
         icon: "shirt-outline",
         name: "Quần áo",
         color: "#006666",
@@ -199,6 +221,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "156a4719-5aaa-44eb-b4bf-45fff4d5f3b4",
         icon: "footsteps-outline",
         name: "Giày dép",
         color: "#003300",
@@ -208,6 +231,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "0d685de8-ad66-4f0d-92d2-cc23660ea4c4",
         icon: "home-outline",
         name: "Tiền nhà",
         color: "#cc3300",
@@ -217,6 +241,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "10e2f299-0e24-496e-a43e-68043e309577",
         icon: "barbell-outline",
         name: "Thể thao",
         color: "#cc6600",
@@ -226,6 +251,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "f571a28b-75e3-483e-aa8a-59f7583540a2",
         icon: "car-outline",
         name: "Tiền xe",
         color: "#cc0099",
@@ -235,6 +261,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "acd53f58-ef03-4ef1-b780-8e543df7b5a4",
         icon: "school-outline",
         name: "Học phí",
         color: "#0099cc",
@@ -244,6 +271,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "b37869ef-2317-450e-85de-47b8bdd2aca5",
         icon: "trash-outline",
         name: "Tiền rác",
         color: "#cc6699",
@@ -253,6 +281,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "4cb5c0dd-47ca-414f-9202-6d0225374fb7",
         icon: "beer-outline",
         name: "Tiệc tùng",
         color: "#ff9966",
@@ -262,6 +291,7 @@ export const listCategory: Category[] = [
         typeIcon: "outline",
     },
     {
+        id: "f58a1121-808a-4914-8b17-7eeac296e1bc",
         icon: "color-wand-outline",
         name: "Mỹ phẩm",
         color: "#cc66ff",

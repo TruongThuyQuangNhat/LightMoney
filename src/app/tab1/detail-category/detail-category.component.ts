@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } fro
 import { ModalController } from '@ionic/angular';
 import { Category, categoryName, colorArray } from 'src/app/model/category';
 import { CategoryService } from 'src/app/service/category.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-detail-category',
@@ -109,6 +110,7 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
 
   save(){
     const data: Category = {
+      id: uuidv4(),
       name: this.name,
       icon: this.icon,
       color: this.color,
