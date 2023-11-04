@@ -46,7 +46,8 @@ export class CategoryComponent  implements OnInit, OnDestroy {
     const modal = await this.modalCtrl.create({
       component: DetailCategoryComponent,
       componentProps: {
-        type: this.type
+        type: this.type,
+        action: 'add'
       }
     });
 
@@ -70,7 +71,8 @@ export class CategoryComponent  implements OnInit, OnDestroy {
       component: DetailCategoryComponent,
       componentProps: {
         type: this.type,
-        data
+        data,
+        action: 'edit'
       }
     });
     modal.onDidDismiss().then((data) => {});

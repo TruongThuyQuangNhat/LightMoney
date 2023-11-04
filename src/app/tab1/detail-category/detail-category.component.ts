@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class DetailCategoryComponent  implements OnInit, AfterViewInit {
   @Input() type: "revenue" | "expenditure" = "revenue";
+  @Input() action: string = "add";
   @Input() data: Category | undefined;
   categoryName: string[] = [];
   colorArray: string[] = colorArray;
@@ -20,6 +21,7 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
   color: string = colorArray[0];
   icon: string = '';
   typeIcon: string = 'outline';
+  title: string = 'Thêm mới danh mục';
 
   constructor(
     private modalCtrl: ModalController,
@@ -42,6 +44,10 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
     } else {
       this.categoryName = categoryName.filter((item) => item.includes('outline'));
       this.icon = this.categoryName[this.indexIcon];
+    }
+
+    if(this.action === 'edit'){
+      this.title = 'Chỉnh sửa danh mục';
     }
   }
 
