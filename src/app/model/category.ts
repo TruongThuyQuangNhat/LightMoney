@@ -5,7 +5,7 @@ export interface Category {
     color: string;
     type: "expenditure" | "revenue";
     isDefault: boolean;
-    index?: number;
+    index: number;
     typeIcon?: string;
 }
 

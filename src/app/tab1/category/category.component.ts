@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ItemReorderEventDetail, ModalController } from '@ionic/angular';
-import { Category, listCategory } from 'src/app/model/category';
+import { Category } from 'src/app/model/category';
 import { DetailCategoryComponent } from '../detail-category/detail-category.component';
 import { CategoryService } from 'src/app/service/category.service';
 import { Subject, takeUntil } from 'rxjs';
+import { StorageService } from 'src/app/service/storage.service';
 
 @Component({
   selector: 'app-category',
@@ -12,11 +13,13 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class CategoryComponent  implements OnInit, OnDestroy {
   type: "revenue" | "expenditure" = "revenue";
-  listCategory: Category[] = listCategory.filter((item) => item.type === this.type);
+  listCategory: Category[] =[];
+  listCategoryRoot: Category[] = [];
   destroy$: Subject<void> = new Subject<void>();
   constructor(
     private modalCtrl: ModalController,
-    private service: CategoryService
+    private service: CategoryService,
+    private storage: StorageService,
   ) { 
     this.service.AddCategory$.pipe(takeUntil(this.destroy$)).subscribe((category) => {
       if(!category) return;
@@ -29,12 +32,23 @@ export class CategoryComponent  implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    setTimeout(async () => {
+      await this.storage.get('ArrayCategory')?.then((data) => {
+        this.listCategoryRoot = data;
+        this.listCategory = this.listCategoryRoot
+          .filter((item: Category) => item.type === this.type)
+          .sort((a: Category, b: Category) => a.index - b.index);
+      });
+    }, 10);
+  }
 
   changeSegment(data: any) {
     if(data?.detail?.value){
       this.type = data.detail.value;
-      this.listCategory = listCategory.filter((item) => item.type === this.type);
+      this.listCategory = this.listCategoryRoot
+          .filter((item: Category) => item.type === this.type)
+          .sort((a: Category, b: Category) => a.index - b.index);
     }
   }
 
@@ -56,13 +70,20 @@ export class CategoryComponent  implements OnInit, OnDestroy {
   }
 
   handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
-    // The `from` and `to` properties contain the index of the item
-    // when the drag started and ended, respectively
-    console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
+    this.listCategory[ev.detail.from].index = ev.detail.to;
+    this.listCategory[ev.detail.to].index = ev.detail.from;
+    this.listCategory.sort((a: Category, b: Category) => a.index - b.index);
 
-    // Finish the reorder and position the item in the DOM based on
-    // where the gesture ended. This method can also be called directly
-    // by the reorder group
+    const indexFrom = this.listCategoryRoot.findIndex((item) => item.id === this.listCategory[ev.detail.from].id);
+    const indexTo = this.listCategoryRoot.findIndex((item) => item.id === this.listCategory[ev.detail.to].id);
+    if(indexFrom !== -1 && indexTo !== -1){
+      this.listCategoryRoot[indexFrom].index = ev.detail.from;
+      this.listCategoryRoot[indexTo].index = ev.detail.to;
+      setTimeout(() => {
+        this.storage.set('ArrayCategory', this.listCategoryRoot);
+        this.service.reloadCategorys(true);
+      }, 10);
+    }
     ev.detail.complete();
   }
 

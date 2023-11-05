@@ -121,7 +121,8 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
       icon: this.icon,
       color: this.color,
       type: this.type,
-      isDefault: false
+      isDefault: false,
+      index: 0,
     };
     this.service.addCategory(data);
     this.modalCtrl.dismiss();

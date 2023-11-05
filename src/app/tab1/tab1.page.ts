@@ -6,6 +6,8 @@ import * as uuid from 'uuid';
 import { ModalController } from '@ionic/angular';
 import { CategoryComponent } from './category/category.component';
 import { StorageService } from '../service/storage.service';
+import { CategoryService } from '../service/category.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
@@ -23,17 +25,30 @@ export class Tab1Page implements OnInit {
   listCategory: Category[] = [];
   listCategoryRoot: Category[] = [];
   category: Category = this.listCategory[0];
+  destroy$: Subject<void> = new Subject<void>();
+
   constructor(
     private service: CalendarService,
     private modalCtrl: ModalController,
     private storage: StorageService,
-  ) {}
+    private cateService: CategoryService,
+  ) {
+    this.cateService.reloadCategory$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(async (data) => {
+        if(data){
+          this.ngOnInit();
+        }
+      });
+  }
 
   ngOnInit() {
     setTimeout(async () => {
       await this.storage.get('ArrayCategory')?.then((data) => {
         this.listCategoryRoot = data;
-        this.listCategory = this.listCategoryRoot.filter((item: Category) => item.type === this.type);
+        this.listCategory = this.listCategoryRoot
+          .filter((item: Category) => item.type === this.type)
+          .sort((a: Category, b: Category) => a.index - b.index);
         this.category = this.listCategory[0];
       });
     }, 10);
@@ -42,7 +57,9 @@ export class Tab1Page implements OnInit {
   changeSegment(data: any) {
     if(data?.detail?.value){
       this.type = data.detail.value;
-      this.listCategory = this.listCategoryRoot.filter((item) => item.type === this.type);
+      this.listCategory = this.listCategoryRoot
+        .filter((item) => item.type === this.type)
+        .sort((a: Category, b: Category) => a.index - b.index);
       this.category = this.listCategory[0];
     }
   }
