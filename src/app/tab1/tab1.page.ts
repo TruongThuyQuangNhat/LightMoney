@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CalendarService } from '../service/calendar.service';
 import { Event } from '../model/event';
-import { Category, listCategory } from '../model/category';
+import { Category } from '../model/category';
 import * as uuid from 'uuid';
 import { ModalController } from '@ionic/angular';
 import { CategoryComponent } from './category/category.component';
+import { StorageService } from '../service/storage.service';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
   titlePage: string = "Thêm giao dịch";
   date: string = new Date().toISOString();
   localID: string = 'vi-VN';
@@ -19,17 +20,30 @@ export class Tab1Page {
   revenue: number = 0;
   expenditure: number = 0;
   type: "revenue" | "expenditure" = "revenue";
-  listCategory: Category[] = listCategory.filter((item) => item.type === this.type);
+  listCategory: Category[] = [];
+  listCategoryRoot: Category[] = [];
   category: Category = this.listCategory[0];
   constructor(
     private service: CalendarService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private storage: StorageService,
   ) {}
+
+  ngOnInit() {
+    setTimeout(async () => {
+      await this.storage.get('ArrayCategory')?.then((data) => {
+        this.listCategoryRoot = data;
+        this.listCategory = this.listCategoryRoot.filter((item: Category) => item.type === this.type);
+        this.category = this.listCategory[0];
+      });
+    }, 10);
+  }
 
   changeSegment(data: any) {
     if(data?.detail?.value){
       this.type = data.detail.value;
-      this.listCategory = listCategory.filter((item) => item.type === this.type);
+      this.listCategory = this.listCategoryRoot.filter((item) => item.type === this.type);
+      this.category = this.listCategory[0];
     }
   }
 
