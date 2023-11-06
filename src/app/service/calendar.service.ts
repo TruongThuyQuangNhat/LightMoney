@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
-  private eventSource: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public eventSource$ = this.eventSource.asObservable();
 
-  constructor() { }
-
-  addEvent(event: any) {
-    this.eventSource.next(event);
-  }
+  constructor(
+    private storage: StorageService,
+  ) { }
 
   getEvents() {
-    return this.eventSource.getValue();
+    return this.storage.get("ArrayEvent");
+  }
+
+  setEvents(events: any[]) {
+    this.storage.set("ArrayEvent", events);
   }
 
 }

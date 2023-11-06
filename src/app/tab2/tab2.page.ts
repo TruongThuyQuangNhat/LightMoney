@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { CalendarService } from '../service/calendar.service';
 import { Subject, takeUntil } from 'rxjs';
 import * as uuid from 'uuid';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -29,12 +30,17 @@ export class Tab2Page implements OnInit, OnDestroy {
   constructor(
     private detec: ChangeDetectorRef,
     private service: CalendarService,
+    private route: ActivatedRoute,
   ) {
-    this.service.eventSource$.pipe(takeUntil(this.destroy$))
-    .subscribe((event) => {
-      if(!event) return;
-      this.eventSource.push(event);
-      this.cal?.loadEvents();
+    this.route.queryParams.subscribe((params) => {
+      setTimeout(() => {
+        this.service.getEvents()?.then((data) => {
+          if(data && data.length > 0) {
+            this.eventSource = data;
+            this.cal?.loadEvents();
+          }
+        });
+      }, 10);
     });
   }
 
@@ -44,11 +50,12 @@ export class Tab2Page implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadEvents();
+    // this.loadEvents();
   }
 
   loadEvents() {
     this.eventSource = this.createRandomEvents();
+    this.service.setEvents(this.eventSource);
   }
 
   onViewTitleChanged(title: string) {

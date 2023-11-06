@@ -91,13 +91,20 @@ export class Tab1Page implements OnInit {
       type: this.type,
       category: this.category,
     }
-    this.service.addEvent(data);
+    
+    this.service.getEvents()?.then((events) => {
+      if(events && events.length > 0){
+        events.push(data);
+        this.service.setEvents(events);
+      } else {
+        this.service.setEvents([data]);
+      }
+    });
     this.reset();
   }
 
   chooseCate(category: Category) {
     this.category = category;
-    console.log(this.category);
   }
 
   reset() {
