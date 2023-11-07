@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } fro
 import { ModalController } from '@ionic/angular';
 import { Category, categoryName, colorArray } from 'src/app/model/category';
 import { CategoryService } from 'src/app/service/category.service';
+import { StorageService } from 'src/app/service/storage.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
@@ -25,7 +26,8 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private service: CategoryService
+    private service: CategoryService,
+    private storage: StorageService,
   ) { }
 
   ngAfterViewInit(): void {
@@ -114,7 +116,11 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
     this.color = color;
   }
 
-  save(){
+  async save(){
+    const dataCate = await this.storage.get('ArrayCategory');
+    const arrayCate = dataCate?.filter((item: Category) => item.type === this.type);
+    const maxIndex = arrayCate?.reduce((prev: number, current: Category) => (prev > current.index) ? prev : current.index, 0);
+
     const data: Category = {
       id: uuidv4(),
       name: this.name,
@@ -122,9 +128,19 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
       color: this.color,
       type: this.type,
       isDefault: false,
-      index: 0,
+      index: maxIndex + 1,
     };
     this.service.addCategory(data);
     this.modalCtrl.dismiss();
+  }
+
+  async delete(){
+    if(this.data){
+      const check = await this.service.checkEventAvailable(this.data);
+      if(!check){
+        this.service.deleteCategory(this.data);
+        this.modalCtrl.dismiss(this.data, "delete");
+      }
+    }
   }
 }

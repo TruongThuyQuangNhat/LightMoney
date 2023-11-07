@@ -122,7 +122,9 @@ export class Tab1Page implements OnInit {
       }
     });
 
-    modal.onDidDismiss().then((data) => {});
+    modal.onDidDismiss().then((data) => {
+      this.ngOnInit();
+    });
     await modal.present();
   }
 }

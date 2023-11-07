@@ -15,8 +15,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar animated="true" placeholder="search"></ion-searchbar>
-  <ion-list>
+  <ion-list class="list">
     <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
       <ng-container *ngFor="let item of listCategory">
         <ion-item (click)="openDetail(item)">

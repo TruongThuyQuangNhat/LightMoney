@@ -96,7 +96,11 @@ export class CategoryComponent  implements OnInit, OnDestroy {
         action: 'edit'
       }
     });
-    modal.onDidDismiss().then((data) => {});
+    modal.onDidDismiss().then(async (data) => {
+      if(data.role === 'delete'){
+        this.listCategory = this.listCategory.filter((item) => item.id !== data.data.id);
+      }
+    });
     await modal.present();
   }
 }

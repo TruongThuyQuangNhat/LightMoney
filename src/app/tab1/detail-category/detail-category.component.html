@@ -4,7 +4,7 @@
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-buttons>
       <ion-title>{{title}}</ion-title>
-      <ion-buttons *ngIf="action == 'edit'" slot="end" (click)="back()">
+      <ion-buttons *ngIf="action == 'edit'" slot="end" (click)="delete()">
         <ion-icon name="trash-outline"></ion-icon>
       </ion-buttons>
     </ion-toolbar>
