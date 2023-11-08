@@ -121,17 +121,31 @@ export class DetailCategoryComponent  implements OnInit, AfterViewInit {
     const arrayCate = dataCate?.filter((item: Category) => item.type === this.type);
     const maxIndex = arrayCate?.reduce((prev: number, current: Category) => (prev > current.index) ? prev : current.index, 0);
 
-    const data: Category = {
-      id: uuidv4(),
-      name: this.name,
-      icon: this.icon,
-      color: this.color,
-      type: this.type,
-      isDefault: false,
-      index: maxIndex + 1,
-    };
-    this.service.addCategory(data);
-    this.modalCtrl.dismiss();
+    if(this.action === 'edit'){
+      const data: Category = {
+        id: this.data?.id || '',
+        name: this.name,
+        icon: this.icon,
+        color: this.color,
+        type: this.type,
+        isDefault: this.data?.isDefault || false,
+        index: this.data?.index || 0,
+      };
+      this.service.updateCategory(data);
+      this.modalCtrl.dismiss(data, "save");
+      return;
+    } else {
+      const data: Category = {
+        id: uuidv4(),
+        name: this.name,
+        icon: this.icon,
+        color: this.color,
+        type: this.type,
+        isDefault: false,
+        index: maxIndex + 1,
+      };
+      this.modalCtrl.dismiss(data, "save");
+    }
   }
 
   async delete(){

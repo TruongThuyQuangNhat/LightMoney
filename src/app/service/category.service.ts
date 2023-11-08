@@ -9,25 +9,11 @@ import { ToastService } from './toast.service';
   providedIn: 'root'
 })
 export class CategoryService {
-  private AddCategory: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public AddCategory$ = this.AddCategory.asObservable();
-
-  private reloadCategory: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public reloadCategory$ = this.reloadCategory.asObservable();
 
   constructor(
     private storage: StorageService,
     private toast: ToastService,
   ) { }
-
-  addCategory(category: Category) {
-    this.saveCategory(category);
-    this.AddCategory.next(category);
-  }
-
-  reloadCategorys(data: boolean) {
-    this.reloadCategory.next(data);
-  }
 
   saveCategory(category: Category) {
     this.storage.get('ArrayCategory')?.then((data) => {
@@ -60,6 +46,20 @@ export class CategoryService {
     await this.storage.get('ArrayCategory')?.then((data) => {
       if (data && data.length > 0) {
         data = data.filter((item: Category) => item.id !== category.id);
+        this.storage.set('ArrayCategory', data);
+      }
+    });
+  }
+
+  async updateCategory(category: Category) {
+    await this.storage.get('ArrayCategory')?.then((data) => {
+      if (data && data.length > 0) {
+        data = data.map((item: Category) => {
+          if (item.id === category.id) {
+            item = category;
+          }
+          return item;
+        });
         this.storage.set('ArrayCategory', data);
       }
     });

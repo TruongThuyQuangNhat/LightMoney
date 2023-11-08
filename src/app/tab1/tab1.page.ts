@@ -32,15 +32,7 @@ export class Tab1Page implements OnInit {
     private modalCtrl: ModalController,
     private storage: StorageService,
     private cateService: CategoryService,
-  ) {
-    this.cateService.reloadCategory$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(async (data) => {
-        if(data){
-          this.ngOnInit();
-        }
-      });
-  }
+  ) {}
 
   ngOnInit() {
     setTimeout(async () => {

@@ -11,26 +11,15 @@ import { StorageService } from 'src/app/service/storage.service';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss'],
 })
-export class CategoryComponent  implements OnInit, OnDestroy {
+export class CategoryComponent  implements OnInit {
   type: "revenue" | "expenditure" = "revenue";
   listCategory: Category[] =[];
   listCategoryRoot: Category[] = [];
-  destroy$: Subject<void> = new Subject<void>();
   constructor(
     private modalCtrl: ModalController,
     private service: CategoryService,
     private storage: StorageService,
-  ) { 
-    this.service.AddCategory$.pipe(takeUntil(this.destroy$)).subscribe((category) => {
-      if(!category) return;
-      this.listCategory.push(category);
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+  ) {}
 
   ngOnInit() {
     setTimeout(async () => {
@@ -65,7 +54,12 @@ export class CategoryComponent  implements OnInit, OnDestroy {
       }
     });
 
-    modal.onDidDismiss().then((data) => {});
+    modal.onDidDismiss().then((data) => {
+      if(data.role === 'save'){
+        this.listCategory.push(data.data);
+        this.listCategoryRoot.push(data.data);
+      }
+    });
     await modal.present();
   }
 
@@ -81,7 +75,6 @@ export class CategoryComponent  implements OnInit, OnDestroy {
       this.listCategoryRoot[indexTo].index = ev.detail.to;
       setTimeout(() => {
         this.storage.set('ArrayCategory', this.listCategoryRoot);
-        this.service.reloadCategorys(true);
       }, 10);
     }
     ev.detail.complete();
@@ -99,6 +92,9 @@ export class CategoryComponent  implements OnInit, OnDestroy {
     modal.onDidDismiss().then(async (data) => {
       if(data.role === 'delete'){
         this.listCategory = this.listCategory.filter((item) => item.id !== data.data.id);
+      } else if(data.role === 'save'){
+        const index = this.listCategory.findIndex((item) => item.id === data.data.id);
+        this.listCategory[index] = data.data;
       }
     });
     await modal.present();
