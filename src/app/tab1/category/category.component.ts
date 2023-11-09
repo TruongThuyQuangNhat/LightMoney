@@ -58,6 +58,7 @@ export class CategoryComponent  implements OnInit {
       if(data.role === 'save'){
         this.listCategory.push(data.data);
         this.listCategoryRoot.push(data.data);
+        this.storage.set('ArrayCategory', this.listCategoryRoot);
       }
     });
     await modal.present();
@@ -93,8 +94,7 @@ export class CategoryComponent  implements OnInit {
       if(data.role === 'delete'){
         this.listCategory = this.listCategory.filter((item) => item.id !== data.data.id);
       } else if(data.role === 'save'){
-        const index = this.listCategory.findIndex((item) => item.id === data.data.id);
-        this.listCategory[index] = data.data;
+        this.ngOnInit();
       }
     });
     await modal.present();
