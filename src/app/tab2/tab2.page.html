@@ -38,7 +38,7 @@
   <ion-list>
     <ng-container *ngFor="let item of eventOfDate">
       <ion-item-sliding>
-        <ion-item>
+        <ion-item (click)="viewDetail(item)">
           <ion-avatar slot="start">
             <ion-icon
               [name]="item?.category?.icon"

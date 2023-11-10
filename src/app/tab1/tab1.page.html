@@ -1,6 +1,9 @@
 <ion-header mode="ios">
   <ion-toolbar>
-    <ion-segment mode="ios" [value]="type" (ionChange)="changeSegment($event)">
+    <ion-buttons *ngIf="action == 'edit'" (click)="back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-segment [disabled]="action == 'edit'" mode="ios" [value]="type" (ionChange)="changeSegment($event)">
       <ion-segment-button value="revenue">
         <ion-label>Tiền Thu</ion-label>
       </ion-segment-button>
@@ -49,7 +52,7 @@
         </ion-list-header>
         <ng-container *ngFor="let item of listCategory">
           <div class="parent-cate">
-            <ion-card [ngClass]="{'clicked': category.name == item.name}" class="card-category" (click)="chooseCate(item)">
+            <ion-card [ngClass]="{'clicked': category.icon == item.icon}" class="card-category" (click)="chooseCate(item)">
               <ion-card-header>
                 <ion-icon [name]="item.icon" 
                   aria-hidden="true" [style]="
@@ -72,6 +75,10 @@
 </ion-content>
 <ion-footer mode="ios">
   <ion-toolbar mode="ios">
-    <ion-button expand="block" (click)="action()">Thêm</ion-button>
+    <ion-button expand="block" (click)="actionSave()">
+      <ion-icon name="save-outline"></ion-icon>
+      <ng-container *ngIf="action == 'add'">Thêm</ng-container>
+      <ng-container *ngIf="action == 'edit'">Lưu lại</ng-container>
+    </ion-button>
   </ion-toolbar>
 </ion-footer>

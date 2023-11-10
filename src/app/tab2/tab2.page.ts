@@ -5,6 +5,8 @@ import { CalendarService } from '../service/calendar.service';
 import { Subject, takeUntil } from 'rxjs';
 import * as uuid from 'uuid';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { Tab1Page } from '../tab1/tab1.page';
 
 @Component({
   selector: 'app-tab2',
@@ -31,6 +33,7 @@ export class Tab2Page implements OnInit, OnDestroy {
     private detec: ChangeDetectorRef,
     private service: CalendarService,
     private route: ActivatedRoute,
+    private modalCtrl: ModalController,
   ) {
     this.route.queryParams.subscribe((params) => {
       setTimeout(() => {
@@ -195,5 +198,32 @@ export class Tab2Page implements OnInit, OnDestroy {
     }, 0);
     if(result === 0) return "";
     return result.toLocaleString(this.localID);
+  }
+
+  async viewDetail(event: any){
+    console.log(event);
+    const modal = await this.modalCtrl.create({
+      component: Tab1Page,
+      componentProps: {
+        titlePage: "Chi tiết",
+        action: "edit",
+        id: event.id,
+        type: event.type,
+        title: event.title,
+        expenditure: event.expenditure,
+        revenue: event.revenue,
+        date: event.startTime.toISOString(),
+        category: event.category,
+      }
+    });
+    modal.onDidDismiss().then((data) => {
+      if(data.role === 'edit'){
+        this.eventSource = this.eventSource.filter((item: any) => item.id !== data.data.id);
+        this.eventSource.push(data.data);
+        this.cal?.loadEvents();
+        this.service.setEvents(this.eventSource);
+      }
+    });
+    await modal.present();
   }
 }
