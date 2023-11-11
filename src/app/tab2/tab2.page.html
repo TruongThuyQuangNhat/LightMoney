@@ -37,8 +37,8 @@
   
   <ion-list>
     <ng-container *ngFor="let item of eventOfDate">
-      <ion-item-sliding>
-        <ion-item (click)="viewDetail(item)">
+      <ion-item-sliding #slidingItem>
+        <ion-item (click)="viewDetail(item, 'edit')">
           <ion-avatar slot="start">
             <ion-icon
               [name]="item?.category?.icon"
@@ -58,15 +58,15 @@
         </ion-item>
     
         <ion-item-options>
-          <ion-item-option color="light">
+          <ion-item-option (click)="viewDetail(item, 'edit', slidingItem)" color="light">
             <ion-icon name="pencil-outline" color="primary" slot="top"></ion-icon>
             Chỉnh sửa
           </ion-item-option>
-          <ion-item-option color="light">
+          <ion-item-option (click)="viewDetail(item, 'copy', slidingItem)" color="light">
             <ion-icon name="copy-outline" color="warning" slot="top"></ion-icon>
             Sao chép
           </ion-item-option>
-          <ion-item-option color="light">
+          <ion-item-option (click)="delete(item, slidingItem)" color="light">
             <ion-icon name="close" color="danger" slot="top"></ion-icon>
             Xóa
           </ion-item-option>

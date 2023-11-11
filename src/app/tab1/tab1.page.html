@@ -1,6 +1,6 @@
 <ion-header mode="ios">
   <ion-toolbar>
-    <ion-buttons *ngIf="action == 'edit'" (click)="back()">
+    <ion-buttons *ngIf="action != 'add'" (click)="back()">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-buttons>
     <ion-segment [disabled]="action == 'edit'" mode="ios" [value]="type" (ionChange)="changeSegment($event)">
@@ -77,7 +77,7 @@
   <ion-toolbar mode="ios">
     <ion-button expand="block" (click)="actionSave()">
       <ion-icon name="save-outline"></ion-icon>
-      <ng-container *ngIf="action == 'add'">Thêm</ng-container>
+      <ng-container *ngIf="action != 'edit'">Thêm</ng-container>
       <ng-container *ngIf="action == 'edit'">Lưu lại</ng-container>
     </ion-button>
   </ion-toolbar>

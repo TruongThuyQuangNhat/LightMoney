@@ -102,6 +102,8 @@ export class Tab1Page implements OnInit, AfterViewInit {
       }
       if(this.action == 'edit'){
         this.modalCtrl.dismiss(data, 'edit');
+      } else if(this.action == 'copy'){
+        this.modalCtrl.dismiss(data, 'copy');
       }
     });
     this.reset();

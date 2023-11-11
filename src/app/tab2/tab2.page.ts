@@ -5,7 +5,7 @@ import { CalendarService } from '../service/calendar.service';
 import { Subject, takeUntil } from 'rxjs';
 import * as uuid from 'uuid';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { AlertController, IonItemSliding, ModalController } from '@ionic/angular';
 import { Tab1Page } from '../tab1/tab1.page';
 
 @Component({
@@ -34,6 +34,7 @@ export class Tab2Page implements OnInit, OnDestroy {
     private service: CalendarService,
     private route: ActivatedRoute,
     private modalCtrl: ModalController,
+    private alertCtrl: AlertController
   ) {
     this.route.queryParams.subscribe((params) => {
       setTimeout(() => {
@@ -200,14 +201,23 @@ export class Tab2Page implements OnInit, OnDestroy {
     return result.toLocaleString(this.localID);
   }
 
-  async viewDetail(event: any){
-    console.log(event);
+  async viewDetail(event: any, action: string, slidingItem?: IonItemSliding){
+    slidingItem ? slidingItem.close() : null;
+    let titlePage = "";
+    switch (action) {
+      case "edit":
+        titlePage = "Chỉnh sửa";
+        break;
+      case "copy":
+        titlePage = "Sao chép";
+        break;
+    }
     const modal = await this.modalCtrl.create({
       component: Tab1Page,
       componentProps: {
-        titlePage: "Chi tiết",
-        action: "edit",
-        id: event.id,
+        titlePage: titlePage,
+        action: action,
+        id: action == 'edit' ? event.id : uuid.v4(),
         type: event.type,
         title: event.title,
         expenditure: event.expenditure,
@@ -222,8 +232,39 @@ export class Tab2Page implements OnInit, OnDestroy {
         this.eventSource.push(data.data);
         this.cal?.loadEvents();
         this.service.setEvents(this.eventSource);
+      } else if(data.role === 'copy'){
+        this.eventSource.push(data.data);
+        this.cal?.loadEvents();
+        this.service.setEvents(this.eventSource);
       }
     });
     await modal.present();
+  }
+
+  async delete(event: any, slidingItem: IonItemSliding){
+    slidingItem.close();
+    const alert = await this.alertCtrl.create({
+      header: 'Bạn có chắc chắn muốn xóa sự kiện này?',
+      buttons: [
+        {
+          text: 'Bỏ qua',
+          role: 'cancel',
+          handler: () => {
+            console.log('Alert canceled');
+          },
+        },
+        {
+          text: 'Xóa',
+          role: 'confirm',
+          handler: () => {
+            this.eventSource = this.eventSource.filter((item: any) => item.id !== event.id);
+            this.cal?.loadEvents();
+            this.service.setEvents(this.eventSource);
+          },
+        }
+      ],
+    });
+
+    await alert.present();
   }
 }
