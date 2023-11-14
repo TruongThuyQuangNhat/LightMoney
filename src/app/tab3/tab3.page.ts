@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { ChartData, ChartEvent, ChartType } from 'chart.js';
+import { ChartData, ChartEvent, ChartType, ChartOptions } from 'chart.js';
+import { StorageService } from '../service/storage.service';
+import * as moment from 'moment';
+import { Event } from '../model/event';
 
 @Component({
   selector: 'app-tab3',
@@ -7,16 +10,11 @@ import { ChartData, ChartEvent, ChartType } from 'chart.js';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-
   @Input() type: "revenue" | "expenditure" = "revenue";
-  constructor() {}
-
-  changeSegment(data: any) {
-    if(data?.detail?.value){
-      this.type = data.detail.value;
-    }
-  }
-
+  dataEvents: Event[] = [];
+  dataEventsToDate: Event[] = [];
+  startTime = moment().startOf('day').toDate();
+  endTime = moment().endOf('day').toDate();
   public doughnutChartLabels: string[] = [
     'Download Sales',
     'In-Store Sales',
@@ -24,32 +22,36 @@ export class Tab3Page {
   ];
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: this.doughnutChartLabels,
-    datasets: [
-      { data: [350, 450, 100] },
-      { data: [50, 150, 120] },
-      { data: [250, 130, 70] },
-    ],
+    datasets: [{ data: [350, 450, 100] }],
   };
   public doughnutChartType: ChartType = 'doughnut';
-
-  // events
-  public chartClicked({
-    event,
-    active,
-  }: {
-    event: ChartEvent;
-    active: object[];
-  }): void {
-    console.log(event, active);
+  public doughnutChartOptions: ChartOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  }
+  
+  constructor(
+    private storage: StorageService
+  ) {
+    setTimeout(() => {
+      this.storage.get("ArrayEvent")?.then((data) => {
+        if(data){
+          this.dataEvents = data;
+          this.dataEventsToDate = data.filter((item: any) => moment(item.startTime).isBetween(this.startTime, this.endTime));
+          console.log(this.dataEventsToDate);
+        }
+      });
+    }, 10);
   }
 
-  public chartHovered({
-    event,
-    active,
-  }: {
-    event: ChartEvent;
-    active: object[];
-  }): void {
-    console.log(event, active);
+  changeSegment(data: any) {
+    if(data?.detail?.value){
+      this.type = data.detail.value;
+    }
   }
+
+
 }

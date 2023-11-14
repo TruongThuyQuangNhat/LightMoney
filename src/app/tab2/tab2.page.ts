@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@ang
 import { CalendarComponent, CalendarMode } from 'ionic2-calendar';
 import * as moment from 'moment';
 import { CalendarService } from '../service/calendar.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import * as uuid from 'uuid';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, IonItemSliding, ModalController } from '@ionic/angular';

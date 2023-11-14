@@ -1,24 +1,70 @@
 <ion-header mode="ios">
   <ion-toolbar>
+    <ion-buttons>
+      <ion-icon class="fz-24" name="images-outline"></ion-icon>
+    </ion-buttons>
     <ion-segment mode="ios" [value]="type" (ionChange)="changeSegment($event)">
       <ion-segment-button value="revenue">
-        <ion-label>Tiền Thu</ion-label>
+        <ion-label>Hàng tháng</ion-label>
       </ion-segment-button>
       <ion-segment-button value="expenditure">
-        <ion-label>Tiền Chi</ion-label>
+        <ion-label>Hàng năm</ion-label>
       </ion-segment-button>
     </ion-segment>
+    <ion-buttons>
+      <ion-icon class="fz-24" name="search-outline"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-item lines="none">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+    <ion-label class="text-center">10/2023 (01/10 - 31/10)</ion-label>
+    <ion-icon name="chevron-forward-outline"></ion-icon>
+  </ion-item>
+  <div class="flex">
+    <ion-item class="w-100" lines="none">
+      <ion-label>Thu</ion-label>
+      <ion-text class="text-right" color="success">+ 123.000.000</ion-text>
+    </ion-item>
+    <div style="width: 10px;"></div>
+    <ion-item class="w-100" lines="none">
+      <ion-label>Chi</ion-label>
+      <ion-text class="text-right" color="danger">- 123.000.000</ion-text>
+    </ion-item>
+  </div>
+  <ion-item class="w-100" lines="none">
+    <ion-label>Thu Chi</ion-label>
+    <ion-text class="text-right" color="success">+ 123.000.000</ion-text>
+  </ion-item>
+
+  <ion-segment value="default" mode="md">
+    <ion-segment-button value="default">
+      <ion-label>Default</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="segment">
+      <ion-label>Segment</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="chart">
     <canvas
       baseChart
-      class="chart"
       [data]="doughnutChartData"
       [type]="doughnutChartType"
+      [options]="doughnutChartOptions"
     >
     </canvas>
   </div>
+  <ion-list>
+    <ng-container *ngFor="let item of dataEventsToDate">
+      <ion-item>
+        <ion-icon name="{{item?.category?.icon}}"></ion-icon>
+        <ion-label>{{item?.category?.name}}</ion-label>
+        <ion-text *ngIf="type == 'revenue'" color="success">{{item?.revenue}}</ion-text>
+        <ion-text *ngIf="type == 'expenditure'" color="success">{{item?.expenditure}}</ion-text>
+      </ion-item>
+    </ng-container>
+  </ion-list>
 </ion-content>
