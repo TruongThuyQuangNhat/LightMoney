@@ -28,6 +28,7 @@
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
     "@ionic/storage-angular": "^4.0.0",
+    "capacitor-screenshot": "^5.0.0",
     "cordova-sqlite-storage": "^6.1.0",
     "ionic2-calendar": "^2.1.0",
     "ionicons": "^7.0.0",

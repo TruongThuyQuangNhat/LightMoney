@@ -3,11 +3,11 @@
     <ion-buttons>
       <ion-icon class="fz-24" name="images-outline"></ion-icon>
     </ion-buttons>
-    <ion-segment mode="ios" [value]="type" (ionChange)="changeSegment($event)">
-      <ion-segment-button value="revenue">
+    <ion-segment mode="ios" value="month">
+      <ion-segment-button value="month">
         <ion-label>Hàng tháng</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="expenditure">
+      <ion-segment-button value="year">
         <ion-label>Hàng năm</ion-label>
       </ion-segment-button>
     </ion-segment>
@@ -20,31 +20,47 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-item lines="none">
     <ion-icon name="chevron-back-outline"></ion-icon>
-    <ion-label class="text-center">10/2023 (01/10 - 31/10)</ion-label>
+    <ion-label class="text-center">
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime 
+            presentation="month-year" 
+            (ionChange)="changeDate($event)"
+            id="datetime"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-label>
     <ion-icon name="chevron-forward-outline"></ion-icon>
   </ion-item>
   <div class="flex">
     <ion-item class="w-100" lines="none">
       <ion-label>Thu</ion-label>
-      <ion-text class="text-right" color="success">+ 123.000.000</ion-text>
+      <ion-text class="text-right revenue">+ {{numberRevenue}}</ion-text>
     </ion-item>
     <div style="width: 10px;"></div>
     <ion-item class="w-100" lines="none">
       <ion-label>Chi</ion-label>
-      <ion-text class="text-right" color="danger">- 123.000.000</ion-text>
+      <ion-text class="text-right expenditure">- {{numberExpenditure}}</ion-text>
     </ion-item>
   </div>
   <ion-item class="w-100" lines="none">
     <ion-label>Thu Chi</ion-label>
-    <ion-text class="text-right" color="success">+ 123.000.000</ion-text>
+    <ng-container *ngIf="numberRevenue >= numberExpenditure">
+      <ion-text class="text-right revenue">+ {{numberRevenue - numberExpenditure}}</ion-text>
+    </ng-container>
+    <ng-container *ngIf="numberRevenue < numberExpenditure">
+      <ion-text class="text-right expenditure">- {{numberExpenditure - numberRevenue}}</ion-text>
+    </ng-container>
   </ion-item>
 
-  <ion-segment value="default" mode="md">
-    <ion-segment-button value="default">
-      <ion-label>Default</ion-label>
+  <ion-segment value="revenue" mode="md" [value]="type" (ionChange)="changeSegment($event)">
+    <ion-segment-button value="revenue">
+      <ion-label>Thu</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="segment">
-      <ion-label>Segment</ion-label>
+    <ion-segment-button value="expenditure">
+      <ion-label>Chi</ion-label>
     </ion-segment-button>
   </ion-segment>
 
@@ -58,12 +74,12 @@
     </canvas>
   </div>
   <ion-list>
-    <ng-container *ngFor="let item of dataEventsToDate">
+    <ng-container *ngFor="let item of dataEvent">
       <ion-item>
-        <ion-icon name="{{item?.category?.icon}}"></ion-icon>
-        <ion-label>{{item?.category?.name}}</ion-label>
-        <ion-text *ngIf="type == 'revenue'" color="success">{{item?.revenue}}</ion-text>
-        <ion-text *ngIf="type == 'expenditure'" color="success">{{item?.expenditure}}</ion-text>
+        <ion-icon name="{{item?.category?.icon}}" [style]="'color:'+item?.category?.color+';'"></ion-icon>
+        <ion-label style="margin-left: 10px;">{{item?.category?.name}}</ion-label>
+        <ion-text class="revenue" *ngIf="type == 'revenue'">+ {{item?.revenue}}</ion-text>
+        <ion-text class="expenditure" *ngIf="type == 'expenditure'">- {{item?.expenditure}}</ion-text>
       </ion-item>
     </ng-container>
   </ion-list>
