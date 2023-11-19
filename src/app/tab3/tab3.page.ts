@@ -3,6 +3,7 @@ import { Chart, ChartData, ChartType, ChartOptions } from 'chart.js';
 import { StorageService } from '../service/storage.service';
 import * as moment from 'moment';
 import { Event } from '../model/event';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -34,15 +35,18 @@ export class Tab3Page {
   
   constructor(
     private storage: StorageService,
+    private route: ActivatedRoute,
   ) {
-    setTimeout(() => {
-      this.storage.get("ArrayEvent")?.then((data) => {
-        if(data){
-          this.dataEvents = data;
-          this.loadData();
-        }
-      });
-    }, 10);
+    this.route.queryParams.subscribe((params) => {
+      setTimeout(() => {
+        this.storage.get("ArrayEvent")?.then((data) => {
+          if(data){
+            this.dataEvents = data;
+            this.loadData();
+          }
+        });
+      }, 10);
+    });
   }
 
   changeSegment(data: any) {
