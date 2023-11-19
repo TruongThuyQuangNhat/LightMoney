@@ -1,5 +1,5 @@
-import { Component, Input, ViewChild } from '@angular/core';
-import { ChartData, ChartType, ChartOptions } from 'chart.js';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Chart, ChartData, ChartType, ChartOptions } from 'chart.js';
 import { StorageService } from '../service/storage.service';
 import * as moment from 'moment';
 import { Event } from '../model/event';
@@ -19,19 +19,17 @@ export class Tab3Page {
   startTime = moment().startOf('month').toDate();
   endTime = moment().endOf('month').toDate();
   dataChart: number[] = [];
-  public doughnutChartLabels: string[] = [];
-  public doughnutChartData: ChartData<'doughnut'> = {
-    labels: this.doughnutChartLabels,
-    datasets: [{ data: [] }],
-  };
-  public doughnutChartType: ChartType = 'doughnut';
-  public doughnutChartOptions: ChartOptions = {
+  currency = "VND";
+  doughnutChartLabels: string[] = [];
+  doughnutChartColor: string[] = [];
+  doughnutChartOptions: ChartOptions = {
     plugins: {
       legend: {
         display: false,
       },
     },
   }
+  chartInstance: any;
   
   constructor(
     private storage: StorageService,
@@ -61,22 +59,43 @@ export class Tab3Page {
   }
 
   loadData(){
+    this.doughnutChartLabels = [];
+    this.dataChart = [];
+    this.doughnutChartColor = [];
     this.dataEventsToDate = this.dataEvents.filter((item: any) => moment(item.startTime).isBetween(this.startTime, this.endTime));
-    this.dataEventsToDate.forEach((item: any) => {
+    this.dataEvent = this.dataEventsToDate.filter((item: any) => item.type === this.type);
+    this.dataEvent.forEach((item: any) => {
       if(!this.doughnutChartLabels.includes(item.category.name)){
         this.doughnutChartLabels.push(item.category.name);
+        this.doughnutChartColor.push(item.category.color);
       }
     });
     this.doughnutChartLabels.forEach((item: any, index) => {
-      const data = this.dataEventsToDate.filter((event: any) => event.category.name === item);
+      const data = this.dataEvent.filter((event: any) => event.category.name === item);
       const total = data.reduce((a: any, b: any) => a + (b[this.type] || 0), 0);
       this.dataChart[index] = total;
     });
-    this.doughnutChartData.datasets[0].data = this.dataChart;
-    console.log(this.dataChart);
-    console.log(this.doughnutChartLabels);
-    this.dataEvent = this.dataEventsToDate.filter((item: any) => item.type === this.type);
+    this.drawChart();
     this.numberExpenditure = this.dataEventsToDate.reduce((a: any, b: any) => a + (b['expenditure'] || 0), 0);
     this.numberRevenue = this.dataEventsToDate.reduce((a: any, b: any) => a + (b['revenue'] || 0), 0);
+  }
+
+  drawChart() {
+    if (this.chartInstance) {
+      this.chartInstance.destroy();
+    }
+    this.chartInstance = new Chart('chartInstance', {
+      type: 'doughnut',
+      data: {
+        labels: this.doughnutChartLabels,
+        datasets: [
+          {
+            data: this.dataChart,
+            backgroundColor: this.doughnutChartColor,
+          },
+        ],
+      },
+      options: this.doughnutChartOptions,
+    });
   }
 }
