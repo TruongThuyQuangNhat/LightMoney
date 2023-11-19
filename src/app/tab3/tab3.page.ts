@@ -30,6 +30,7 @@ export class Tab3Page {
     },
   }
   chartInstance: any;
+  listCategory: any[] = [];
   
   constructor(
     private storage: StorageService,
@@ -62,12 +63,26 @@ export class Tab3Page {
     this.doughnutChartLabels = [];
     this.dataChart = [];
     this.doughnutChartColor = [];
+    this.listCategory = [];
     this.dataEventsToDate = this.dataEvents.filter((item: any) => moment(item.startTime).isBetween(this.startTime, this.endTime));
     this.dataEvent = this.dataEventsToDate.filter((item: any) => item.type === this.type);
     this.dataEvent.forEach((item: any) => {
       if(!this.doughnutChartLabels.includes(item.category.name)){
         this.doughnutChartLabels.push(item.category.name);
         this.doughnutChartColor.push(item.category.color);
+      }
+      const number = item[this.type] || 0;
+      const index = this.listCategory.findIndex((cate: any) => cate.id === item.category.id);
+      if(index > -1){
+        this.listCategory[index].number += number;
+      } else {
+        this.listCategory.push({
+          icon: item.category.icon,
+          id: item.category.id,
+          name: item.category.name,
+          color: item.category.color,
+          number: number,
+        });
       }
     });
     this.doughnutChartLabels.forEach((item: any, index) => {

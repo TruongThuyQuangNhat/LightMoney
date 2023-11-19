@@ -144,12 +144,15 @@ export class Tab2Page implements OnInit, OnDestroy {
         revenue: 0,
         type: 'expenditure',
         category: {
-          icon: "fast-food-outline",
-          name: "Ăn vặt",
-          color: "#f96161",
+          color: "#ff6600",
+          icon: "cart-outline",
+          id: "4501bcaf-d5ce-45e5-8941-95f26eac5fe3",
+          index: 8,
+          isDefault: true,
+          name: "Siêu thị",
           type: "expenditure",
-          isDefault: true
-      },
+          typeIcon: "outline",
+        }
       });
       events.push({
         id: uuid.v4(),
@@ -161,12 +164,15 @@ export class Tab2Page implements OnInit, OnDestroy {
         expenditure: 0,
         type: 'revenue',
         category: {
-          icon: "wallet-outline",
-          name: "Thu nhập khác",
-          color: "#5085a5",
-          type: "revenue",
-          isDefault: true
-      },
+          color: "#999966",
+          icon: "paw-outline",
+          id: "abd6fb7b-4124-4f5f-84f3-d6b21bbb2669",
+          index: 6,
+          isDefault: true,
+          name: "Thú cưng",
+          type: "expenditure",
+          typeIcon: "outline",
+        }
       });
     }
     return events;

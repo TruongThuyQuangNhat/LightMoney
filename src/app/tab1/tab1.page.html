@@ -21,13 +21,13 @@
     </ion-list-header>
     <ion-item>
       <ion-label>Ngày</ion-label>
-      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-datetime-button datetime="datetimePage1"></ion-datetime-button>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
           <ion-datetime 
             [(ngModel)]="date" 
             [presentation]="'date'"
-            id="datetime"
+            id="datetimePage1"
             [locale]="localID"
           ></ion-datetime>
         </ng-template>
