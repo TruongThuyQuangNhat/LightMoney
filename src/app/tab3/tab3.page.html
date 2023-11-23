@@ -71,14 +71,13 @@
   </div>
   <ion-list>
     <ng-container *ngFor="let item of listCategory">
-      <ion-item>
+      <ion-item [button]="true">
         <ion-icon name="{{item?.icon}}" [style]="'color:'+item?.color+';'"></ion-icon>
         <ion-label style="margin-left: 10px;">
           {{item?.name}}
         </ion-label>
         <ion-text class="revenue" *ngIf="type == 'revenue'">+ {{item?.number | currency:currency}}</ion-text>
         <ion-text class="expenditure" *ngIf="type == 'expenditure'">- {{item?.number | currency:currency}}</ion-text>
-        <ion-icon class="color-grey" name="chevron-forward-outline"></ion-icon>
       </ion-item>
     </ng-container>
   </ion-list>
