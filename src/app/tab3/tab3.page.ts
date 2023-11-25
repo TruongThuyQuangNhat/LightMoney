@@ -4,6 +4,8 @@ import { StorageService } from '../service/storage.service';
 import * as moment from 'moment';
 import { Event } from '../model/event';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { CategoryChartComponent } from './category-chart/category-chart.component';
 
 @Component({
   selector: 'app-tab3',
@@ -36,6 +38,7 @@ export class Tab3Page {
   constructor(
     private storage: StorageService,
     private route: ActivatedRoute,
+    private modal: ModalController,
   ) {
     this.route.queryParams.subscribe((params) => {
       setTimeout(() => {
@@ -116,5 +119,18 @@ export class Tab3Page {
       },
       options: this.doughnutChartOptions,
     });
+  }
+
+  async detailChart(item: any){
+    const modal = await this.modal.create({
+      component: CategoryChartComponent,
+      componentProps: {
+        category: item,
+        startTime: this.startTime,
+        endTime: this.endTime,
+      }
+    });
+    modal.onDidDismiss().then();
+    await modal.present();
   }
 }

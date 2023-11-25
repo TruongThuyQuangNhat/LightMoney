@@ -71,7 +71,7 @@
   </div>
   <ion-list>
     <ng-container *ngFor="let item of listCategory">
-      <ion-item [button]="true">
+      <ion-item [button]="true" (click)="detailChart(item)">
         <ion-icon name="{{item?.icon}}" [style]="'color:'+item?.color+';'"></ion-icon>
         <ion-label style="margin-left: 10px;">
           {{item?.name}}

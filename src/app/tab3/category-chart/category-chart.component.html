@@ -1,3 +1,53 @@
-<p>
-  category-chart works!
-</p>
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons (click)="back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>Aó Quần (Tháng 10) 234.000</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <canvas id="chart">{{chart}}</canvas>
+  <ion-list>
+    <ng-container *ngFor="let item of data; let i = index">
+      <ion-list-header *ngIf="i == 0 || item?.startTime.getTime() !== data[i-1]?.startTime.getTime()">
+        <ion-label>{{item?.startTime | date}}</ion-label>
+      </ion-list-header>
+      <ion-item-sliding #slidingItem>
+        <ion-item (click)="viewDetail(item, 'edit')">
+          <ion-avatar slot="start">
+            <ion-icon
+              [name]="item?.category?.icon"
+              [style]="'color: ' + item?.category?.color + ';'"
+            ></ion-icon>
+          </ion-avatar>
+          <ion-label>
+            <h3>{{item.category?.name}}</h3>
+            <p>{{item.title}}</p>
+          </ion-label>
+          <ion-note class="cur-revenue" slot="end" *ngIf="item.type == 'revenue'">
+            {{item.revenue | currency:currency}}
+          </ion-note>
+          <ion-note class="cur-expenditure" slot="end" *ngIf="item.type == 'expenditure'">
+            {{item.expenditure | currency:currency}}
+          </ion-note>
+        </ion-item>
+    
+        <ion-item-options>
+          <ion-item-option (click)="viewDetail(item, 'edit', slidingItem)" color="light">
+            <ion-icon name="pencil-outline" color="primary" slot="top"></ion-icon>
+            Chỉnh sửa
+          </ion-item-option>
+          <ion-item-option (click)="viewDetail(item, 'copy', slidingItem)" color="light">
+            <ion-icon name="copy-outline" color="warning" slot="top"></ion-icon>
+            Sao chép
+          </ion-item-option>
+          <ion-item-option (click)="delete(item, slidingItem)" color="light">
+            <ion-icon name="close" color="danger" slot="top"></ion-icon>
+            Xóa
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ng-container>
+  </ion-list>
+</ion-content>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CalendarService } from '../service/calendar.service';
 import { Event } from '../model/event';
 import { Category } from '../model/category';
@@ -13,7 +13,7 @@ import { CategoryService } from '../service/category.service';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page implements OnInit, AfterViewInit {
+export class Tab1Page implements OnInit {
   @Input() titlePage: string = "Thêm giao dịch";
   @Input() action: string = "add";
   @Input() date: string = new Date().toISOString();
@@ -33,10 +33,6 @@ export class Tab1Page implements OnInit, AfterViewInit {
     private storage: StorageService,
     private cateService: CategoryService,
   ) {}
-
-  ngAfterViewInit(): void {
-    console.log(this.category)
-  }
 
   ngOnInit() {
     setTimeout(async () => {
