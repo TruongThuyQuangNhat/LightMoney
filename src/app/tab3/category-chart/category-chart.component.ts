@@ -48,14 +48,28 @@ export class CategoryChartComponent  implements OnInit {
     this.data.sort((a, b) => {
       return moment(a.startTime).valueOf() - moment(b.startTime).valueOf();
     });
+    let labels: string[] = [];
+    let data: number[] = [];
+    for(let i = 1; i <= this.endTime.getDate(); i++){
+      labels[i-1] = i.toString();
+      const lst = this.data.filter((item) => {
+        if(moment(item.startTime).date() === i){
+          return item;
+        }
+      })
+      const count = lst.reduce((sum, item) => {
+        return sum + item[this.category.type];
+      }, 0);
+      data[i-1] = count;
+    }
     this.chart = new Chart('chart', {
       type: "bar",
       data: {
-        labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+        labels: labels,
         datasets: [{
           label: this.category.name,
           backgroundColor: this.category.color,
-          data: [2478, 5267, 734, 784, 433, 2478, 5267, 734, 784, 433, 2478, 5267]
+          data: data
         }]
       },
       options: {

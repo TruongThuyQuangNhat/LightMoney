@@ -23,6 +23,7 @@ export class Tab3Page {
   endTime = moment().endOf('month').toDate();
   dataChart: number[] = [];
   currency = "VND";
+  locale = "vi-VN";
   doughnutChartLabels: string[] = [];
   doughnutChartColor: string[] = [];
   doughnutChartOptions: ChartOptions = {
@@ -34,6 +35,7 @@ export class Tab3Page {
   }
   chartInstance: any;
   listCategory: any[] = [];
+  dateString = moment().format('YYYY-MM');
   
   constructor(
     private storage: StorageService,
@@ -61,6 +63,7 @@ export class Tab3Page {
 
   changeDate(event: any){
     const date = new Date(event?.detail?.value);
+    this.dateString = moment(date).format('YYYY-MM');
     this.startTime = moment(date).startOf('month').toDate();
     this.endTime = moment(date).endOf('month').toDate();
     this.loadData();
@@ -89,6 +92,7 @@ export class Tab3Page {
           name: item.category.name,
           color: item.category.color,
           number: number,
+          type: item.category.type,
         });
       }
     });
@@ -132,5 +136,12 @@ export class Tab3Page {
     });
     modal.onDidDismiss().then();
     await modal.present();
+  }
+
+  changeMonth(number: number){
+    this.startTime = moment(this.startTime).add(number, 'month').startOf('month').toDate();
+    this.endTime = moment(this.endTime).add(number, 'month').endOf('month').toDate();
+    this.dateString = moment(this.startTime).format('YYYY-MM');
+    this.loadData();
   }
 }

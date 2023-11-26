@@ -19,7 +19,7 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-item lines="none">
-    <ion-icon name="chevron-back-outline"></ion-icon>
+    <ion-icon (click)="changeMonth(-1)" name="chevron-back-outline"></ion-icon>
     <ion-label class="text-center">
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
       <ion-modal [keepContentsMounted]="true">
@@ -27,12 +27,14 @@
           <ion-datetime 
             presentation="month-year" 
             (ionChange)="changeDate($event)"
+            [locale]="locale"
             id="datetime"
+            [value]="dateString"
           ></ion-datetime>
         </ng-template>
       </ion-modal>
     </ion-label>
-    <ion-icon name="chevron-forward-outline"></ion-icon>
+    <ion-icon (click)="changeMonth(1)" name="chevron-forward-outline"></ion-icon>
   </ion-item>
   <div class="flex">
     <ion-item class="w-100" lines="none">

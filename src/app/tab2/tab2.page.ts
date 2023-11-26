@@ -164,14 +164,14 @@ export class Tab2Page implements OnInit, OnDestroy {
         expenditure: 0,
         type: 'revenue',
         category: {
-          color: "#999966",
-          icon: "paw-outline",
-          id: "abd6fb7b-4124-4f5f-84f3-d6b21bbb2669",
-          index: 6,
+          id: "25156491-3f5d-4e9a-903f-a4c65f0e8176",
+          icon: "wallet-outline",
+          name: "Thu nhập khác",
+          color: "#00cc99",
+          type: "revenue",
           isDefault: true,
-          name: "Thú cưng",
-          type: "expenditure",
           typeIcon: "outline",
+          index: 1
         }
       });
     }
