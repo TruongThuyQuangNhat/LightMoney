@@ -3,7 +3,7 @@
     <ion-buttons>
       <ion-icon class="fz-24" name="images-outline"></ion-icon>
     </ion-buttons>
-    <ion-segment mode="ios" value="month">
+    <ion-segment mode="ios" [value]="timeChart" (ionChange)="changeTypeChart($event)">
       <ion-segment-button value="month">
         <ion-label>Hàng tháng</ion-label>
       </ion-segment-button>
@@ -21,18 +21,34 @@
   <ion-item lines="none">
     <ion-icon (click)="changeMonth(-1)" name="chevron-back-outline"></ion-icon>
     <ion-label class="text-center">
-      <ion-datetime-button datetime="datetime"></ion-datetime-button>
-      <ion-modal [keepContentsMounted]="true">
-        <ng-template>
-          <ion-datetime 
-            presentation="month-year" 
-            (ionChange)="changeDate($event)"
-            [locale]="locale"
-            id="datetime"
-            [value]="dateString"
-          ></ion-datetime>
-        </ng-template>
-      </ion-modal>
+      <ng-container *ngIf="presentation == 'year'">
+        <ion-datetime-button datetime="datetime1"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime 
+              presentation="year" 
+              (ionChange)="changeDate($event)"
+              [locale]="locale"
+              id="datetime1"
+              [value]="dateString"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ng-container>
+      <ng-container *ngIf="presentation == 'month-year'">
+        <ion-datetime-button datetime="datetime2"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime 
+              presentation="month-year" 
+              (ionChange)="changeDate($event)"
+              [locale]="locale"
+              id="datetime2"
+              [value]="dateString"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ng-container>
     </ion-label>
     <ion-icon (click)="changeMonth(1)" name="chevron-forward-outline"></ion-icon>
   </ion-item>

@@ -14,6 +14,7 @@ import * as uuid from 'uuid';
 })
 export class CategoryChartComponent  implements OnInit {
   @Input() category: any;
+  @Input() total: number = 0;
   @Input() startTime: Date = moment().startOf('month').toDate();
   @Input() endTime: Date = moment().endOf('month').toDate();
   chart: any;

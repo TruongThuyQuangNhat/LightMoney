@@ -1,5 +1,5 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { Chart, ChartData, ChartType, ChartOptions } from 'chart.js';
+import { Component, Input } from '@angular/core';
+import { Chart, ChartOptions } from 'chart.js';
 import { StorageService } from '../service/storage.service';
 import * as moment from 'moment';
 import { Event } from '../model/event';
@@ -24,6 +24,8 @@ export class Tab3Page {
   dataChart: number[] = [];
   currency = "VND";
   locale = "vi-VN";
+  timeChart: any = "month";
+  presentation: string = "month-year";
   doughnutChartLabels: string[] = [];
   doughnutChartColor: string[] = [];
   doughnutChartOptions: ChartOptions = {
@@ -132,6 +134,7 @@ export class Tab3Page {
         category: item,
         startTime: this.startTime,
         endTime: this.endTime,
+        total: item.number,
       }
     });
     modal.onDidDismiss().then();
@@ -139,9 +142,31 @@ export class Tab3Page {
   }
 
   changeMonth(number: number){
-    this.startTime = moment(this.startTime).add(number, 'month').startOf('month').toDate();
-    this.endTime = moment(this.endTime).add(number, 'month').endOf('month').toDate();
-    this.dateString = moment(this.startTime).format('YYYY-MM');
+    this.startTime = moment(this.startTime).add(number, this.timeChart).startOf(this.timeChart).toDate();
+    this.endTime = moment(this.endTime).add(number, this.timeChart).endOf(this.timeChart).toDate();
+    if(this.timeChart === 'year'){
+      this.dateString = moment(this.startTime).format('YYYY');
+      this.presentation = "year";
+    } else { // month
+      this.dateString = moment(this.startTime).format('YYYY-MM');
+      this.presentation = "month-year";
+    }
     this.loadData();
+  }
+
+  changeTypeChart(data: any){
+    if(data?.detail?.value){
+      this.timeChart = data.detail.value;
+      this.startTime = moment(this.startTime).startOf(this.timeChart).toDate();
+      this.endTime = moment(this.endTime).endOf(this.timeChart).toDate();
+      if(this.timeChart === 'year'){
+        this.dateString = moment(this.startTime).format('YYYY');
+        this.presentation = "year";
+      } else { // month
+        this.dateString = moment(this.startTime).format('YYYY-MM');
+        this.presentation = "month-year";
+      }
+      this.loadData();
+    }
   }
 }
