@@ -17,10 +17,12 @@ export class CategoryChartComponent  implements OnInit {
   @Input() total: number = 0;
   @Input() startTime: Date = moment().startOf('month').toDate();
   @Input() endTime: Date = moment().endOf('month').toDate();
+  @Input() timeChart: string = "month";
   chart: any;
   eventSource: any[] = [];
   data: any[] = [];
   currency = "VND";
+  locale = "vi-VN";
   constructor(
     private modalCtrl: ModalController,
     private storage: StorageService,
@@ -51,18 +53,35 @@ export class CategoryChartComponent  implements OnInit {
     });
     let labels: string[] = [];
     let data: number[] = [];
-    for(let i = 1; i <= this.endTime.getDate(); i++){
-      labels[i-1] = i.toString();
-      const lst = this.data.filter((item) => {
-        if(moment(item.startTime).date() === i){
-          return item;
-        }
-      })
-      const count = lst.reduce((sum, item) => {
-        return sum + item[this.category.type];
-      }, 0);
-      data[i-1] = count;
+    
+    if(this.timeChart === "month"){
+      for(let i = 1; i <= this.endTime.getDate(); i++){
+        labels[i-1] = i.toString();
+        const lst = this.data.filter((item) => {
+          if(moment(item.startTime).date() === i){
+            return item;
+          }
+        })
+        const count = lst.reduce((sum, item) => {
+          return sum + item[this.category.type];
+        }, 0);
+        data[i-1] = count;
+      }
+    } else if(this.timeChart === "year"){
+      for(let i = 0; i < 12; i++){
+        labels[i] = moment().month(i).locale(this.locale).format('MMM');
+        const lst = this.data.filter((item) => {
+          if(moment(item.startTime).month() === i){
+            return item;
+          }
+        })
+        const count = lst.reduce((sum, item) => {
+          return sum + item[this.category.type];
+        }, 0);
+        data[i] = count;
+      }
     }
+
     this.chart = new Chart('chart', {
       type: "bar",
       data: {
@@ -155,5 +174,12 @@ export class CategoryChartComponent  implements OnInit {
     });
 
     await alert.present();
+  }
+
+  ReturnTitle(data: any){
+    if(data){
+      return moment(data).locale(this.locale).format('DD MMMM YYYY');
+    }
+    return "";
   }
 }

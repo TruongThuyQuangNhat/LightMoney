@@ -135,6 +135,7 @@ export class Tab3Page {
         startTime: this.startTime,
         endTime: this.endTime,
         total: item.number,
+        timeChart: this.timeChart,
       }
     });
     modal.onDidDismiss().then();
@@ -157,8 +158,8 @@ export class Tab3Page {
   changeTypeChart(data: any){
     if(data?.detail?.value){
       this.timeChart = data.detail.value;
-      this.startTime = moment(this.startTime).startOf(this.timeChart).toDate();
-      this.endTime = moment(this.endTime).endOf(this.timeChart).toDate();
+      this.startTime = moment().startOf(this.timeChart).toDate();
+      this.endTime = moment().endOf(this.timeChart).toDate();
       if(this.timeChart === 'year'){
         this.dateString = moment(this.startTime).format('YYYY');
         this.presentation = "year";

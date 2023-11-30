@@ -11,7 +11,7 @@
   <ion-list>
     <ng-container *ngFor="let item of data; let i = index">
       <ion-list-header mode="ios" *ngIf="i == 0 || item?.startTime.getTime() !== data[i-1]?.startTime.getTime()">
-        <ion-label>{{item?.startTime | date}}</ion-label>
+        <ion-label>{{ReturnTitle(item?.startTime)}}</ion-label>
       </ion-list-header>
       <ion-item-sliding #slidingItem>
         <ion-item (click)="viewDetail(item, 'edit')">
