@@ -23,6 +23,7 @@ export class CategoryChartComponent  implements OnInit {
   data: any[] = [];
   currency = "VND";
   locale = "vi-VN";
+  numberMedium = 0;
   constructor(
     private modalCtrl: ModalController,
     private storage: StorageService,
@@ -55,6 +56,7 @@ export class CategoryChartComponent  implements OnInit {
     let data: number[] = [];
     
     if(this.timeChart === "month"){
+      this.numberMedium = this.endTime.getDate();
       for(let i = 1; i <= this.endTime.getDate(); i++){
         labels[i-1] = i.toString();
         const lst = this.data.filter((item) => {
@@ -68,6 +70,7 @@ export class CategoryChartComponent  implements OnInit {
         data[i-1] = count;
       }
     } else if(this.timeChart === "year"){
+      this.numberMedium = 12;
       for(let i = 0; i < 12; i++){
         labels[i] = moment().month(i).locale(this.locale).format('MMM');
         const lst = this.data.filter((item) => {
@@ -181,5 +184,19 @@ export class CategoryChartComponent  implements OnInit {
       return moment(data).locale(this.locale).format('DD MMMM YYYY');
     }
     return "";
+  }
+
+  totalOfTime(data: any){
+    if(data){
+      const lst = this.data.filter((item) => {
+        if(moment(item.startTime).date() === moment(data).date()){
+          return item;
+        }
+      });
+      return lst.reduce((sum: any, item: any) => {
+        return sum + item[this.category.type];
+      }, 0);
+    }
+    return 0;
   }
 }

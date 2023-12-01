@@ -6,12 +6,22 @@
     <ion-title>{{category.name}} ({{total | currency: currency}})</ion-title>
   </ion-toolbar>
 </ion-header>
+<canvas id="chart">{{chart}}</canvas>
 <ion-content>
-  <canvas id="chart">{{chart}}</canvas>
+  <ion-list>
+    <ion-item lines="none">
+      <ion-label>Tổng</ion-label>
+      <ion-text [ngClass]="'cur-'+category.type">{{total | currency:currency}}</ion-text>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>Trung bình</ion-label>
+      <ion-text [ngClass]="'cur-'+category.type">{{ (total/numberMedium) | currency:currency}}</ion-text>
+    </ion-item>
+  </ion-list>
   <ion-list>
     <ng-container *ngFor="let item of data; let i = index">
       <ion-list-header mode="ios" *ngIf="i == 0 || item?.startTime.getTime() !== data[i-1]?.startTime.getTime()">
-        <ion-label>{{ReturnTitle(item?.startTime)}}</ion-label>
+        <ion-label>{{ReturnTitle(item?.startTime)}} - ({{totalOfTime(item?.startTime) | currency:currency}})</ion-label>
       </ion-list-header>
       <ion-item-sliding #slidingItem>
         <ion-item (click)="viewDetail(item, 'edit')">
