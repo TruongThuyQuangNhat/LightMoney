@@ -6,6 +6,7 @@ import { Event } from '../model/event';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { CategoryChartComponent } from './category-chart/category-chart.component';
+import { SearchEventComponent } from './search-event/search-event.component';
 
 @Component({
   selector: 'app-tab3',
@@ -169,5 +170,13 @@ export class Tab3Page {
       }
       this.loadData();
     }
+  }
+
+  async openSearchModal(){
+    const modal = await this.modal.create({
+      component: SearchEventComponent,
+    });
+    modal.onDidDismiss().then();
+    await modal.present();
   }
 }

@@ -1,0 +1,23 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>Search Event</ion-title>
+  </ion-toolbar>
+  <ion-searchbar mode="ios" (ionInput)="searchEvent($event)"></ion-searchbar>
+  <div class="padding">
+    <ion-chip>Tiền Thu</ion-chip>
+    <ion-chip>Tiền Chi</ion-chip>
+    <ion-chip>Danh mục</ion-chip>
+    <ion-chip>Thời gian</ion-chip>
+  </div>
+</ion-header>
+<ion-content mode="ios" class="ion-padding">
+  
+  <ion-list>
+    <ion-item *ngFor="let event of events">
+      <ion-label>{{event.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

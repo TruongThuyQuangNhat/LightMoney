@@ -1,0 +1,18 @@
+<ion-item>
+  <ion-avatar slot="start">
+    <ion-icon
+      [name]="item?.category?.icon"
+      [style]="'color: ' + item?.category?.color + ';'"
+    ></ion-icon>
+  </ion-avatar>
+  <ion-label>
+    <h3>{{item.category?.name}}</h3>
+    <p>{{item.title}}</p>
+  </ion-label>
+  <ion-note class="cur-revenue" slot="end" *ngIf="item.type == 'revenue'">
+    {{item.revenue | currency:currency}}
+  </ion-note>
+  <ion-note class="cur-expenditure" slot="end" *ngIf="item.type == 'expenditure'">
+    {{item.expenditure | currency:currency}}
+  </ion-note>
+</ion-item>

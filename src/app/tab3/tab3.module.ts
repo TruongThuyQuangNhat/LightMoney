@@ -6,6 +6,7 @@ import { Tab3Page } from './tab3.page';
 import { NgChartsModule } from 'ng2-charts';
 import { Tab3PageRoutingModule } from './tab3-routing.module';
 import { CategoryChartComponent } from './category-chart/category-chart.component';
+import { SearchEventComponent } from './search-event/search-event.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { CategoryChartComponent } from './category-chart/category-chart.componen
     NgChartsModule,
     Tab3PageRoutingModule
   ],
-  declarations: [Tab3Page, CategoryChartComponent]
+  declarations: [Tab3Page, CategoryChartComponent, SearchEventComponent]
 })
 export class Tab3PageModule {}

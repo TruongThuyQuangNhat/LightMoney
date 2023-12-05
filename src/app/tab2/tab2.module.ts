@@ -6,6 +6,7 @@ import { Tab2Page } from './tab2.page';
 
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { Tab2PageRoutingModule } from './tab2-routing.module';
+import { ComponentModule } from '../component/component.module';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     CommonModule,
     FormsModule,
     Tab2PageRoutingModule,
-    NgCalendarModule
+    NgCalendarModule,
+    ComponentModule,
   ],
   declarations: [Tab2Page]
 })

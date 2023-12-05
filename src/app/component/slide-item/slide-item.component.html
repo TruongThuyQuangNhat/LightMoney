@@ -1,0 +1,22 @@
+<ion-item-sliding #slidingItem>
+  <app-item-event
+    [item]="item"
+    [currency]="currency"
+    (click)="action('edit')"
+  ></app-item-event>
+
+  <ion-item-options>
+    <ion-item-option (click)="action('edit', slidingItem)" color="light">
+      <ion-icon name="pencil-outline" color="primary" slot="top"></ion-icon>
+      Chỉnh sửa
+    </ion-item-option>
+    <ion-item-option (click)="action('copy', slidingItem)" color="light">
+      <ion-icon name="copy-outline" color="warning" slot="top"></ion-icon>
+      Sao chép
+    </ion-item-option>
+    <ion-item-option (click)="action('delete', slidingItem)" color="light">
+      <ion-icon name="close" color="danger" slot="top"></ion-icon>
+      Xóa
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>
