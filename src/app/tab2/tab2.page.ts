@@ -258,8 +258,10 @@ export class Tab2Page implements OnInit, OnDestroy {
       });
       modal.onDidDismiss().then((data) => {
         if(data.role === 'edit'){
-          this.eventSource = this.eventSource.filter((item: any) => item.id !== data.data.id);
-          this.eventSource.push(data.data);
+          const index = this.eventSource.findIndex((item: any) => item.id === data.data.id);
+          if(index !== -1){
+            this.eventSource[index] = data.data;
+          }
           this.cal?.loadEvents();
           this.service.setEvents(this.eventSource);
         } else if(data.role === 'copy'){

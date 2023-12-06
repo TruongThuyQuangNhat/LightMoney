@@ -176,7 +176,14 @@ export class Tab3Page {
     const modal = await this.modal.create({
       component: SearchEventComponent,
     });
-    modal.onDidDismiss().then();
+    modal.onDidDismiss().then(res => {
+      this.storage.get("ArrayEvent")?.then((data) => {
+        if(data){
+          this.dataEvents = data;
+          this.loadData();
+        }
+      });
+    });
     await modal.present();
   }
 }

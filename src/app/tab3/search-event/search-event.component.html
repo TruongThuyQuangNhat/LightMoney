@@ -7,17 +7,33 @@
   </ion-toolbar>
   <ion-searchbar mode="ios" (ionInput)="searchEvent($event)"></ion-searchbar>
   <div class="padding">
-    <ion-chip>Tiền Thu</ion-chip>
-    <ion-chip>Tiền Chi</ion-chip>
+    <ion-chip 
+      (click)="filterData('revenue')"
+      [color]="filter === 'revenue' ? 'primary' : ''"
+    >Tiền Thu</ion-chip>
+    <ion-chip 
+      (click)="filterData('expenditure')"
+      [color]="filter === 'expenditure' ? 'primary' : ''"
+    >Tiền Chi</ion-chip>
     <ion-chip>Danh mục</ion-chip>
     <ion-chip>Thời gian</ion-chip>
   </div>
 </ion-header>
-<ion-content mode="ios" class="ion-padding">
-  
+<ion-content mode="ios">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
-    <ion-item *ngFor="let event of events">
-      <ion-label>{{event.name}}</ion-label>
-    </ion-item>
+    <ng-container *ngFor="let item of eventSource; let i = index">
+      <ion-list-header mode="ios" *ngIf="i == 0 || item?.startTime.getTime() !== eventSource[i-1]?.startTime.getTime()">
+        <ion-label>{{ReturnTitle(item?.startTime)}} - ({{totalOfTime(item?.startTime) | currency:currency}})</ion-label>
+      </ion-list-header>
+      <app-slide-item
+        [item]="item"
+        [currency]="currency"
+        (eventDetail)="viewDetail(item, $event)"
+      ></app-slide-item>
+    </ng-container>
   </ion-list>
 </ion-content>

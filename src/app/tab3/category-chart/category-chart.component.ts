@@ -191,7 +191,7 @@ export class CategoryChartComponent  implements OnInit {
   totalOfTime(data: any){
     if(data){
       const lst = this.data.filter((item) => {
-        if(moment(item.startTime).date() === moment(data).date()){
+        if(moment(item.startTime).valueOf() === moment(data).valueOf()){
           return item;
         }
       });
