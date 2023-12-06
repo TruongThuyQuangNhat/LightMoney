@@ -7,6 +7,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { Tab3PageRoutingModule } from './tab3-routing.module';
 import { CategoryChartComponent } from './category-chart/category-chart.component';
 import { SearchEventComponent } from './search-event/search-event.component';
+import { ComponentModule } from '../component/component.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { SearchEventComponent } from './search-event/search-event.component';
     CommonModule,
     FormsModule,
     NgChartsModule,
-    Tab3PageRoutingModule
+    Tab3PageRoutingModule,
+    ComponentModule
   ],
   declarations: [Tab3Page, CategoryChartComponent, SearchEventComponent]
 })
