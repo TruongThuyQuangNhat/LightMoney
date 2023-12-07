@@ -6,7 +6,6 @@ import * as uuid from 'uuid';
 import { ModalController } from '@ionic/angular';
 import { CategoryComponent } from './category/category.component';
 import { StorageService } from '../service/storage.service';
-import { CategoryService } from '../service/category.service';
 
 @Component({
   selector: 'app-tab1',
@@ -31,7 +30,6 @@ export class Tab1Page implements OnInit {
     private service: CalendarService,
     private modalCtrl: ModalController,
     private storage: StorageService,
-    private cateService: CategoryService,
   ) {}
 
   ngOnInit() {
@@ -55,6 +53,14 @@ export class Tab1Page implements OnInit {
         .filter((item) => item.type === this.type)
         .sort((a: Category, b: Category) => a.index - b.index);
       this.category = this.listCategory[0];
+      
+      if(this.type === "revenue"){
+        this.revenue = this.expenditure;
+        this.expenditure = 0;
+      } else {
+        this.expenditure = this.revenue;
+        this.revenue = 0;
+      }
     }
   }
 

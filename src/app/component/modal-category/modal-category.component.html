@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons (click)="cancel()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>Modal</ion-title>
+  </ion-toolbar>
+  <ion-searchbar (ionInput)="searchCategory($event)"></ion-searchbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ng-container *ngFor="let item of listCategory">
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-icon [name]="item.icon" 
+          [style]="'color: ' + item.color + '; font-size: 36px; margin: auto;'" 
+          aria-hidden="true"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h3>{{item.name}}</h3>
+        </ion-label>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>

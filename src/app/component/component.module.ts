@@ -3,10 +3,14 @@ import { CommonModule } from '@angular/common';
 import { SlideItemComponent } from './slide-item/slide-item.component';
 import { ItemEventComponent } from './item-event/item-event.component';
 import { IonicModule } from '@ionic/angular';
+import { ModalSelectTimeComponent } from './modal-select-time/modal-select-time.component';
+import { ModalCategoryComponent } from './modal-category/modal-category.component';
 
 const COMPONENT = [
   SlideItemComponent,
-  ItemEventComponent
+  ItemEventComponent,
+  ModalSelectTimeComponent,
+  ModalCategoryComponent
 ];
 
 @NgModule({

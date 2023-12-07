@@ -26,6 +26,10 @@ export class CategoryService {
     });
   }
 
+  getCategory() {
+    return this.storage.get('ArrayCategory');
+  }
+
   async checkEventAvailable(category: Category) {
     return await this.storage.get('ArrayEvent')?.then(async (data) => {
       if (data && data.length > 0) {

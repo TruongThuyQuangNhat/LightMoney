@@ -4,6 +4,8 @@ import { CalendarService } from 'src/app/service/calendar.service';
 import * as uuid from 'uuid';
 import { Tab1Page } from 'src/app/tab1/tab1.page';
 import * as moment from 'moment';
+import { ModalCategoryComponent } from 'src/app/component/modal-category/modal-category.component';
+import { ModalSelectTimeComponent } from 'src/app/component/modal-select-time/modal-select-time.component';
 
 @Component({
   selector: 'app-search-event',
@@ -30,11 +32,11 @@ export class SearchEventComponent  implements OnInit {
   loadData() {
     this.service.getEvents()?.then((data: any) => {
       if (data) {
-        this.eventSource = [...data];
-        this.eventSourceRoot =  [...data];
-        this.eventSource.sort((a: any, b: any) => {
+        data.sort((a: any, b: any) => {
           return moment(b.startTime).valueOf() - moment(a.startTime).valueOf();
         });
+        this.eventSource = [...data];
+        this.eventSourceRoot =  [...data];
         if(this.filter !== ""){
           this.eventSource = this.eventSourceRoot.filter((item: any) => {
             return item.type === this.filter;
@@ -68,8 +70,44 @@ export class SearchEventComponent  implements OnInit {
   }
 
   filterData(data: string) {
-    this.filter = data;
-    this.loadData();
+    if(this.filter === data){
+      this.filter = "";
+      this.loadData();
+    } else {
+      this.filter = data;
+      this.loadData();
+    }
+  }
+
+  async filterTime() {
+    const modal = await this.modalCtrl.create({
+      component: ModalSelectTimeComponent,
+      cssClass: 'modal-select-time',
+      componentProps: {
+        type: this.filter,
+      }
+    });
+    modal.onDidDismiss().then((data) => {
+      if(data.role === 'accept'){
+        //
+      }
+    });
+    await modal.present();
+  }
+
+  async filterCategory() {
+    const modal = await this.modalCtrl.create({
+      component: ModalCategoryComponent,
+      componentProps: {
+        type: this.filter,
+      }
+    });
+    modal.onDidDismiss().then((data) => {
+      if(data.role === 'accept'){
+        //
+      }
+    });
+    await modal.present();
   }
 
   async viewDetail(event: any, action: string){

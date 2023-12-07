@@ -15,8 +15,12 @@
       (click)="filterData('expenditure')"
       [color]="filter === 'expenditure' ? 'primary' : ''"
     >Tiền Chi</ion-chip>
-    <ion-chip>Danh mục</ion-chip>
-    <ion-chip>Thời gian</ion-chip>
+    <ion-chip
+      (click)="filterCategory()"
+    >Danh mục</ion-chip>
+    <ion-chip
+      (click)="filterTime()"
+    >Thời gian</ion-chip>
   </div>
 </ion-header>
 <ion-content mode="ios">
