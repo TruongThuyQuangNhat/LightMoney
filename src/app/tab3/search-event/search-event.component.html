@@ -10,14 +10,24 @@
     <ion-chip 
       (click)="filterData('revenue')"
       [color]="filter === 'revenue' ? 'primary' : ''"
-    >Tiền Thu</ion-chip>
+    >
+      <ion-icon name="enter-outline"></ion-icon>
+      <ion-label>Tiền Thu</ion-label>
+    </ion-chip>
     <ion-chip 
       (click)="filterData('expenditure')"
       [color]="filter === 'expenditure' ? 'primary' : ''"
-    >Tiền Chi</ion-chip>
+    >
+      <ion-icon name="exit-outline"></ion-icon>
+      <ion-label>Tiền Chi</ion-label>
+    </ion-chip>
     <ion-chip
       (click)="filterCategory()"
-    >Danh mục</ion-chip>
+      [color]="haveCategory ? 'primary' : ''"
+    >
+      <ion-icon [name]="iconCategory"></ion-icon>
+      <ion-label>{{textCategory}}</ion-label>
+    </ion-chip>
     <ion-chip
       (click)="filterTime()"
     >Thời gian</ion-chip>

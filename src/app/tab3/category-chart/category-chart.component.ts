@@ -183,7 +183,7 @@ export class CategoryChartComponent  implements OnInit {
 
   ReturnTitle(data: any){
     if(data){
-      return moment(data).locale(this.locale).format('DD MMMM YYYY');
+      return moment(data).locale(this.locale).format('dddd, DD MMMM YYYY');
     }
     return "";
   }

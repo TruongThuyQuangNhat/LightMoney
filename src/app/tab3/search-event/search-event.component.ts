@@ -6,6 +6,7 @@ import { Tab1Page } from 'src/app/tab1/tab1.page';
 import * as moment from 'moment';
 import { ModalCategoryComponent } from 'src/app/component/modal-category/modal-category.component';
 import { ModalSelectTimeComponent } from 'src/app/component/modal-select-time/modal-select-time.component';
+import { Category } from 'src/app/model/category';
 
 @Component({
   selector: 'app-search-event',
@@ -19,6 +20,10 @@ export class SearchEventComponent  implements OnInit {
   filter: string = "";
   locale = "vi-VN";
   search: string = "";
+  listFilterCategory: Category[] = [];
+  textCategory: string = "Danh mục";
+  haveCategory: boolean = false;
+  iconCategory: string = "grid-outline";
   constructor(
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
@@ -47,6 +52,16 @@ export class SearchEventComponent  implements OnInit {
         if(this.search !== ""){
           this.eventSource = this.eventSource.filter((item: any) => {
             return item.title.toLowerCase().includes(this.search.toLowerCase());
+          });
+        }
+        if(this.listFilterCategory.length > 0){
+          this.eventSource = this.eventSource.filter((item: any) => {
+            const index = this.listFilterCategory.findIndex((cate) => {
+              return cate.id === item.category.id;
+            });
+            if(index !== -1){
+              return item;
+            }
           });
         }
       }
@@ -99,12 +114,27 @@ export class SearchEventComponent  implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ModalCategoryComponent,
       componentProps: {
-        type: this.filter,
+        listFilterCategory: this.listFilterCategory,
       }
     });
     modal.onDidDismiss().then((data) => {
       if(data.role === 'accept'){
-        //
+        console.log(data.data);
+        this.listFilterCategory = data.data;
+        if(this.listFilterCategory.length === 0){
+          this.textCategory = "Danh mục";
+          this.haveCategory = false;
+          this.iconCategory = "grid-outline";
+        } else if(this.listFilterCategory.length === 1){
+          this.textCategory = this.listFilterCategory[0].name;
+          this.haveCategory = true;
+          this.iconCategory = this.listFilterCategory[0].icon;
+        } else {
+          this.textCategory = "Danh mục" + " (" + this.listFilterCategory.length + ")";
+          this.haveCategory = true;
+          this.iconCategory = "grid-outline";
+        }
+        this.loadData();
       }
     });
     await modal.present();
@@ -182,7 +212,7 @@ export class SearchEventComponent  implements OnInit {
 
   ReturnTitle(data: any){
     if(data){
-      return moment(data).locale(this.locale).format('DD MMMM YYYY');
+      return moment(data).locale(this.locale).format('dddd, DD MMMM YYYY');
     }
     return "";
   }

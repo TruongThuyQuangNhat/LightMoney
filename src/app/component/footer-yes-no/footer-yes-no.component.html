@@ -1,0 +1,14 @@
+<ion-footer mode="ios">
+  <ion-toolbar mode="ios">
+    <div style="display: flex;">
+      <ion-button style="width: 100%;" fill="outline" expand="block" (click)="cancel()">
+        <ion-icon slot="start" name="close-outline"></ion-icon>
+        <ng-container>Hủy</ng-container>
+      </ion-button>
+      <ion-button style="width: 100%;" expand="block" (click)="accept()">
+        <ion-icon slot="start" name="checkmark-outline"></ion-icon>
+        <ng-container>Đồng ý</ng-container>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

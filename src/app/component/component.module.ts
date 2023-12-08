@@ -5,12 +5,14 @@ import { ItemEventComponent } from './item-event/item-event.component';
 import { IonicModule } from '@ionic/angular';
 import { ModalSelectTimeComponent } from './modal-select-time/modal-select-time.component';
 import { ModalCategoryComponent } from './modal-category/modal-category.component';
+import { FooterYesNoComponent } from './footer-yes-no/footer-yes-no.component';
 
 const COMPONENT = [
   SlideItemComponent,
   ItemEventComponent,
   ModalSelectTimeComponent,
-  ModalCategoryComponent
+  ModalCategoryComponent,
+  FooterYesNoComponent
 ];
 
 @NgModule({
