@@ -1,3 +1,84 @@
-<div class="wrapper">
-  <ion-datetime></ion-datetime>
-</div>
+<ion-card>
+  <!-- #region header -->
+  <ion-card-header class="header">
+
+    <!-- #region header top -->
+    <div class="top">
+      <!-- #region today text -->
+      <h1 (click)="today()">
+        Hôm nay
+      </h1>
+      <div>
+        <ion-select mode="md" [value]="mode" interface="popover"
+          (ionChange)="changeOption($event)">
+          <ion-select-option value="day">
+            Ngày
+          </ion-select-option>
+          <ion-select-option value="month">
+            Tháng
+          </ion-select-option>
+          <ion-select-option value="year">
+            Năm
+          </ion-select-option>
+          <ion-select-option value="range">
+            Khoảng thời gian
+          </ion-select-option>
+        </ion-select>
+      </div>
+      <!-- #endregion -->
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region show selected date time -->
+    <ng-container *ngIf="mode == 'day'">
+      <h1 class="title">
+        {{selectedDate | date: 'dd/MM/yyyy'}}
+      </h1>
+    </ng-container>
+    <ng-container *ngIf="mode == 'month'">
+      <h1 class="title">
+        {{selectedDate | date: 'MM/yyyy'}}
+      </h1>
+    </ng-container>
+    <ng-container *ngIf="mode == 'year'">
+      <h1 class="title">
+        {{selectedDate | date: 'yyyy'}}
+      </h1>
+    </ng-container>
+    <ng-container *ngIf="mode == 'range'">
+      <h1 class="title">
+        {{(dateRange.from | date: 'dd/MM/yyyy') + ' - ' + (dateRange.to | date: 'dd/MM/yyyy')}}
+      </h1>
+    </ng-container>
+    <!-- #endregion -->
+
+  </ion-card-header>
+  <!-- #endregion -->
+
+  <!-- #region content -->
+  <ion-card-content>
+    <ion-datetime 
+      *ngIf="mode != 'range'" 
+      [presentation]="presentation" 
+      [(ngModel)]="selectedDate"
+      locale="vi-VI" 
+      [min]="dateMin" 
+      [max]="dateMax" 
+      hourCycle="h23"
+    ></ion-datetime>
+
+    <ion-calendar 
+      *ngIf="mode == 'range'" 
+      [(ngModel)]="dateRange" 
+      [options]="optionsRange"
+      [format]="isoFormat"
+    ></ion-calendar>
+
+    <app-footer-yes-no
+      (outAccept)="accept()"
+      (outCancel)="cancel()"
+    ></app-footer-yes-no>
+  </ion-card-content>
+  <!-- #endregion -->
+
+</ion-card>

@@ -119,7 +119,6 @@ export class SearchEventComponent  implements OnInit {
     });
     modal.onDidDismiss().then((data) => {
       if(data.role === 'accept'){
-        console.log(data.data);
         this.listFilterCategory = data.data;
         if(this.listFilterCategory.length === 0){
           this.textCategory = "Danh mục";

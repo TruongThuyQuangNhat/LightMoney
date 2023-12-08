@@ -30,6 +30,7 @@
     "@ionic/storage-angular": "^4.0.0",
     "capacitor-screenshot": "^5.0.0",
     "cordova-sqlite-storage": "^6.1.0",
+    "ion7-calendar": "^3.6.29",
     "ionic2-calendar": "^2.1.0",
     "ionicons": "^7.0.0",
     "localforage-cordovasqlitedriver": "^1.8.0",
