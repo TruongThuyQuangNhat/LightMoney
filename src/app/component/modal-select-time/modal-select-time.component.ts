@@ -28,7 +28,9 @@ export class ModalSelectTimeComponent  implements OnInit {
     private modalCtrl: ModalController,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.presentation)
+  }
 
   today() {
     const today = new Date();
@@ -64,6 +66,7 @@ export class ModalSelectTimeComponent  implements OnInit {
           mode: this.mode,
           selectedDate: this.selectedDate,
           dateRange: this.dateRange,
+          presentation: this.presentation,
         };
         this.modalCtrl.dismiss(response, 'accept');
       }
@@ -77,6 +80,7 @@ export class ModalSelectTimeComponent  implements OnInit {
             mode: this.mode,
             selectedDate: this.selectedDate,
             dateRange: { from: from.toISOString(), to: to.toISOString() },
+            presentation: this.presentation,
           };
           this.modalCtrl.dismiss(response, 'accept');
         }

@@ -1,13 +1,13 @@
 <ion-card>
   <!-- #region header -->
-  <ion-card-header class="header">
+  <ion-card-header>
 
     <!-- #region header top -->
-    <div class="top">
+    <div class="header">
       <!-- #region today text -->
-      <h1 (click)="today()">
+      <h3 (click)="today()">
         Hôm nay
-      </h1>
+      </h3>
       <div>
         <ion-select mode="md" [value]="mode" interface="popover"
           (ionChange)="changeOption($event)">

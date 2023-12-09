@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { CalendarService } from 'src/app/service/calendar.service';
 import * as uuid from 'uuid';
@@ -24,6 +24,12 @@ export class SearchEventComponent  implements OnInit {
   textCategory: string = "Danh mục";
   haveCategory: boolean = false;
   iconCategory: string = "grid-outline";
+  startTime: any;
+  endTime: any;
+  equalDate: boolean = false;
+  @Input() typeTime: any = "month";
+  presentation: string = "month-year";
+  selectedDate: string = new Date().toISOString();
   constructor(
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
@@ -31,6 +37,11 @@ export class SearchEventComponent  implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.startTime = moment().startOf(this.typeTime).toDate();
+    this.endTime = moment().endOf(this.typeTime).toDate();
+    if(this.typeTime === 'year'){
+      this.presentation = 'year';
+    }
     this.loadData();
   }
 
@@ -60,6 +71,13 @@ export class SearchEventComponent  implements OnInit {
               return cate.id === item.category.id;
             });
             if(index !== -1){
+              return item;
+            }
+          });
+        }
+        if(this.startTime && this.endTime){
+          this.eventSource = this.eventSource.filter((item: any) => {
+            if(moment(item.startTime).isBetween(this.startTime, this.endTime)){
               return item;
             }
           });
@@ -100,11 +118,26 @@ export class SearchEventComponent  implements OnInit {
       cssClass: 'modal-select-time',
       componentProps: {
         type: this.filter,
+        mode: this.typeTime,
+        presentation: this.presentation,
+        dateRange: {
+          from: this.startTime.toISOString(),
+          to: this.endTime.toISOString(),
+        },
+        selectedDate: this.selectedDate,
       }
     });
     modal.onDidDismiss().then((data) => {
       if(data.role === 'accept'){
-        //
+        if(data.data) {
+          this.presentation = data.data.presentation;
+          this.typeTime = data.data.mode;
+          this.selectedDate = data.data.selectedDate;
+          this.startTime = new Date(data.data.dateRange.from);
+          this.endTime = new Date(data.data.dateRange.to);
+          this.equalDate = moment(this.startTime).isSame(this.endTime, "day");
+          this.loadData();
+        }
       }
     });
     await modal.present();

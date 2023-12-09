@@ -175,6 +175,9 @@ export class Tab3Page {
   async openSearchModal(){
     const modal = await this.modal.create({
       component: SearchEventComponent,
+      componentProps: {
+        typeTime: this.timeChart
+      }
     });
     modal.onDidDismiss().then(res => {
       this.storage.get("ArrayEvent")?.then((data) => {

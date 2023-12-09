@@ -29,8 +29,19 @@
       <ion-label>{{textCategory}}</ion-label>
     </ion-chip>
     <ion-chip
+      color="primary"
       (click)="filterTime()"
-    >Thời gian</ion-chip>
+    >
+      <ion-icon name="calendar-outline"></ion-icon>
+      <ng-container *ngIf="equalDate; then singleDate else multiDate">
+      </ng-container>
+      <ng-template #singleDate>
+        <ion-label>{{startTime | date: 'dd/MM/yyyy'}}</ion-label>
+      </ng-template>
+      <ng-template #multiDate>
+        <ion-label>{{startTime | date: 'dd/MM/yyyy'}} - {{endTime | date: 'dd/MM/yyyy'}}</ion-label>
+      </ng-template>
+    </ion-chip>
   </div>
 </ion-header>
 <ion-content mode="ios">
