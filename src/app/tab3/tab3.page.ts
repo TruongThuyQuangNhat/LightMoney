@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { CategoryChartComponent } from './category-chart/category-chart.component';
 import { SearchEventComponent } from './search-event/search-event.component';
+import { ModalSelectTimeComponent } from '../component/modal-select-time/modal-select-time.component';
 
 @Component({
   selector: 'app-tab3',
@@ -38,7 +39,7 @@ export class Tab3Page {
   }
   chartInstance: any;
   listCategory: any[] = [];
-  dateString = moment().format('YYYY-MM');
+  textLocalTime: string = moment().locale(this.locale).format('MMMM YYYY');
   
   constructor(
     private storage: StorageService,
@@ -66,7 +67,6 @@ export class Tab3Page {
 
   changeDate(event: any){
     const date = new Date(event?.detail?.value);
-    this.dateString = moment(date).format('YYYY-MM');
     this.startTime = moment(date).startOf('month').toDate();
     this.endTime = moment(date).endOf('month').toDate();
     this.loadData();
@@ -77,7 +77,7 @@ export class Tab3Page {
     this.dataChart = [];
     this.doughnutChartColor = [];
     this.listCategory = [];
-    this.dataEventsToDate = this.dataEvents.filter((item: any) => moment(item.startTime).isBetween(this.startTime, this.endTime));
+    this.dataEventsToDate = this.dataEvents.filter((item: any) => moment(item.startTime).isBetween(this.startTime.toISOString(), this.endTime.toISOString()));
     this.dataEvent = this.dataEventsToDate.filter((item: any) => item.type === this.type);
     this.dataEvent.forEach((item: any) => {
       if(!this.doughnutChartLabels.includes(item.category.name)){
@@ -107,6 +107,32 @@ export class Tab3Page {
     this.drawChart();
     this.numberExpenditure = this.dataEventsToDate.reduce((a: any, b: any) => a + (b['expenditure'] || 0), 0);
     this.numberRevenue = this.dataEventsToDate.reduce((a: any, b: any) => a + (b['revenue'] || 0), 0);
+  }
+
+  async openModalTime() {
+    const modal = await this.modal.create({
+      component: ModalSelectTimeComponent,
+      cssClass: 'modal-select-time',
+      componentProps: {
+        selectedDate: this.endTime.toISOString(),
+        mode: this.timeChart,
+        presentation: this.presentation,
+        showOptionsTime: false,
+      },
+    });
+    modal.onDidDismiss().then((res) => {
+      if(res?.data){
+        this.startTime = moment(res.data.dateRange.from).toDate();
+        this.endTime = moment(res.data.dateRange.to).toDate();
+        if(this.presentation === 'year'){
+          this.textLocalTime = moment(this.startTime).locale(this.locale).format('YYYY');
+        } else { // month-year
+          this.textLocalTime = moment(this.startTime).locale(this.locale).format('MMMM YYYY');
+        }
+        this.loadData();
+      }
+    });
+    await modal.present();
   }
 
   drawChart() {
@@ -147,10 +173,10 @@ export class Tab3Page {
     this.startTime = moment(this.startTime).add(number, this.timeChart).startOf(this.timeChart).toDate();
     this.endTime = moment(this.endTime).add(number, this.timeChart).endOf(this.timeChart).toDate();
     if(this.timeChart === 'year'){
-      this.dateString = moment(this.startTime).format('YYYY');
+      this.textLocalTime = moment(this.startTime).locale(this.locale).format('YYYY');
       this.presentation = "year";
     } else { // month
-      this.dateString = moment(this.startTime).format('YYYY-MM');
+      this.textLocalTime = moment(this.startTime).locale(this.locale).format('MMMM YYYY');
       this.presentation = "month-year";
     }
     this.loadData();
@@ -162,10 +188,10 @@ export class Tab3Page {
       this.startTime = moment().startOf(this.timeChart).toDate();
       this.endTime = moment().endOf(this.timeChart).toDate();
       if(this.timeChart === 'year'){
-        this.dateString = moment(this.startTime).format('YYYY');
+        this.textLocalTime = moment(this.startTime).locale(this.locale).format('YYYY');
         this.presentation = "year";
       } else { // month
-        this.dateString = moment(this.startTime).format('YYYY-MM');
+        this.textLocalTime = moment(this.startTime).locale(this.locale).format('MMMM YYYY');
         this.presentation = "month-year";
       }
       this.loadData();

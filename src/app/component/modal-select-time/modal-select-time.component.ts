@@ -18,6 +18,7 @@ export class ModalSelectTimeComponent  implements OnInit {
   };
   @Input() mode: 'day' | 'month' | 'year' | 'range' = 'month';
   @Input() presentation: 'date' | 'month-year' | 'year' = 'month-year';
+  @Input() showOptionsTime: boolean = true;
 
   optionsRange: CalendarComponentOptions = {
     pickMode: 'range',
@@ -28,9 +29,7 @@ export class ModalSelectTimeComponent  implements OnInit {
     private modalCtrl: ModalController,
   ) { }
 
-  ngOnInit() {
-    console.log(this.presentation)
-  }
+  ngOnInit() {}
 
   today() {
     const today = new Date();

@@ -133,8 +133,8 @@ export class SearchEventComponent  implements OnInit {
           this.presentation = data.data.presentation;
           this.typeTime = data.data.mode;
           this.selectedDate = data.data.selectedDate;
-          this.startTime = new Date(data.data.dateRange.from);
-          this.endTime = new Date(data.data.dateRange.to);
+          this.startTime = new Date(data.data.dateRange.from).toISOString();
+          this.endTime = new Date(data.data.dateRange.to).toISOString();
           this.equalDate = moment(this.startTime).isSame(this.endTime, "day");
           this.loadData();
         }

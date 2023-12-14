@@ -50,7 +50,7 @@ export class CategoryChartComponent  implements OnInit {
       }
     });
     this.data.sort((a, b) => {
-      return moment(a.startTime).valueOf() - moment(b.startTime).valueOf();
+      return moment(b.startTime).valueOf() - moment(a.startTime).valueOf();
     });
     let labels: string[] = [];
     let data: number[] = [];

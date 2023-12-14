@@ -8,7 +8,7 @@
       <h3 (click)="today()">
         Hôm nay
       </h3>
-      <div>
+      <div *ngIf="showOptionsTime">
         <ion-select mode="md" [value]="mode" interface="popover"
           (ionChange)="changeOption($event)">
           <ion-select-option value="day">
