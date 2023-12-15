@@ -15,7 +15,7 @@ import { ModalSelectTimeComponent } from '../component/modal-select-time/modal-s
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  @Input() type: "revenue" | "expenditure" = "revenue";
+  @Input() type: "revenue" | "expenditure" | "all" = "revenue";
   dataEvents: Event[] = [];
   dataEventsToDate: Event[] = [];
   dataEvent: Event[] = [];
@@ -40,6 +40,10 @@ export class Tab3Page {
   chartInstance: any;
   listCategory: any[] = [];
   textLocalTime: string = moment().locale(this.locale).format('MMMM YYYY');
+  lineChart: any;
+  lineChartRevenue: any[] = [];
+  lineChartExpenditure: any[] = [];
+  lineChartLabels: string[] = [];
   
   constructor(
     private storage: StorageService,
@@ -104,6 +108,65 @@ export class Tab3Page {
       const total = data.reduce((a: any, b: any) => a + (b[this.type] || 0), 0);
       this.dataChart[index] = total;
     });
+
+    // create data line chart
+    this.lineChartLabels = [];
+    this.lineChartRevenue = [];
+    this.lineChartExpenditure = [];
+    const dataEventRevenue = this.dataEventsToDate.filter((item: any) => item.type === "revenue");
+    const dataEventExpenditure = this.dataEventsToDate.filter((item: any) => item.type === "expenditure");
+    if(this.timeChart === "month"){
+      for(let i = 1; i <= this.endTime.getDate(); i++){
+        this.lineChartLabels[i-1] = i.toString();
+        const lstRevenue = dataEventRevenue.filter((item) => {
+          if(moment(item.startTime).date() === i){
+            return item;
+          }
+          return null;
+        })
+        const countRevenue = lstRevenue.reduce((sum, item) => {
+          return sum + (item['revenue'] || 0);
+        }, 0);
+        this.lineChartRevenue[i-1] = countRevenue;
+
+        const lstExpenditure = dataEventExpenditure.filter((item) => {
+          if(moment(item.startTime).date() === i){
+            return item;
+          }
+          return null;
+        })
+        const countExpenditure = lstExpenditure.reduce((sum, item) => {
+          return sum + (item['expenditure'] || 0);
+        }, 0);
+        this.lineChartExpenditure[i-1] = countExpenditure;
+      }
+    } else if(this.timeChart === "year"){
+      for(let i = 0; i < 12; i++){
+        this.lineChartLabels[i] = moment().month(i).locale(this.locale).format('MMM');
+        const lstRevenue = dataEventRevenue.filter((item) => {
+          if(moment(item.startTime).month() === i){
+            return item;
+          }
+          return null;
+        })
+        const countRevenue = lstRevenue.reduce((sum, item) => {
+          return sum + (item['revenue'] || 0);
+        }, 0);
+        this.lineChartRevenue[i] = countRevenue;
+
+        const lstExpenditure = dataEventExpenditure.filter((item) => {
+          if(moment(item.startTime).month() === i){
+            return item;
+          }
+          return null;
+        })
+        const countExpenditure = lstExpenditure.reduce((sum, item) => {
+          return sum + (item['expenditure'] || 0);
+        }, 0);
+        this.lineChartExpenditure[i] = countExpenditure;
+      }
+    }
+
     this.drawChart();
     this.numberExpenditure = this.dataEventsToDate.reduce((a: any, b: any) => a + (b['expenditure'] || 0), 0);
     this.numberRevenue = this.dataEventsToDate.reduce((a: any, b: any) => a + (b['revenue'] || 0), 0);
@@ -139,6 +202,9 @@ export class Tab3Page {
     if (this.chartInstance) {
       this.chartInstance.destroy();
     }
+    if (this.lineChart) {
+      this.lineChart.destroy();
+    }
     this.chartInstance = new Chart('chartInstance', {
       type: 'doughnut',
       data: {
@@ -151,6 +217,28 @@ export class Tab3Page {
         ],
       },
       options: this.doughnutChartOptions,
+    });
+    this.lineChart = new Chart('lineChart', {
+      type: 'line',
+      data: {
+        labels: this.lineChartLabels,
+        datasets: [
+          {
+            label: "Revenue",
+            data: this.lineChartRevenue,
+            fill: false,
+            borderColor: "#109b78",
+            tension: 0.1
+          },
+          {
+            label: "Expenditure",
+            data: this.lineChartExpenditure,
+            fill: false,
+            borderColor: "#b63e0e",
+            tension: 0.1
+          }
+        ]
+      }
     });
   }
 
@@ -165,7 +253,14 @@ export class Tab3Page {
         timeChart: this.timeChart,
       }
     });
-    modal.onDidDismiss().then();
+    modal.onDidDismiss().then(res => {
+      this.storage.get("ArrayEvent")?.then((data) => {
+        if(data){
+          this.dataEvents = data;
+          this.loadData();
+        }
+      });
+    });
     await modal.present();
   }
 

@@ -49,6 +49,11 @@
       <ion-text class="text-right expenditure">- {{numberExpenditure - numberRevenue | currency:currency}}</ion-text>
     </ng-container>
   </ion-item>
+  <div>
+    <canvas id="lineChart">
+      {{lineChart}}
+    </canvas>
+  </div>
 
   <ion-segment value="revenue" mode="md" [value]="type" (ionChange)="changeSegment($event)">
     <ion-segment-button value="revenue">
