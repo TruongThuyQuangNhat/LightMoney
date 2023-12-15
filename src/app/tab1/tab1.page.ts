@@ -65,6 +65,9 @@ export class Tab1Page implements OnInit {
   }
 
   actionSave() {
+    if(!this.expenditure && !this.revenue){
+      return;
+    }
     var date = new Date(this.date);
     const startTime = new Date(
       Date.UTC(

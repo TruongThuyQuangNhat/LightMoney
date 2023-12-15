@@ -74,7 +74,11 @@
   </ion-list>
 </ion-content>
 <ion-footer mode="ios">
-  <ion-button expand="block" (click)="actionSave()">
+  <ion-button 
+    [disabled]="!expenditure && !revenue" 
+    expand="block" 
+    (click)="actionSave()"
+  >
     <ion-icon slot="start" name="save-outline"></ion-icon>
     <ng-container *ngIf="action != 'edit'">Thêm</ng-container>
     <ng-container *ngIf="action == 'edit'">Lưu lại</ng-container>
