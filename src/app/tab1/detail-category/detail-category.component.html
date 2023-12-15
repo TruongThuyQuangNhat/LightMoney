@@ -49,6 +49,9 @@
           ></ion-icon>
         </ng-container>
       </ng-container>
+      <ng-container *ngIf="categoryName.length == 0">
+        <app-empty></app-empty>
+      </ng-container>
     </div>
   </ion-list>
   
@@ -91,6 +94,9 @@
             'margin: 0px 2px 0px 2px;'
           ">
         </div>
+      </ng-container>
+      <ng-container *ngIf="colorArray.length == 0">
+        <app-empty></app-empty>
       </ng-container>
     </div>
   </ion-list>

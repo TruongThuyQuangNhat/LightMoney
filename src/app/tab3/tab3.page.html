@@ -80,5 +80,8 @@
         <ion-text class="expenditure" *ngIf="type == 'expenditure'">- {{item?.number | currency:currency}}</ion-text>
       </ion-item>
     </ng-container>
+    <ng-container *ngIf="listCategory.length == 0">
+      <app-empty></app-empty>
+    </ng-container>
   </ion-list>
 </ion-content>

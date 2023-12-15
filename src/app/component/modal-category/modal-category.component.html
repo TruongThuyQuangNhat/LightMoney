@@ -32,6 +32,9 @@
         <ion-icon *ngIf="item.checked" slot="end" name="checkmark-outline" color="primary"></ion-icon>
       </ion-item>
     </ng-container>
+    <ng-container *ngIf="listCategory.length == 0">
+      <app-empty></app-empty>
+    </ng-container>
   </ion-list>
 </ion-content>
 <app-footer-yes-no

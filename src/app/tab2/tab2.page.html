@@ -43,6 +43,9 @@
         (eventDetail)="viewDetail(item, $event)"
       ></app-slide-item>
     </ng-container>
+    <ng-container *ngIf="eventOfDate.length == 0">
+      <app-empty></app-empty>
+    </ng-container>
   </ion-list>
 </ion-content>
 

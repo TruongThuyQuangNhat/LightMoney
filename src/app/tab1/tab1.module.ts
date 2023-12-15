@@ -6,13 +6,15 @@ import { Tab1Page } from './tab1.page';
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { CategoryComponent } from './category/category.component';
 import { DetailCategoryComponent } from './detail-category/detail-category.component';
+import { ComponentModule } from '../component/component.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,
+    ComponentModule,
   ],
   declarations: [
     Tab1Page, 

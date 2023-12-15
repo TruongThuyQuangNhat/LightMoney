@@ -9,13 +9,15 @@ import { FooterYesNoComponent } from './footer-yes-no/footer-yes-no.component';
 import { CalendarModule } from 'ion7-calendar';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { FormsModule } from '@angular/forms';
+import { EmptyComponent } from './empty/empty.component';
 
 const COMPONENT = [
   SlideItemComponent,
   ItemEventComponent,
   ModalSelectTimeComponent,
   ModalCategoryComponent,
-  FooterYesNoComponent
+  FooterYesNoComponent,
+  EmptyComponent,
 ];
 
 @NgModule({

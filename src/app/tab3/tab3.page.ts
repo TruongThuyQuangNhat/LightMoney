@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Chart, ChartOptions } from 'chart.js';
 import { StorageService } from '../service/storage.service';
 import * as moment from 'moment';
@@ -14,7 +14,7 @@ import { ModalSelectTimeComponent } from '../component/modal-select-time/modal-s
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page {
+export class Tab3Page implements OnInit {
   @Input() type: "revenue" | "expenditure" | "all" = "revenue";
   dataEvents: Event[] = [];
   dataEventsToDate: Event[] = [];
@@ -49,13 +49,18 @@ export class Tab3Page {
     private storage: StorageService,
     private route: ActivatedRoute,
     private modal: ModalController,
-  ) {
+  ) {}
+  ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       setTimeout(() => {
         this.storage.get("ArrayEvent")?.then((data) => {
           if(data){
             this.dataEvents = data;
             this.loadData();
+            this.createDataLineChart();
+            this.createDataDonutChart();
+            this.drawLineChart();
+            this.drawChart();
           }
         });
       }, 10);
@@ -65,54 +70,29 @@ export class Tab3Page {
   changeSegment(data: any) {
     if(data?.detail?.value){
       this.type = data.detail.value;
-      this.loadData();
+      this.handleEmptyData();
+      this.createDataDonutChart();
+      this.drawChart();
     }
   }
 
-  changeDate(event: any){
-    const date = new Date(event?.detail?.value);
-    this.startTime = moment(date).startOf('month').toDate();
-    this.endTime = moment(date).endOf('month').toDate();
-    this.loadData();
+  loadData(){
+    this.dataEventsToDate = this.dataEvents.filter((item: any) => moment(item.startTime).isBetween(this.startTime.toISOString(), this.endTime.toISOString()));
+    this.numberExpenditure = this.dataEventsToDate.reduce((a: any, b: any) => a + (b['expenditure'] || 0), 0);
+    this.numberRevenue = this.dataEventsToDate.reduce((a: any, b: any) => a + (b['revenue'] || 0), 0);
   }
 
-  loadData(){
+  handleEmptyData(){
     this.doughnutChartLabels = [];
     this.dataChart = [];
     this.doughnutChartColor = [];
     this.listCategory = [];
-    this.dataEventsToDate = this.dataEvents.filter((item: any) => moment(item.startTime).isBetween(this.startTime.toISOString(), this.endTime.toISOString()));
-    this.dataEvent = this.dataEventsToDate.filter((item: any) => item.type === this.type);
-    this.dataEvent.forEach((item: any) => {
-      if(!this.doughnutChartLabels.includes(item.category.name)){
-        this.doughnutChartLabels.push(item.category.name);
-        this.doughnutChartColor.push(item.category.color);
-      }
-      const number = item[this.type] || 0;
-      const index = this.listCategory.findIndex((cate: any) => cate.id === item.category.id);
-      if(index > -1){
-        this.listCategory[index].number += number;
-      } else {
-        this.listCategory.push({
-          icon: item.category.icon,
-          id: item.category.id,
-          name: item.category.name,
-          color: item.category.color,
-          number: number,
-          type: item.category.type,
-        });
-      }
-    });
-    this.doughnutChartLabels.forEach((item: any, index) => {
-      const data = this.dataEvent.filter((event: any) => event.category.name === item);
-      const total = data.reduce((a: any, b: any) => a + (b[this.type] || 0), 0);
-      this.dataChart[index] = total;
-    });
-
-    // create data line chart
     this.lineChartLabels = [];
     this.lineChartRevenue = [];
     this.lineChartExpenditure = [];
+  }
+
+  createDataLineChart(){
     const dataEventRevenue = this.dataEventsToDate.filter((item: any) => item.type === "revenue");
     const dataEventExpenditure = this.dataEventsToDate.filter((item: any) => item.type === "expenditure");
     if(this.timeChart === "month"){
@@ -166,10 +146,35 @@ export class Tab3Page {
         this.lineChartExpenditure[i] = countExpenditure;
       }
     }
+  }
 
-    this.drawChart();
-    this.numberExpenditure = this.dataEventsToDate.reduce((a: any, b: any) => a + (b['expenditure'] || 0), 0);
-    this.numberRevenue = this.dataEventsToDate.reduce((a: any, b: any) => a + (b['revenue'] || 0), 0);
+  createDataDonutChart(){
+    this.dataEvent = this.dataEventsToDate.filter((item: any) => item.type === this.type);
+    this.dataEvent.forEach((item: any) => {
+      if(!this.doughnutChartLabels.includes(item.category.name)){
+        this.doughnutChartLabels.push(item.category.name);
+        this.doughnutChartColor.push(item.category.color);
+      }
+      const number = item[this.type] || 0;
+      const index = this.listCategory.findIndex((cate: any) => cate.id === item.category.id);
+      if(index > -1){
+        this.listCategory[index].number += number;
+      } else {
+        this.listCategory.push({
+          icon: item.category.icon,
+          id: item.category.id,
+          name: item.category.name,
+          color: item.category.color,
+          number: number,
+          type: item.category.type,
+        });
+      }
+    });
+    this.doughnutChartLabels.forEach((item: any, index) => {
+      const data = this.dataEvent.filter((event: any) => event.category.name === item);
+      const total = data.reduce((a: any, b: any) => a + (b[this.type] || 0), 0);
+      this.dataChart[index] = total;
+    });
   }
 
   async openModalTime() {
@@ -193,6 +198,10 @@ export class Tab3Page {
           this.textLocalTime = moment(this.startTime).locale(this.locale).format('MMMM YYYY');
         }
         this.loadData();
+        this.createDataDonutChart();
+        this.createDataLineChart();
+        this.drawLineChart();
+        this.drawChart();
       }
     });
     await modal.present();
@@ -201,9 +210,6 @@ export class Tab3Page {
   drawChart() {
     if (this.chartInstance) {
       this.chartInstance.destroy();
-    }
-    if (this.lineChart) {
-      this.lineChart.destroy();
     }
     this.chartInstance = new Chart('chartInstance', {
       type: 'doughnut',
@@ -218,6 +224,13 @@ export class Tab3Page {
       },
       options: this.doughnutChartOptions,
     });
+  }
+
+  drawLineChart() {
+    if (this.lineChart) {
+      this.lineChart.destroy();
+    }
+    
     this.lineChart = new Chart('lineChart', {
       type: 'line',
       data: {
@@ -238,6 +251,13 @@ export class Tab3Page {
             tension: 0.1
           }
         ]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false,
+          }
+        }
       }
     });
   }
@@ -254,12 +274,7 @@ export class Tab3Page {
       }
     });
     modal.onDidDismiss().then(res => {
-      this.storage.get("ArrayEvent")?.then((data) => {
-        if(data){
-          this.dataEvents = data;
-          this.loadData();
-        }
-      });
+      this.refreshData();
     });
     await modal.present();
   }
@@ -274,7 +289,12 @@ export class Tab3Page {
       this.textLocalTime = moment(this.startTime).locale(this.locale).format('MMMM YYYY');
       this.presentation = "month-year";
     }
-    this.loadData();
+    this.handleEmptyData();
+      this.loadData();
+      this.createDataLineChart();
+      this.createDataDonutChart();
+      this.drawLineChart();
+      this.drawChart();
   }
 
   changeTypeChart(data: any){
@@ -289,7 +309,12 @@ export class Tab3Page {
         this.textLocalTime = moment(this.startTime).locale(this.locale).format('MMMM YYYY');
         this.presentation = "month-year";
       }
+      this.handleEmptyData();
       this.loadData();
+      this.createDataLineChart();
+      this.createDataDonutChart();
+      this.drawLineChart();
+      this.drawChart();
     }
   }
 
@@ -301,13 +326,22 @@ export class Tab3Page {
       }
     });
     modal.onDidDismiss().then(res => {
-      this.storage.get("ArrayEvent")?.then((data) => {
-        if(data){
-          this.dataEvents = data;
-          this.loadData();
-        }
-      });
+      this.refreshData();
     });
     await modal.present();
+  }
+
+  refreshData(){
+    this.storage.get("ArrayEvent")?.then((data) => {
+      if(data){
+        this.dataEvents = data;
+        this.handleEmptyData();
+        this.loadData();
+        this.createDataLineChart();
+        this.createDataDonutChart();
+        this.drawLineChart();
+        this.drawChart();
+      }
+    });
   }
 }
