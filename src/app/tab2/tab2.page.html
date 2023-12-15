@@ -4,6 +4,9 @@
       <ion-button [disabled]="isToday" (click)="today()">Today</ion-button>
     </ion-buttons>
     <ion-title>{{viewTitle}}</ion-title>
+    <ion-buttons slot="end" (click)="openSearchModal()">
+      <ion-icon class="fz-24" name="search-outline"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
   <calendar
     [eventSource]="eventSource"

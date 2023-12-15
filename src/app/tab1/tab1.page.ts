@@ -6,6 +6,7 @@ import * as uuid from 'uuid';
 import { ModalController } from '@ionic/angular';
 import { CategoryComponent } from './category/category.component';
 import { StorageService } from '../service/storage.service';
+import { listCategory as lstCate } from '../model/category';
 
 @Component({
   selector: 'app-tab1',

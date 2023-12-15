@@ -7,6 +7,7 @@ import * as uuid from 'uuid';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, IonItemSliding, ModalController } from '@ionic/angular';
 import { Tab1Page } from '../tab1/tab1.page';
+import { SearchEventComponent } from '../tab3/search-event/search-event.component';
 
 @Component({
   selector: 'app-tab2',
@@ -272,5 +273,23 @@ export class Tab2Page implements OnInit, OnDestroy {
       });
       await modal.present();
     }
+  }
+
+  async openSearchModal(){
+    const modal = await this.modalCtrl.create({
+      component: SearchEventComponent,
+      componentProps: {
+        typeTime: "month"
+      }
+    });
+    modal.onDidDismiss().then(res => {
+      this.service.getEvents()?.then((data) => {
+        if(data && data.length > 0) {
+          this.eventSource = data;
+          this.cal?.loadEvents();
+        }
+      });
+    });
+    await modal.present();
   }
 }

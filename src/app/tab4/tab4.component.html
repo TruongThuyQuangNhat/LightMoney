@@ -1,3 +1,27 @@
-<p>
-  tab4 works!
-</p>
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-segment value="revenue" mode="ios" [value]="typeHeader" (ionChange)="changeSegmentHeader($event)">
+      <ion-segment-button value="loan">
+        <ion-label>Cho vay</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="pay">
+        <ion-label>Trả nợ</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-segment value="revenue" mode="md" [value]="typeContent" (ionChange)="changeSegment($event)">
+    <ion-segment-button value="list">
+      <ion-label>Danh sách</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="dashboard">
+      <ion-label>Thống kê</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
