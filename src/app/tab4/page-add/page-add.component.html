@@ -1,0 +1,62 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="back()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>
+      {{textTitle}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate>
+    <ion-item disabled="true">
+      <ion-input
+        [value]="textCreatedOn"
+        type="text"
+        label="Ngày tạo"
+        readonly="true"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        formControlName="ownerOfType2"
+        type="text"
+        label="{{titelInputType2}} *"
+        required
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        formControlName="money"
+        type="number"
+        required
+        label="Số tiền *"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea
+        formControlName="title"
+        type="text"
+        label="Chi tiết"
+      ></ion-textarea>
+    </ion-item>
+    <ion-text *ngIf="isError" class="ion-padding" color="danger">
+      {{textError}}
+    </ion-text>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col>
+      <ion-button 
+        (click)="submitForm()" 
+        type="submit" 
+        color="danger" 
+        expand="block"
+      >
+        Submit
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

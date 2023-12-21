@@ -1,18 +1,19 @@
 <ion-header mode="ios">
   <ion-toolbar>
     <ion-segment value="revenue" mode="ios" [value]="type" (ionChange)="changeSegment($event)">
+      <ion-segment-button value="borrow">
+        <ion-label>Đi vay</ion-label>
+      </ion-segment-button>
       <ion-segment-button value="loan">
         <ion-label>Cho vay</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="pay">
-        <ion-label>Trả nợ</ion-label>
-      </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
+  <ion-searchbar mode="ios" (ionInput)="searchEvent($event)"></ion-searchbar>
 </ion-header>
 <ion-content>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button>
+    <ion-fab-button (click)="openAddModal()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

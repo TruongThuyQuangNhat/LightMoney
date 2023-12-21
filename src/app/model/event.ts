@@ -10,4 +10,7 @@ export interface Event {
     revenue?: number;
     type: "expenditure" | "revenue";
     category: Category;
+    parentId?: string;
+    type2?: "loan" | "borrow" | "debtCollection" | "debtRepayment";
+    ownerOfType2?: string;
 }

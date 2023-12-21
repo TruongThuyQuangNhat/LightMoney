@@ -22,7 +22,7 @@ export class Tab1Page implements OnInit {
   @Input() title: string = "";
   @Input() revenue: number = 0;
   @Input() expenditure: number = 0;
-  @Input() type: "revenue" | "expenditure" = "revenue";
+  @Input() type: "revenue" | "expenditure" = "expenditure";
   listCategory: Category[] = [];
   listCategoryRoot: Category[] = [];
   @Input() category: Category = this.listCategory[0];

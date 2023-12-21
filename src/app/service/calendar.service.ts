@@ -18,6 +18,13 @@ export class CalendarService {
     this.storage.set("ArrayEvent", events);
   }
 
+  setEvent(event: any) {
+    this.storage.get("ArrayEvent")?.then((data) => {
+      data.push(event);
+      this.storage.set("ArrayEvent", data);
+    });
+  }
+
   getCategories() {
     return this.storage.get("ArrayCategory");
   }

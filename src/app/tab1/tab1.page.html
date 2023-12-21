@@ -4,11 +4,11 @@
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-buttons>
     <ion-segment [disabled]="action == 'edit'" mode="ios" [value]="type" (ionChange)="changeSegment($event)">
-      <ion-segment-button value="revenue">
-        <ion-label>Tiền Thu</ion-label>
-      </ion-segment-button>
       <ion-segment-button value="expenditure">
         <ion-label>Tiền Chi</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="revenue">
+        <ion-label>Tiền Thu</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
