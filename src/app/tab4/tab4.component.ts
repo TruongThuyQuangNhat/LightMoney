@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PageAddComponent } from './page-add/page-add.component';
+import { CalendarService } from '../service/calendar.service';
+import { Event } from '../model/event';
 
 @Component({
   selector: 'app-tab4',
@@ -10,15 +12,35 @@ import { PageAddComponent } from './page-add/page-add.component';
 export class Tab4Component  implements OnInit {
   type: string = 'borrow';
   search: string = '';
+  data: Event[] = [];
   constructor(
     private modalCtrl: ModalController,
+    private calService: CalendarService,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadData();
+  }
 
+  loadData() {
+    setTimeout(() => {
+      this.calService.getEvents()?.then((data: Event[]) => {
+        if(data?.length > 0){
+          this.data = data.filter((item: Event) => {
+            if(item.type2 == this.type){
+              return item;
+            } else {
+              return null;
+            }
+          });
+        }
+      });
+    }, 10);
+  }
 
   changeSegment(ev: any) {
     this.type = ev.detail.value;
+    this.loadData();
   }
 
   searchEvent(data: any) {
@@ -34,7 +56,9 @@ export class Tab4Component  implements OnInit {
       },
     });
     modal.onDidDismiss().then((res) => {
-      console.log(res);
+      if(res.role == 'accept'){
+        this.loadData();
+      }
     });
     modal.present();
   }

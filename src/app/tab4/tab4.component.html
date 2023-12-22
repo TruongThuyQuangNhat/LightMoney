@@ -12,6 +12,13 @@
   <ion-searchbar mode="ios" (ionInput)="searchEvent($event)"></ion-searchbar>
 </ion-header>
 <ion-content>
+
+  <ng-container *ngFor="let item of data">
+    <app-slide-item
+      [item]="item"
+    ></app-slide-item>
+  </ng-container>
+
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="openAddModal()">
       <ion-icon name="add"></ion-icon>

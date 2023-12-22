@@ -8,7 +8,7 @@ import { IonItemSliding } from '@ionic/angular';
 })
 export class SlideItemComponent  implements OnInit {
   @Input() item: any;
-  @Input() currency = "VND";
+  currency = "VND";
 
   @Output() eventDetail = new EventEmitter<any>();
   constructor() { }

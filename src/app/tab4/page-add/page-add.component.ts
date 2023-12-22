@@ -15,7 +15,7 @@ export class PageAddComponent  implements OnInit {
   textTitle: string = '';
   @Input() type: "loan" | "borrow" = 'loan';
   titelInputType2: string = '';
-  ionicForm: FormGroup;
+  ionicForm: FormGroup = new FormGroup({});
   local = 'vi-VN';
   textCreatedOn: string = moment().locale(this.local).format('DD MMMM YYYY');
   textError: string = 'Vui lòng nhập đầy đủ thông tin';
@@ -25,7 +25,9 @@ export class PageAddComponent  implements OnInit {
     private modalCtrl: ModalController,
     public formBuilder: FormBuilder,
     private calService: CalendarService,
-  ) { 
+  ) {}
+
+  ngOnInit() {
     switch (this.type) {
       case 'loan':
         this.textTitle = 'Thêm khoản cho vay';
@@ -43,10 +45,6 @@ export class PageAddComponent  implements OnInit {
       title: [''],
       money: [null, [Validators.required]],
     });
-  }
-
-  ngOnInit() {
-
   }
 
   back() {
@@ -104,6 +102,7 @@ export class PageAddComponent  implements OnInit {
       };
       this.calService.setEvent(event);
       this.isError = false;
+      this.modalCtrl.dismiss(true, 'accept');
     } else {
       this.isError = true;
     }

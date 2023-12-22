@@ -6,7 +6,12 @@
     ></ion-icon>
   </ion-avatar>
   <ion-label>
-    <h3>{{item.category?.name}}</h3>
+    <ng-container *ngIf="!item?.type2">
+      <h3>{{item.category?.name}}</h3>
+    </ng-container>
+    <ng-container *ngIf="item?.type2">
+      <h3>{{item.ownerOfType2}}</h3>
+    </ng-container>
     <p>{{item.title}}</p>
   </ion-label>
   <ion-note class="cur-revenue" slot="end" *ngIf="item.type == 'revenue'">

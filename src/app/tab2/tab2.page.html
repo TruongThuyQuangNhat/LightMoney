@@ -42,7 +42,6 @@
     <ng-container *ngFor="let item of eventOfDate">
       <app-slide-item
         [item]="item"
-        [currency]="currency"
         (eventDetail)="viewDetail(item, $event)"
       ></app-slide-item>
     </ng-container>
