@@ -7,6 +7,7 @@ import { Tab4PageRoutingModule } from './tab4-routing.module';
 import { Tab4Component } from './tab4.component';
 import { ComponentModule } from '../component/component.module';
 import { PageAddComponent } from './page-add/page-add.component';
+import { PageAddHistoryComponent } from './page-add-history/page-add-history.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,6 @@ import { PageAddComponent } from './page-add/page-add.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [Tab4Component, PageAddComponent]
+  declarations: [Tab4Component, PageAddComponent, PageAddHistoryComponent]
 })
 export class Tab4PageModule {}

@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
-import * as moment from 'moment';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Event } from 'src/app/model/event';
 import * as uuid from 'uuid';
+import { PageAddHistoryComponent } from '../page-add-history/page-add-history.component';
+import { CalendarService } from 'src/app/service/calendar.service';
 
 @Component({
   selector: 'app-page-add',
@@ -26,10 +27,13 @@ export class PageAddComponent  implements OnInit {
   textError: string = 'Vui lòng nhập đầy đủ thông tin';
   isError: boolean = false;
   localID = 'vi-VN';
+  listHistory: Event[] = [];
 
   constructor(
     private modalCtrl: ModalController,
     public formBuilder: FormBuilder,
+    private calService: CalendarService,
+    private alertCtrl: AlertController,
   ) {}
 
   ngOnInit() {
@@ -59,13 +63,22 @@ export class PageAddComponent  implements OnInit {
         [Validators.required]
       ],
     });
+    this.loadChildren(this.id);
+  }
+
+  loadChildren(id: string) {
+    setTimeout(() => {
+      this.calService.loadChildren(id)?.then((data) => {
+        this.listHistory = data;
+      });
+    }, 10);
   }
 
   back() {
     this.modalCtrl.dismiss();
   }
 
-  submitForm = () => {
+  submitForm() {
     if (this.ionicForm.valid) {
       var date = this.date ? new Date(this.date) : new Date();
       const startTime = new Date(
@@ -120,4 +133,92 @@ export class PageAddComponent  implements OnInit {
       this.isError = true;
     }
   };
+
+  async addHistory() {
+    const modal = await this.modalCtrl.create({
+      component: PageAddHistoryComponent,
+      componentProps: {
+        type2: this.type2 === 'loan' ? 'debtCollection' : 'debtRepayment',
+        parentId: this.id,
+        ownerOfType2: this.ionicForm.value.ownerOfType2,
+      },
+    });
+
+    modal.onDidDismiss().then((data) => {
+      if(data.role === 'add'){
+        this.listHistory.push(data.data);
+        this.calService.setEvent(data.data);
+      }
+    });
+
+    await modal.present();
+  }
+
+  async viewDetail(event: any, action: string){
+    let titlePage = "";
+    if(action === 'delete'){
+      const alert = await this.alertCtrl.create({
+        header: 'Bạn có chắc chắn muốn xóa sự kiện này?',
+        buttons: [
+          {
+            text: 'Bỏ qua',
+            role: 'cancel',
+            handler: () => {
+              console.log('Alert canceled');
+            },
+          },
+          {
+            text: 'Xóa',
+            role: 'confirm',
+            handler: () => {
+              this.listHistory = this.listHistory.filter((item: any) => item.id !== event.id);
+              this.calService.deleteEvent(event.id);
+            },
+          }
+        ],
+      });
+  
+      await alert.present();
+    } else {
+      switch (action) {
+        case "edit":
+          titlePage = "Chỉnh sửa";
+          break;
+        case "copy":
+          titlePage = "Sao chép";
+          break;
+      }
+      const modal = await this.modalCtrl.create({
+        component: PageAddHistoryComponent,
+        componentProps: {
+          titlePage: titlePage,
+          action: action,
+          id: action == 'edit' ? event.id : uuid.v4(),
+          type: event.type,
+          title: event.title,
+          expenditure: event.expenditure,
+          revenue: event.revenue,
+          date: event.startTime.toISOString(),
+          category: event.category,
+          ownerOfType2: this.ionicForm.value.ownerOfType2,
+          parentId: this.id,
+          type2: this.type2 === 'loan' ? 'debtCollection' : 'debtRepayment',
+        }
+      });
+      modal.onDidDismiss().then((data) => {
+        console.log(data);
+        if(data.role === 'edit'){
+          const index = this.listHistory.findIndex((item: any) => item.id === data.data.id);
+          if(index !== -1){
+            this.listHistory[index] = data.data;
+          }
+          this.calService.updateEvent(data.data);
+        } else if(data.role === 'copy'){
+          this.listHistory.push(data.data);
+          this.calService.setEvent(data.data);
+        }
+      });
+      await modal.present();
+    }
+  }
 }

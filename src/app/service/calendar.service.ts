@@ -49,6 +49,18 @@ export class CalendarService {
     });
   }
 
+  loadChildren(id: string) {
+    return this.storage.get("ArrayEvent")?.then((data) => {
+      if(!data) return [];
+      const temp = data.filter((item: any) => {
+        if(item.parentId === id){
+          return item;
+        }
+      });
+      return temp;
+    });
+  }
+
   getCategories() {
     return this.storage.get("ArrayCategory");
   }

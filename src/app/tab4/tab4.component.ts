@@ -133,7 +133,6 @@ export class Tab4Component  implements OnInit {
         }
       });
       modal.onDidDismiss().then((data) => {
-        console.log(data)
         if(data.role === 'edit'){
           const index = this.eventSource.findIndex((item: any) => item.id === data.data.id);
           const index2 = this.eventSourceRoot.findIndex((item: any) => item.id === data.data.id);

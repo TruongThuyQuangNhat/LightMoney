@@ -51,30 +51,7 @@
       {{textError}}
     </ion-text>
   </form>
-  <ion-list *ngIf="action !== 'add'">
-    <ion-list-header mode="ios">
-      <ion-label>
-        Lịch sử thanh toán
-      </ion-label>
-    </ion-list-header>
-    <ng-container *ngFor="let item of listHistory">
-      <app-slide-item
-        [item]="item"
-        (eventDetail)="viewDetail(item, $event)"
-      ></app-slide-item>
-    </ng-container>
-    <ion-row>
-      <ion-col>
-        <ion-button 
-          (click)="addHistory()" 
-          fill="outline"
-          expand="block"
-        >
-          Thêm mới lịch sử thanh toán
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-list>
+
 </ion-content>
 <ion-footer>
   <ion-row>

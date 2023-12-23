@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { ModalCategoryComponent } from 'src/app/component/modal-category/modal-category.component';
 import { ModalSelectTimeComponent } from 'src/app/component/modal-select-time/modal-select-time.component';
 import { Category } from 'src/app/model/category';
+import { PageAddComponent } from 'src/app/tab4/page-add/page-add.component';
 
 @Component({
   selector: 'app-search-event',
@@ -208,7 +209,7 @@ export class SearchEventComponent  implements OnInit {
           break;
       }
       const modal = await this.modalCtrl.create({
-        component: Tab1Page,
+        component: event.type2 ? PageAddComponent : Tab1Page,
         componentProps: {
           titlePage: titlePage,
           action: action,

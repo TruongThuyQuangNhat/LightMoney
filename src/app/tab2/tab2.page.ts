@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertController, IonItemSliding, ModalController } from '@ionic/angular';
 import { Tab1Page } from '../tab1/tab1.page';
 import { SearchEventComponent } from '../tab3/search-event/search-event.component';
+import { PageAddComponent } from '../tab4/page-add/page-add.component';
 
 @Component({
   selector: 'app-tab2',
@@ -244,7 +245,7 @@ export class Tab2Page implements OnInit, OnDestroy {
           break;
       }
       const modal = await this.modalCtrl.create({
-        component: Tab1Page,
+        component: event.type2 ? PageAddComponent : Tab1Page,
         componentProps: {
           titlePage: titlePage,
           action: action,
@@ -255,6 +256,9 @@ export class Tab2Page implements OnInit, OnDestroy {
           revenue: event.revenue,
           date: event.startTime.toISOString(),
           category: event.category,
+          ownerOfType2: event.ownerOfType2,
+          parentId: event.parentId,
+          type2: event.type2,
         }
       });
       modal.onDidDismiss().then((data) => {
