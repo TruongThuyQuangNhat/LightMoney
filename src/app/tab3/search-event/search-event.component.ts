@@ -191,7 +191,7 @@ export class SearchEventComponent  implements OnInit {
             handler: () => {
               this.eventSource = this.eventSource.filter((item: any) => item.id !== event.id);
               this.eventSourceRoot = this.eventSourceRoot.filter((item: any) => item.id !== event.id);
-              this.service.setEvents(this.eventSourceRoot);
+              this.service.deleteEvent(event.id);
             },
           }
         ],
@@ -231,7 +231,7 @@ export class SearchEventComponent  implements OnInit {
           if(index2 !== -1){
             this.eventSourceRoot[index] = data.data;
           }
-          this.service.setEvents(this.eventSourceRoot);
+          this.service.updateEvent(data.data);
         } else if(data.role === 'copy'){
           this.eventSource.push(data.data);
           this.eventSourceRoot.push(data.data);

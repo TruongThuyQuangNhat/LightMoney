@@ -13,10 +13,14 @@
 </ion-header>
 <ion-content>
 
-  <ng-container *ngFor="let item of data">
+  <ng-container *ngFor="let item of eventSource">
     <app-slide-item
       [item]="item"
+      (eventDetail)="viewDetail(item, $event)"
     ></app-slide-item>
+  </ng-container>
+  <ng-container *ngIf="eventSource.length == 0">
+    <app-empty></app-empty>
   </ng-container>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">

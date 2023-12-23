@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Event } from 'src/app/model/event';
-import { CalendarService } from 'src/app/service/calendar.service';
 import * as uuid from 'uuid';
 
 @Component({
@@ -13,37 +12,52 @@ import * as uuid from 'uuid';
 })
 export class PageAddComponent  implements OnInit {
   textTitle: string = '';
-  @Input() type: "loan" | "borrow" = 'loan';
+  @Input() type2: "loan" | "borrow" = 'loan';
+  @Input() ownerOfType2: string = '';
+  @Input() expenditure = 0;
+  @Input() revenue = 0;
+  @Input() title: string = '';
+  @Input() action: string = 'add';
+  @Input() titlePage: string = '';
+  @Input() id: string = '';
+  @Input() date: string = new Date().toISOString();
   titelInputType2: string = '';
   ionicForm: FormGroup = new FormGroup({});
-  local = 'vi-VN';
-  textCreatedOn: string = moment().locale(this.local).format('DD MMMM YYYY');
   textError: string = 'Vui lòng nhập đầy đủ thông tin';
   isError: boolean = false;
+  localID = 'vi-VN';
 
   constructor(
     private modalCtrl: ModalController,
     public formBuilder: FormBuilder,
-    private calService: CalendarService,
   ) {}
 
   ngOnInit() {
-    switch (this.type) {
+    if(this.action != 'edit') {
+      this.id = uuid.v4();
+    }
+    switch (this.type2) {
       case 'loan':
-        this.textTitle = 'Thêm khoản cho vay';
+        this.textTitle = this.titlePage ? this.titlePage : 'Thêm khoản cho vay';
         this.titelInputType2 = 'Người vay';
         break;
       case 'borrow':
-        this.textTitle = 'Thêm khoản đi vay';
+        this.textTitle = this.titlePage ? this.titlePage : 'Thêm khoản đi vay';
         this.titelInputType2 = 'Người cho vay';
         break;
       default:
         break;
     }
     this.ionicForm = this.formBuilder.group({
-      ownerOfType2: ['', [Validators.required]],
-      title: [''],
-      money: [null, [Validators.required]],
+      ownerOfType2: [
+        this.ownerOfType2 ? this.ownerOfType2 :'', 
+        [Validators.required]
+      ],
+      title: [this.title ? this.title :''],
+      money: [
+        this.type2 == 'loan' ? this.expenditure : this.revenue, 
+        [Validators.required]
+      ],
     });
   }
 
@@ -53,7 +67,7 @@ export class PageAddComponent  implements OnInit {
 
   submitForm = () => {
     if (this.ionicForm.valid) {
-      var date = new Date();
+      var date = this.date ? new Date(this.date) : new Date();
       const startTime = new Date(
         Date.UTC(
           date.getUTCFullYear(),
@@ -69,15 +83,15 @@ export class PageAddComponent  implements OnInit {
         )
       );
       const event: Event = {
-        id: uuid.v4(),
+        id: this.id,
         title: this.ionicForm.value.title,
         startTime,
         endTime,
         allDay: true,
-        expenditure: this.type === 'loan' ? this.ionicForm.value.money : 0,
-        revenue: this.type === 'borrow' ? this.ionicForm.value.money : 0,
-        type: this.type === 'loan' ? 'expenditure' : 'revenue',
-        category: this.type === 'loan' ? 
+        expenditure: this.type2 === 'loan' ? this.ionicForm.value.money : 0,
+        revenue: this.type2 === 'borrow' ? this.ionicForm.value.money : 0,
+        type: this.type2 === 'loan' ? 'expenditure' : 'revenue',
+        category: this.type2 === 'loan' ? 
             {
               id: "e4f2f979-ad7d-493c-ba8e-9982948d58e2",
               icon: "reader-outline",
@@ -97,12 +111,11 @@ export class PageAddComponent  implements OnInit {
               typeIcon: "outline",
               index: 8
             },
-        type2: this.type,
+        type2: this.type2,
         ownerOfType2: this.ionicForm.value.ownerOfType2,
       };
-      this.calService.setEvent(event);
       this.isError = false;
-      this.modalCtrl.dismiss(true, 'accept');
+      this.modalCtrl.dismiss(event, this.action);
     } else {
       this.isError = true;
     }

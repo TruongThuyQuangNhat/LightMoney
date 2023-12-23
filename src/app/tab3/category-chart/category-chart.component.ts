@@ -135,7 +135,7 @@ export class CategoryChartComponent  implements OnInit {
             role: 'confirm',
             handler: () => {
               this.eventSource = this.eventSource.filter((item: any) => item.id !== event.id);
-              this.service.setEvents(this.eventSource);
+              this.service.deleteEvent(event.id);
               this.loadData();
             },
           }
@@ -170,7 +170,7 @@ export class CategoryChartComponent  implements OnInit {
         if(data.role === 'edit'){
           this.eventSource = this.eventSource.filter((item: any) => item.id !== data.data.id);
           this.eventSource.push(data.data);
-          this.service.setEvents(this.eventSource);
+          this.service.updateEvent(data.data);
         } else if(data.role === 'copy'){
           this.eventSource.push(data.data);
           this.service.setEvents(this.eventSource);

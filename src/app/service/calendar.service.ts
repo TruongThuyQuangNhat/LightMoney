@@ -25,6 +25,30 @@ export class CalendarService {
     });
   }
 
+  updateEvent(event: any) {
+    this.storage.get("ArrayEvent")?.then((data) => {
+      const index = data.findIndex((item: any) => {
+        return item.id === event.id;
+      });
+      if(index !== -1){
+        data[index] = event;
+        this.storage.set("ArrayEvent", data);
+      }
+    });
+  }
+
+  deleteEvent(id: string) {
+    this.storage.get("ArrayEvent")?.then((data) => {
+      const index = data.findIndex((item: any) => {
+        return item.id === id;
+      });
+      if(index !== -1){
+        data.splice(index, 1);
+        this.storage.set("ArrayEvent", data);
+      }
+    });
+  }
+
   getCategories() {
     return this.storage.get("ArrayCategory");
   }

@@ -227,7 +227,7 @@ export class Tab2Page implements OnInit, OnDestroy {
             handler: () => {
               this.eventSource = this.eventSource.filter((item: any) => item.id !== event.id);
               this.cal?.loadEvents();
-              this.service.setEvents(this.eventSource);
+              this.service.deleteEvent(event.id);
             },
           }
         ],
@@ -264,7 +264,7 @@ export class Tab2Page implements OnInit, OnDestroy {
             this.eventSource[index] = data.data;
           }
           this.cal?.loadEvents();
-          this.service.setEvents(this.eventSource);
+          this.service.updateEvent(data.data);
         } else if(data.role === 'copy'){
           this.eventSource.push(data.data);
           this.cal?.loadEvents();

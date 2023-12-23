@@ -10,13 +10,19 @@
 </ion-header>
 <ion-content>
   <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate>
-    <ion-item disabled="true">
-      <ion-input
-        [value]="textCreatedOn"
-        type="text"
-        label="Ngày tạo"
-        readonly="true"
-      ></ion-input>
+    <ion-item>
+      <ion-label>Ngày tạo</ion-label>
+      <ion-datetime-button [datetime]="id"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime 
+            [value]="date" 
+            [presentation]="'date'"
+            [id]="id"
+            [locale]="localID"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
     </ion-item>
     <ion-item>
       <ion-input
