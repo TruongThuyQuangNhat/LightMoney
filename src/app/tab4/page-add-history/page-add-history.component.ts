@@ -53,7 +53,7 @@ export class PageAddHistoryComponent  implements OnInit {
       ],
       title: [this.title ? this.title :''],
       money: [
-        this.type2 == 'debtCollection' ? this.expenditure : this.revenue, 
+        this.type2 == 'debtCollection' ? this.revenue : this.expenditure, 
         [Validators.required]
       ],
     });
