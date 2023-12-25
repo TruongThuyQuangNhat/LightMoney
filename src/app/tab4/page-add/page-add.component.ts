@@ -28,6 +28,7 @@ export class PageAddComponent  implements OnInit {
   isError: boolean = false;
   localID = 'vi-VN';
   listHistory: Event[] = [];
+  titleHistory: string = '';
 
   constructor(
     private modalCtrl: ModalController,
@@ -44,10 +45,12 @@ export class PageAddComponent  implements OnInit {
       case 'loan':
         this.textTitle = this.titlePage ? this.titlePage : 'Thêm khoản cho vay';
         this.titelInputType2 = 'Người vay';
+        this.titleHistory = 'Lịch sử thu nợ';
         break;
       case 'borrow':
         this.textTitle = this.titlePage ? this.titlePage : 'Thêm khoản đi vay';
         this.titelInputType2 = 'Người cho vay';
+        this.titleHistory = 'Lịch sử trả nợ';
         break;
       default:
         break;

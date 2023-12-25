@@ -9,6 +9,7 @@ import { AlertController, IonItemSliding, ModalController } from '@ionic/angular
 import { Tab1Page } from '../tab1/tab1.page';
 import { SearchEventComponent } from '../tab3/search-event/search-event.component';
 import { PageAddComponent } from '../tab4/page-add/page-add.component';
+import { PageAddHistoryComponent } from '../tab4/page-add-history/page-add-history.component';
 
 @Component({
   selector: 'app-tab2',
@@ -245,7 +246,9 @@ export class Tab2Page implements OnInit, OnDestroy {
           break;
       }
       const modal = await this.modalCtrl.create({
-        component: event.type2 ? PageAddComponent : Tab1Page,
+        component: event.type2 ? 
+        (event.type2 == 'loan' || event.type2 == 'borrow' ?PageAddComponent : PageAddHistoryComponent) 
+        : Tab1Page,
         componentProps: {
           titlePage: titlePage,
           action: action,

@@ -54,7 +54,7 @@
   <ion-list *ngIf="action !== 'add'">
     <ion-list-header mode="ios">
       <ion-label>
-        Lịch sử thanh toán
+        {{titleHistory}}
       </ion-label>
     </ion-list-header>
     <ng-container *ngFor="let item of listHistory">
@@ -70,7 +70,7 @@
           fill="outline"
           expand="block"
         >
-          Thêm mới lịch sử thanh toán
+          Thêm mới lịch sử
         </ion-button>
       </ion-col>
     </ion-row>

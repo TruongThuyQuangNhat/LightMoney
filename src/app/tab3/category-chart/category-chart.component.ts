@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { CalendarService } from 'src/app/service/calendar.service';
 import { StorageService } from 'src/app/service/storage.service';
 import { Tab1Page } from 'src/app/tab1/tab1.page';
+import { PageAddHistoryComponent } from 'src/app/tab4/page-add-history/page-add-history.component';
 import { PageAddComponent } from 'src/app/tab4/page-add/page-add.component';
 import * as uuid from 'uuid';
 
@@ -154,7 +155,9 @@ export class CategoryChartComponent  implements OnInit {
           break;
       }
       const modal = await this.modalCtrl.create({
-        component: event.type2 ? PageAddComponent : Tab1Page,
+        component: event.type2 ? 
+        (event.type2 == 'loan' || event.type2 == 'borrow' ?PageAddComponent : PageAddHistoryComponent) 
+        : Tab1Page,
         componentProps: {
           titlePage: titlePage,
           action: action,

@@ -8,6 +8,7 @@ import { ModalCategoryComponent } from 'src/app/component/modal-category/modal-c
 import { ModalSelectTimeComponent } from 'src/app/component/modal-select-time/modal-select-time.component';
 import { Category } from 'src/app/model/category';
 import { PageAddComponent } from 'src/app/tab4/page-add/page-add.component';
+import { PageAddHistoryComponent } from 'src/app/tab4/page-add-history/page-add-history.component';
 
 @Component({
   selector: 'app-search-event',
@@ -209,7 +210,9 @@ export class SearchEventComponent  implements OnInit {
           break;
       }
       const modal = await this.modalCtrl.create({
-        component: event.type2 ? PageAddComponent : Tab1Page,
+        component: event.type2 ? 
+        (event.type2 == 'loan' || event.type2 == 'borrow' ?PageAddComponent : PageAddHistoryComponent) 
+        : Tab1Page,
         componentProps: {
           titlePage: titlePage,
           action: action,
