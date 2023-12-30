@@ -270,7 +270,12 @@ export class Tab2Page implements OnInit, OnDestroy {
           if(index !== -1){
             this.eventSource[index] = data.data;
           }
-          this.cal?.loadEvents();
+          this.service.getEvents()?.then((data) => {
+            if(data && data.length > 0) {
+              this.eventSource = data;
+              this.cal?.loadEvents();
+            }
+          });
           this.service.updateEvent(data.data);
         } else if(data.role === 'copy'){
           this.eventSource.push(data.data);

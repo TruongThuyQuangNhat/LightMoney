@@ -224,4 +224,8 @@ export class PageAddComponent  implements OnInit {
       await modal.present();
     }
   }
+
+  changeDate(event: any) {
+    this.date = event.detail.value;
+  }
 }

@@ -116,6 +116,10 @@ export class PageAddHistoryComponent  implements OnInit {
     }
   };
 
+  changeDate(event: any) {
+    this.date = event.detail.value;
+  }
+
   back() {
     this.modalCtrl.dismiss();
   }

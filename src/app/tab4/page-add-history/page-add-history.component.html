@@ -17,6 +17,7 @@
         <ng-template>
           <ion-datetime 
             [value]="date" 
+            (ionChange)="changeDate($event)"
             [presentation]="'date'"
             [id]="id"
             [locale]="localID"
