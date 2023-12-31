@@ -10,7 +10,7 @@
       <h3>{{item.category?.name}}</h3>
     </ng-container>
     <ng-container *ngIf="item?.type2">
-      <h3>{{item.ownerOfType2}}</h3>
+      <h3><b>{{item?.category?.name}}</b> - {{item.ownerOfType2}}</h3>
     </ng-container>
     <p>{{item.title}}</p>
   </ion-label>

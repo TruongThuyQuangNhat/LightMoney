@@ -84,7 +84,7 @@ export class Tab4Component  implements OnInit {
     let titlePage = "";
     if(action === 'delete'){
       const alert = await this.alertCtrl.create({
-        header: 'Bạn có chắc chắn muốn xóa sự kiện này?',
+        header: 'Bạn có chắc chắn muốn xóa sự kiện này và lịch sử của nó?',
         buttons: [
           {
             text: 'Bỏ qua',

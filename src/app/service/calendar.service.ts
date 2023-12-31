@@ -44,6 +44,23 @@ export class CalendarService {
       });
       if(index !== -1){
         data.splice(index, 1);
+
+        // remove children
+        const temp = data.filter((item: any) => {
+          if(item.parentId === id){
+            return item;
+          }
+        });
+
+        temp.forEach((item: any) => {
+          const index2 = data.findIndex((item2: any) => {
+            return item2.id === item.id;
+          });
+          if(index2 !== -1){
+            data.splice(index2, 1);
+          }
+        });
+        
         this.storage.set("ArrayEvent", data);
       }
     });
