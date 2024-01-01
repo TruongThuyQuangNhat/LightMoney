@@ -13,6 +13,7 @@ import { CalendarService } from 'src/app/service/calendar.service';
 })
 export class PageAddComponent  implements OnInit {
   textTitle: string = '';
+  textHeader: string = '';
   @Input() type2: "loan" | "borrow" = 'loan';
   @Input() ownerOfType2: string = '';
   @Input() expenditure = 0;
@@ -44,11 +45,13 @@ export class PageAddComponent  implements OnInit {
     switch (this.type2) {
       case 'loan':
         this.textTitle = this.titlePage ? this.titlePage : 'Thêm khoản cho vay';
+        this.textHeader = 'Cho vay';
         this.titelInputType2 = 'Người vay';
         this.titleHistory = 'Lịch sử thu nợ';
         break;
       case 'borrow':
         this.textTitle = this.titlePage ? this.titlePage : 'Thêm khoản đi vay';
+        this.textHeader = 'Đi vay';
         this.titelInputType2 = 'Người cho vay';
         this.titleHistory = 'Lịch sử trả nợ';
         break;

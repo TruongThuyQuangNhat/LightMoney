@@ -14,6 +14,7 @@ export class PageAddHistoryComponent  implements OnInit {
   textError: string = 'Vui lòng nhập đầy đủ thông tin';
   isError: boolean = false;
   textTitle: string = '';
+  textHeader: string = '';
   date: string = new Date().toISOString();
   localID = 'vi-VN';
   titelInputType2: string = '';
@@ -36,12 +37,25 @@ export class PageAddHistoryComponent  implements OnInit {
     }
     switch (this.type2) {
       case 'debtRepayment':
-        this.textTitle = 'Trả tiền vay';
+        this.textHeader = 'Trả tiền vay';
         this.titelInputType2 = 'Người cho vay';
         break;
       case 'debtCollection':
-        this.textTitle = 'Thu tiền cho vay';
+        this.textHeader = 'Thu tiền cho vay';
         this.titelInputType2 = 'Người vay';
+        break;
+      default:
+        break;
+    }
+    switch (this.action) {
+      case 'edit':
+        this.textTitle = 'Chỉnh sửa';
+        break;
+      case 'add':
+        this.textTitle = 'Thêm mới';
+        break;
+      case 'copy':
+        this.textTitle = 'Sao chép';
         break;
       default:
         break;

@@ -4,11 +4,14 @@
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-buttons>
     <ion-title>
-      {{textTitle}}
+      {{textHeader}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-list-header>
+    {{textTitle}}
+  </ion-list-header>
   <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate>
     <ion-item>
       <ion-label>Ngày tạo</ion-label>
