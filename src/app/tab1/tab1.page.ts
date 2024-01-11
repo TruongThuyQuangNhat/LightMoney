@@ -16,7 +16,16 @@ import { listCategory as lstCate } from '../model/category';
 export class Tab1Page implements OnInit {
   @Input() titlePage: string = "Thêm giao dịch";
   @Input() action: string = "add";
-  @Input() date: string = new Date().toISOString();
+  @Input() date: string = new Date(
+    Date.UTC(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate(),
+      new Date().getHours(),
+      new Date().getMinutes(),
+      new Date().getSeconds(),
+    )
+  ).toISOString();
   @Input() id: string = uuid.v4();
   localID: string = 'vi-VN';
   @Input() title: string = "";
