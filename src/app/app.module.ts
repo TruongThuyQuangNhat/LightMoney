@@ -8,6 +8,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import { Storage } from "@ionic/storage-angular";
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import { Storage } from "@ionic/storage-angular";
         name: 'LightMoneyDatabase',
         driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB, Drivers.LocalStorage]
       }
-    )
+    ),
+    NgZorroAntdMobileModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
     Storage,

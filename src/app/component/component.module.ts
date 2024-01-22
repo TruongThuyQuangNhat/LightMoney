@@ -10,6 +10,8 @@ import { CalendarModule } from 'ion7-calendar';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { FormsModule } from '@angular/forms';
 import { EmptyComponent } from './empty/empty.component';
+import { InputCurrencyComponent } from '../common/input-currency/input-currency.component';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 
 const COMPONENT = [
   SlideItemComponent,
@@ -18,6 +20,7 @@ const COMPONENT = [
   ModalCategoryComponent,
   FooterYesNoComponent,
   EmptyComponent,
+  InputCurrencyComponent
 ];
 
 @NgModule({
@@ -29,7 +32,8 @@ const COMPONENT = [
     IonicModule,
     CalendarModule,
     NgCalendarModule,
-    FormsModule
+    FormsModule,
+    NgZorroAntdMobileModule
   ],
   exports: [
     COMPONENT

@@ -1,0 +1,16 @@
+<!-- <ion-input 
+  [label]="label" 
+  [value]="value" 
+  (ionFocus)="focusInputExp()"
+  (ionBlur)="blurInputExp()"
+  (ionInput)="changeInputExp($event)"
+  type="text"
+></ion-input> -->
+
+<InputItem
+  [type]="'money'"
+  [clear]="true"
+  [placeholder]="'0.00'" 
+  [extra]="'VND'"
+  [content]="label"
+></InputItem>

@@ -29,8 +29,8 @@ export class Tab1Page implements OnInit {
   @Input() id: string = uuid.v4();
   localID: string = 'vi-VN';
   @Input() title: string = "";
-  @Input() revenue: number = 0;
-  @Input() expenditure: number = 0;
+  @Input() revenue: any = 0;
+  @Input() expenditure: any = 0;
   @Input() type: "revenue" | "expenditure" = "expenditure";
   listCategory: Category[] = [];
   listCategoryRoot: Category[] = [];

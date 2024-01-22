@@ -37,7 +37,10 @@
       <ion-input label="Doanh thu" [(ngModel)]="revenue" type="number"></ion-input>
     </ion-item>
     <ion-item *ngIf="type == 'expenditure'">
-      <ion-input label="Chi tiêu" [(ngModel)]="expenditure" type="number"></ion-input>
+      <input-currency
+        [value]="0"
+        [label]="'Chi tiêu'"
+      ></input-currency>
     </ion-item>
     <ion-item>
       <ion-textarea label="Tiêu đề" [(ngModel)]="title" placeholder="Thông tin chi tiết"></ion-textarea>
