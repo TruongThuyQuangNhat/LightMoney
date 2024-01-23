@@ -38,8 +38,10 @@
     </ion-item>
     <ion-item *ngIf="type == 'expenditure'">
       <input-currency
-        [value]="0"
+        style="width: 100%;"
+        [value]="expenditure"
         [label]="'Chi tiêu'"
+        (valueChange)="changeInputExp($event)"
       ></input-currency>
     </ion-item>
     <ion-item>

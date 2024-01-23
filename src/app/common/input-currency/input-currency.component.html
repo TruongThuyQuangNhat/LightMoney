@@ -7,10 +7,13 @@
   type="text"
 ></ion-input> -->
 
-<InputItem
-  [type]="'money'"
-  [clear]="true"
+<InputItem 
+  [type]="'money'" 
   [placeholder]="'0.00'" 
-  [extra]="'VND'"
+  [extra]="'VND'" 
   [content]="label"
+  [value]="valueString"
+  (onChange)="changeInputExp($event)"
+  (onBlur)="blurInputExp()"
+  (onFocus)="focusInputExp()"
 ></InputItem>

@@ -7,35 +7,41 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class InputCurrencyComponent  implements OnInit {
   @Input() value: any = 0;
+  @Input() valueString: string = "0";
   @Input() label: string = "";
 
   @Output() valueChange = new EventEmitter<any>();
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.valueString = this.recursiveCurrency(this.value.toString());
+  }
 
   focusInputExp() {
     if(this.value === 0){
       this.value = null;
-      this.valueChange.emit(0);
+      this.valueString = "";
     }
+    this.valueChange.emit(this.value);
   }
 
   blurInputExp() {
     if(!this.value){
       this.value = 0;
-      this.valueChange.emit(this.value);
+      this.valueString = "0";
     }
+    this.valueChange.emit(this.value);
   }
 
-  changeInputExp(event?: any) {
-    if(event?.detail.value){
-      let temp: string = event.detail.value?.replaceAll(".", "");
-      this.value = this.recursiveCurrency(temp);
-      console.log(this.value);
+  changeInputExp(value?: any) {
+    if(value != null){
+      let temp: string = value?.replaceAll(".", "");
+      this.valueString = this.recursiveCurrency(temp);
+      this.value = parseInt(temp);
     } else {
       let temp: string = this.value?.toString()?.replaceAll(".", "");
-      this.value = this.recursiveCurrency(temp);
+      this.valueString = this.recursiveCurrency(temp);
+      this.value = parseInt(temp);
     }
   }
 

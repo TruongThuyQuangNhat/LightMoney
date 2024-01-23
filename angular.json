@@ -34,6 +34,8 @@
             ],
             "styles": [
               "node_modules/ng-zorro-antd-mobile/src/ng-zorro-antd-mobile.min.css",
+              "src/theme/variables.scss",
+              "src/global.scss",
               {
                 "input": "src/theme/variables.scss"
               },
@@ -83,10 +85,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "app:build:production"
+              "buildTarget": "app:build:production"
             },
             "development": {
-              "browserTarget": "app:build:development"
+              "buildTarget": "app:build:development"
             },
             "ci": {
               "progress": false
@@ -97,7 +99,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "app:build"
+            "buildTarget": "app:build"
           }
         },
         "test": {
@@ -123,7 +125,13 @@
             "styles": [
               "node_modules/ng-zorro-antd-mobile/src/ng-zorro-antd-mobile.min.css",
               "src/theme/variables.scss",
-              "src/global.scss"
+              "src/global.scss",
+              {
+                "input": "src/theme/variables.scss"
+              },
+              {
+                "input": "src/global.scss"
+              }
             ],
             "scripts": []
           },

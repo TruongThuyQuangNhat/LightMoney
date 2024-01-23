@@ -56,6 +56,10 @@ export class Tab1Page implements OnInit {
     }, 10);
   }
 
+  changeInputExp(value?: any) {
+    console.log(value);
+  }
+
   changeSegment(data: any) {
     if(data?.detail?.value){
       this.type = data.detail.value;
