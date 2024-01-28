@@ -28,6 +28,7 @@ export class Tab1Page implements OnInit {
   ).toISOString();
   @Input() id: string = uuid.v4();
   localID: string = 'vi-VN';
+  currency: string = 'VND';
   @Input() title: string = "";
   @Input() revenue: any = 0;
   @Input() expenditure: any = 0;
@@ -57,7 +58,13 @@ export class Tab1Page implements OnInit {
   }
 
   changeInputExp(value?: any) {
-    console.log(value);
+    if(this.type === "revenue"){
+      this.revenue = value;
+      this.expenditure = 0;
+    } else {
+      this.expenditure = value;
+      this.revenue = 0;
+    }
   }
 
   changeSegment(data: any) {

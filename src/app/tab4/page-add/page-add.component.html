@@ -12,49 +12,45 @@
   <ion-list-header>
     {{textTitle}}
   </ion-list-header>
-  <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate>
-    <ion-item>
-      <ion-label>Ngày tạo</ion-label>
-      <ion-datetime-button [datetime]="id"></ion-datetime-button>
-      <ion-modal [keepContentsMounted]="true">
-        <ng-template>
-          <ion-datetime 
-            [value]="date" 
-            (ionChange)="changeDate($event)"
-            [presentation]="'date'"
-            [id]="id"
-            [locale]="localID"
-          ></ion-datetime>
-        </ng-template>
-      </ion-modal>
-    </ion-item>
-    <ion-item>
-      <ion-input
-        formControlName="ownerOfType2"
-        type="text"
-        label="{{titelInputType2}} *"
-        required
-      ></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input
-        formControlName="money"
-        type="number"
-        required
-        label="Số tiền *"
-      ></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-textarea
-        formControlName="title"
-        type="text"
-        label="Chi tiết"
-      ></ion-textarea>
-    </ion-item>
-    <ion-text *ngIf="isError" class="ion-padding" color="danger">
-      {{textError}}
-    </ion-text>
-  </form>
+  <ion-item>
+    <ion-label>Ngày tạo</ion-label>
+    <ion-datetime-button [datetime]="id"></ion-datetime-button>
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime 
+          [value]="date" 
+          (ionChange)="changeDate($event)"
+          [presentation]="'date'"
+          [id]="id"
+          [locale]="localID"
+        ></ion-datetime>
+      </ng-template>
+    </ion-modal>
+  </ion-item>
+  <ion-item>
+    <ion-input
+      type="text"
+      label="{{titelInputType2}} *"
+      [(ngModel)]="ownerOfType2" 
+    ></ion-input>
+  </ion-item>
+  <ion-item>
+    <input-currency
+      style="width: 100%;"
+      [value]="money"
+      [label]="'Số tiền *'"
+      [currency]="currency"
+      (valueChange)="changeInputExp($event)"
+    ></input-currency>
+  </ion-item>
+  <ion-item>
+    <ion-textarea
+      type="text"
+      label="Chi tiết"
+      [autoGrow]="true"
+      [(ngModel)]="title" 
+    ></ion-textarea>
+  </ion-item>
   <ion-list *ngIf="action !== 'add' && action !== 'copy'">
     <ion-list-header mode="ios">
       <ion-label>
@@ -84,6 +80,7 @@
   <ion-row>
     <ion-col>
       <ion-button 
+        [disabled]="!ownerOfType2 || !money"
         (click)="submitForm()" 
         type="submit"
         expand="block"

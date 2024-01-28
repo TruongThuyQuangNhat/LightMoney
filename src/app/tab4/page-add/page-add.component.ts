@@ -24,12 +24,11 @@ export class PageAddComponent  implements OnInit {
   @Input() id: string = '';
   @Input() date: string = new Date().toISOString();
   titelInputType2: string = '';
-  ionicForm: FormGroup = new FormGroup({});
-  textError: string = 'Vui lòng nhập đầy đủ thông tin';
-  isError: boolean = false;
   localID = 'vi-VN';
+  currency = 'VND';
   listHistory: Event[] = [];
   titleHistory: string = '';
+  money: number = 0;
 
   constructor(
     private modalCtrl: ModalController,
@@ -58,18 +57,12 @@ export class PageAddComponent  implements OnInit {
       default:
         break;
     }
-    this.ionicForm = this.formBuilder.group({
-      ownerOfType2: [
-        this.ownerOfType2 ? this.ownerOfType2 :'', 
-        [Validators.required]
-      ],
-      title: [this.title ? this.title :''],
-      money: [
-        this.type2 == 'loan' ? this.expenditure : this.revenue, 
-        [Validators.required]
-      ],
-    });
+    this.money = this.type2 == 'loan' ? this.expenditure : this.revenue;
     this.loadChildren(this.id);
+  }
+
+  changeInputExp(event: any) {
+    this.money = event;
   }
 
   loadChildren(id: string) {
@@ -85,59 +78,54 @@ export class PageAddComponent  implements OnInit {
   }
 
   submitForm() {
-    if (this.ionicForm.valid) {
-      var date = this.date ? new Date(this.date) : new Date();
-      const startTime = new Date(
-        Date.UTC(
-          date.getUTCFullYear(),
-          date.getUTCMonth(),
-          date.getUTCDate()
-        )
-      );
-      const endTime = new Date(
-        Date.UTC(
-          date.getUTCFullYear(),
-          date.getUTCMonth(),
-          date.getUTCDate() + 1
-        )
-      );
-      const event: Event = {
-        id: this.id,
-        title: this.ionicForm.value.title,
-        startTime,
-        endTime,
-        allDay: true,
-        expenditure: this.type2 === 'loan' ? this.ionicForm.value.money : 0,
-        revenue: this.type2 === 'borrow' ? this.ionicForm.value.money : 0,
-        type: this.type2 === 'loan' ? 'expenditure' : 'revenue',
-        category: this.type2 === 'loan' ? 
-            {
-              id: "e4f2f979-ad7d-493c-ba8e-9982948d58e2",
-              icon: "reader-outline",
-              name: "Cho vay",
-              color: "#0000ff",
-              type: "expenditure",
-              isDefault: true,
-              index: 32,
-              typeIcon: "outline",
-            } : {
-              id: "80622438-75c4-487b-b817-0e30bc96d3af",
-              icon: "document-text-outline",
-              name: "Đi vay",
-              color: "#669999",
-              type: "revenue",
-              isDefault: true,
-              typeIcon: "outline",
-              index: 8
-            },
-        type2: this.type2,
-        ownerOfType2: this.ionicForm.value.ownerOfType2,
-      };
-      this.isError = false;
-      this.modalCtrl.dismiss(event, this.action);
-    } else {
-      this.isError = true;
-    }
+    var date = this.date ? new Date(this.date) : new Date();
+    const startTime = new Date(
+      Date.UTC(
+        date.getUTCFullYear(),
+        date.getUTCMonth(),
+        date.getUTCDate()
+      )
+    );
+    const endTime = new Date(
+      Date.UTC(
+        date.getUTCFullYear(),
+        date.getUTCMonth(),
+        date.getUTCDate() + 1
+      )
+    );
+    const event: Event = {
+      id: this.id,
+      title: this.title,
+      startTime,
+      endTime,
+      allDay: true,
+      expenditure: this.type2 === 'loan' ? this.money : 0,
+      revenue: this.type2 === 'borrow' ? this.money : 0,
+      type: this.type2 === 'loan' ? 'expenditure' : 'revenue',
+      category: this.type2 === 'loan' ? 
+          {
+            id: "e4f2f979-ad7d-493c-ba8e-9982948d58e2",
+            icon: "reader-outline",
+            name: "Cho vay",
+            color: "#0000ff",
+            type: "expenditure",
+            isDefault: true,
+            index: 32,
+            typeIcon: "outline",
+          } : {
+            id: "80622438-75c4-487b-b817-0e30bc96d3af",
+            icon: "document-text-outline",
+            name: "Đi vay",
+            color: "#669999",
+            type: "revenue",
+            isDefault: true,
+            typeIcon: "outline",
+            index: 8
+          },
+      type2: this.type2,
+      ownerOfType2: this.ownerOfType2,
+    };
+    this.modalCtrl.dismiss(event, this.action);
   };
 
   async addHistory() {
@@ -146,7 +134,7 @@ export class PageAddComponent  implements OnInit {
       componentProps: {
         type2: this.type2 === 'loan' ? 'debtCollection' : 'debtRepayment',
         parentId: this.id,
-        ownerOfType2: this.ionicForm.value.ownerOfType2,
+        ownerOfType2: this.ownerOfType2,
       },
     });
 
@@ -206,7 +194,7 @@ export class PageAddComponent  implements OnInit {
           revenue: event.revenue,
           date: event.startTime.toISOString(),
           category: event.category,
-          ownerOfType2: this.ionicForm.value.ownerOfType2,
+          ownerOfType2: this.ownerOfType2,
           parentId: this.id,
           type2: this.type2 === 'loan' ? 'debtCollection' : 'debtRepayment',
         }

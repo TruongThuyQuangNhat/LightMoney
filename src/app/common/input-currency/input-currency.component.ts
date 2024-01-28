@@ -9,15 +9,22 @@ export class InputCurrencyComponent  implements OnInit {
   @Input() value: any = 0;
   @Input() valueString: string = "0";
   @Input() label: string = "";
+  @Input() currency: string = "VND";
 
   @Output() valueChange = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit() {
-    this.valueString = this.recursiveCurrency(this.value.toString());
+    this.valueString = this.recursiveCurrency(this.value?.toString());
   }
 
   focusInputExp() {
+    setTimeout(() => {
+      const element = document.getElementsByClassName("keyboard-confirm am-number-keyboard-item");
+      if(element.length > 0){
+        element[0].innerHTML = "Xong";
+      }
+    }, 150);
     if(this.value === 0){
       this.value = null;
       this.valueString = "";
@@ -43,10 +50,11 @@ export class InputCurrencyComponent  implements OnInit {
       this.valueString = this.recursiveCurrency(temp);
       this.value = parseInt(temp);
     }
+    this.valueChange.emit(this.value);
   }
 
   recursiveCurrency(value: string): string{
-   if(value.length > 3){
+   if(value?.length > 3){
     return this.recursiveCurrency(value.slice(0, value.length - 3)) + "." + value.slice(value.length - 3);
    } else {
      return value;
